@@ -1,4 +1,4 @@
-// App.js (파일 업로드 포함 + 제품명 멘트 추가)
+// App.js (버튼 비노출 문제 해결 - 선택 UI 전체 복원)
 import React, { useState } from 'react';
 
 function App() {
@@ -94,7 +94,138 @@ function App() {
           <input type="text" value={product} placeholder="재발주시 제품명을 사용합니다" onChange={(e) => setProduct(e.target.value)} style={{ width: '90%', padding: '0.5rem', borderRadius: '6px' }} />
         </div>
 
-        {/* 종이 느낌 ~ 하단 모양 선택 UI 생략 없이 동일 */}
+        <div style={{ marginBottom: '1rem' }}>
+          <label>종이 느낌</label>
+          <div style={{ display: 'flex', gap: '0.5rem' }}>
+            {['매끄러운', '러프한', '친환경'].map((type) => (
+              <button
+                key={type}
+                onClick={() => {
+                  setPaperFeel(type);
+                  setMaterial('');
+                  setColor('');
+                  setWeight('');
+                  setBottomStyle('');
+                }}
+                style={{
+                  flex: 1,
+                  padding: '0.5rem',
+                  background: paperFeel === type ? 'black' : '#f0f0f0',
+                  color: paperFeel === type ? 'white' : 'black',
+                  border: '1px solid #ccc',
+                  borderRadius: '6px',
+                  cursor: 'pointer',
+                }}>
+                {type}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {paperFeel && materialOptions[paperFeel] && (
+          <div style={{ marginBottom: '1rem' }}>
+            <label>재질 선택</label>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+              {materialOptions[paperFeel].map((mat) => (
+                <button
+                  key={mat}
+                  onClick={() => {
+                    setMaterial(mat);
+                    setColor('');
+                    setWeight('');
+                    setBottomStyle('');
+                  }}
+                  style={{
+                    padding: '0.5rem',
+                    background: material === mat ? 'black' : '#f0f0f0',
+                    color: material === mat ? 'white' : 'black',
+                    border: '1px solid #ccc',
+                    borderRadius: '6px',
+                    cursor: 'pointer',
+                  }}>
+                  {mat}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {paperFeel === '러프한' && material && colorOptions[material] && (
+          <div style={{ marginBottom: '1rem' }}>
+            <label>색상 선택</label>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+              {colorOptions[material].map((c) => (
+                <button
+                  key={c}
+                  onClick={() => {
+                    setColor(c);
+                    setWeight('');
+                    setBottomStyle('');
+                  }}
+                  style={{
+                    padding: '0.5rem',
+                    background: color === c ? 'black' : '#f0f0f0',
+                    color: color === c ? 'white' : 'black',
+                    border: '1px solid #ccc',
+                    borderRadius: '6px',
+                    cursor: 'pointer',
+                  }}>
+                  {c}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {showWeightOptions().length > 0 && (
+          <div style={{ marginBottom: '1rem' }}>
+            <label>용지 무게 선택</label>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+              {showWeightOptions().map((w) => (
+                <button
+                  key={w}
+                  onClick={() => {
+                    setWeight(w);
+                    setBottomStyle('');
+                  }}
+                  style={{
+                    padding: '0.5rem',
+                    background: weight === w ? 'black' : '#f0f0f0',
+                    color: weight === w ? 'white' : 'black',
+                    border: '1px solid #ccc',
+                    borderRadius: '6px',
+                    cursor: 'pointer',
+                  }}>
+                  {w}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {weight && (
+          <div style={{ marginBottom: '1rem' }}>
+            <label>하단 모양 선택</label>
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              {bottomOptions.map((opt) => (
+                <button
+                  key={opt}
+                  onClick={() => setBottomStyle(opt)}
+                  style={{
+                    flex: 1,
+                    padding: '0.5rem',
+                    background: bottomStyle === opt ? 'black' : '#f0f0f0',
+                    color: bottomStyle === opt ? 'white' : 'black',
+                    border: '1px solid #ccc',
+                    borderRadius: '6px',
+                    cursor: 'pointer',
+                  }}>
+                  {opt}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
         {weight && bottomStyle && (
           <div>
