@@ -12,7 +12,7 @@ function App() {
   return (
     <div style={{ display: 'flex', justifyContent: 'center', padding: '2rem' }}>
       {/* 오른쪽 입력 영역 */}
-      <div style={{ marginLeft: 'auto', width: '300px' }}>
+      <div style={{ marginLeft: 'auto', marginRight: '3rem', width: '300px' }}>
         <h2>B형 단상자</h2>
 
         {/* 회사명 또는 성함 */}
