@@ -12,6 +12,9 @@ function App() {
   const [product, setProduct] = useState('');
   const [phone, setPhone] = useState('');
   const [printSide, setPrintSide] = useState('');
+  const [width, setWidth] = useState('');
+  const [length, setLength] = useState('');
+  const [height, setHeight] = useState('');
 
   const boxTypeOptions = ['명함', 'B형', '고리걸이 B형', '상, 하짝 Y형', '슬리브+Y형', '손잡이형', '쇼핑백'];
   const bottomOptions = ['맞뚜껑', '십자다루마', '삼면접착'];
@@ -81,6 +84,18 @@ function App() {
     alert('확인되었습니다.');
   };
 
+  const shouldShowMaterial = () => {
+    if (boxType === '명함') return printSide;
+    return weight;
+  };
+
+  const shouldShowBoxOptions = () => {
+    if (boxType === '명함') {
+      return width && length && printSide && material;
+    }
+    return width && length && height && weight;
+  };
+
   return (
     <div style={{ display: 'flex', justifyContent: 'center', padding: '2rem' }}>
       <div style={{ width: '360px', marginLeft: 'auto' }}>
@@ -93,12 +108,7 @@ function App() {
           <input value={phone} onChange={e => setPhone(e.target.value)} style={{ width: '100%', padding: '0.5rem' }} />
         </div>
         <div style={{ marginBottom: '1rem' }}>
-          <label>제품명</label>
-          <input placeholder="재발주시 제품명을 사용합니다" value={product} onChange={e => setProduct(e.target.value)} style={{ width: '100%', padding: '0.5rem' }} />
-        </div>
-
-        <div style={{ marginBottom: '1rem' }}>
-          <label>상자 형태</label>
+          <label>제품</label>
           <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
             {boxTypeOptions.map(type => (
               <button key={type} onClick={() => {
@@ -110,6 +120,9 @@ function App() {
                 setWeight('');
                 setBottomStyle('');
                 setPrintSide('');
+                setWidth('');
+                setLength('');
+                setHeight('');
               }} style={{ padding: '0.5rem', background: boxType === type ? 'black' : '#f0f0f0', color: boxType === type ? 'white' : 'black', border: '1px solid #ccc' }}>
                 {type}
               </button>
@@ -117,21 +130,46 @@ function App() {
           </div>
         </div>
 
-        {boxType === '명함' ? (
+        {boxType && (
+          <div style={{ marginBottom: '1rem' }}>
+            <label>내경 (mm)</label>
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <input placeholder="가로" value={width} onChange={e => setWidth(e.target.value)} style={{ width: '70px', padding: '0.5rem' }} />
+              <input placeholder="세로" value={length} onChange={e => setLength(e.target.value)} style={{ width: '70px', padding: '0.5rem' }} />
+              {boxType !== '명함' && (
+                <input placeholder="높이" value={height} onChange={e => setHeight(e.target.value)} style={{ width: '70px', padding: '0.5rem' }} />
+              )}
+            </div>
+          </div>
+        )}
+
+        {boxType === '명함' && width && length && (
           <>
             <div style={{ marginBottom: '1rem' }}>
-              <label>종이 분류</label>
+              <label>인쇄 방식</label>
               <div style={{ display: 'flex', gap: '0.5rem' }}>
-                {['기본종이', '감성종이', '색지'].map(type => (
-                  <button key={type} onClick={() => setPaperCategory(type)} style={{ flex: 1, padding: '0.5rem', background: paperCategory === type ? 'black' : '#f0f0f0', color: paperCategory === type ? 'white' : 'black', border: '1px solid #ccc' }}>
-                    {type}
+                {printSides.map(side => (
+                  <button key={side} onClick={() => setPrintSide(side)} style={{ flex: 1, padding: '0.5rem', background: printSide === side ? 'black' : '#f0f0f0', color: printSide === side ? 'white' : 'black', border: '1px solid #ccc' }}>
+                    {side}
                   </button>
                 ))}
               </div>
             </div>
+            {printSide && (
+              <div style={{ marginBottom: '1rem' }}>
+                <label>종이 종류</label>
+                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                  {['기본종이', '감성종이', '색지'].map(type => (
+                    <button key={type} onClick={() => setPaperCategory(type)} style={{ padding: '0.5rem', background: paperCategory === type ? 'black' : '#f0f0f0', color: paperCategory === type ? 'white' : 'black', border: '1px solid #ccc' }}>
+                      {type}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
             {paperCategory && (
               <div style={{ marginBottom: '1rem' }}>
-                <label>용지 종류</label>
+                <label>재질 선택</label>
                 <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                   {materialOptions[paperCategory].map(mat => (
                     <button key={mat} onClick={() => setMaterial(mat)} style={{ padding: '0.5rem', background: material === mat ? 'black' : '#f0f0f0', color: material === mat ? 'white' : 'black', border: '1px solid #ccc' }}>
@@ -141,26 +179,16 @@ function App() {
                 </div>
               </div>
             )}
-            {material && (
-              <div style={{ marginBottom: '1rem' }}>
-                <label>인쇄 방식</label>
-                <div style={{ display: 'flex', gap: '0.5rem' }}>
-                  {printSides.map(side => (
-                    <button key={side} onClick={() => setPrintSide(side)} style={{ flex: 1, padding: '0.5rem', background: printSide === side ? 'black' : '#f0f0f0', color: printSide === side ? 'white' : 'black', border: '1px solid #ccc' }}>
-                      {side}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
           </>
-        ) : boxType && (
+        )}
+
+        {boxType !== '명함' && width && length && height && (
           <>
             <div style={{ marginBottom: '1rem' }}>
               <label>종이 느낌</label>
               <div style={{ display: 'flex', gap: '0.5rem' }}>
                 {['매끄러운', '러프한', '친환경'].map(type => (
-                  <button key={type} onClick={() => { setPaperFeel(type); setMaterial(''); setColor(''); setWeight(''); setBottomStyle(''); }} style={{ flex: 1, padding: '0.5rem', background: paperFeel === type ? 'black' : '#f0f0f0', color: paperFeel === type ? 'white' : 'black', border: '1px solid #ccc' }}>
+                  <button key={type} onClick={() => { setPaperFeel(type); setMaterial(''); setColor(''); setWeight(''); }} style={{ flex: 1, padding: '0.5rem', background: paperFeel === type ? 'black' : '#f0f0f0', color: paperFeel === type ? 'white' : 'black', border: '1px solid #ccc' }}>
                     {type}
                   </button>
                 ))}
@@ -171,7 +199,7 @@ function App() {
                 <label>재질 선택</label>
                 <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                   {materialOptions[paperFeel].map(mat => (
-                    <button key={mat} onClick={() => { setMaterial(mat); setColor(''); setWeight(''); setBottomStyle(''); }} style={{ padding: '0.5rem', background: material === mat ? 'black' : '#f0f0f0', color: material === mat ? 'white' : 'black', border: '1px solid #ccc' }}>
+                    <button key={mat} onClick={() => { setMaterial(mat); setColor(''); setWeight(''); }} style={{ padding: '0.5rem', background: material === mat ? 'black' : '#f0f0f0', color: material === mat ? 'white' : 'black', border: '1px solid #ccc' }}>
                       {mat}
                     </button>
                   ))}
@@ -183,7 +211,7 @@ function App() {
                 <label>색상 선택</label>
                 <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                   {colorOptions[material].map(c => (
-                    <button key={c} onClick={() => { setColor(c); setWeight(''); setBottomStyle(''); }} style={{ padding: '0.5rem', background: color === c ? 'black' : '#f0f0f0', color: color === c ? 'white' : 'black', border: '1px solid #ccc' }}>
+                    <button key={c} onClick={() => setColor(c)} style={{ padding: '0.5rem', background: color === c ? 'black' : '#f0f0f0', color: color === c ? 'white' : 'black', border: '1px solid #ccc' }}>
                       {c}
                     </button>
                   ))}
@@ -195,7 +223,7 @@ function App() {
                 <label>용지 무게 선택</label>
                 <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                   {showWeightOptions().map(w => (
-                    <button key={w} onClick={() => { setWeight(w); setBottomStyle(''); }} style={{ padding: '0.5rem', background: weight === w ? 'black' : '#f0f0f0', color: weight === w ? 'white' : 'black', border: '1px solid #ccc' }}>
+                    <button key={w} onClick={() => setWeight(w)} style={{ padding: '0.5rem', background: weight === w ? 'black' : '#f0f0f0', color: weight === w ? 'white' : 'black', border: '1px solid #ccc' }}>
                       {w}
                     </button>
                   ))}
@@ -205,7 +233,7 @@ function App() {
           </>
         )}
 
-        {(boxType === '명함' ? printSide : weight) && (
+        {shouldShowBoxOptions() && (
           <>
             {boxType !== '명함' && (
               <div style={{ marginBottom: '1rem' }}>
