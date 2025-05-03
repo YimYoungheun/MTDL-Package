@@ -40,6 +40,28 @@ function App() {
             ))}
           </div>
         </div>
+            {/* 종이 느낌 선택 */}
+        <div style={{ marginBottom: '1rem' }}>
+          <label>종이 느낌</label>
+          <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
+            {['매끄러운', '러프한', '친환경'].map((label, index) => (
+              <button
+                key={index}
+                type="button"
+                style={{
+                  flex: 1,
+                  padding: '0.5rem',
+                  border: '1px solid #ccc',
+                  background: '#f9f9f9',
+                  cursor: 'pointer',
+                  }}
+                  >
+                {label}
+             </button>
+            ))}
+          </div>
+        </div>
+
       </div>
     </div>
   );
