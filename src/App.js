@@ -22,7 +22,7 @@ function App() {
             type="text"
             placeholder="회사 이름을 입력해주세요"
             style={{
-              width: '100%',
+              width: '90%',
               padding: '0.5rem',
               borderRadius: '6px',
             }}
@@ -36,7 +36,7 @@ function App() {
             type="text"
             placeholder="재발주시 제품명을 사용합니다"
             style={{
-              width: '100%',
+              width: '9  0%',
               padding: '0.5rem',
               borderRadius: '6px',
             }}
@@ -73,14 +73,14 @@ function App() {
         {/* 종이 느낌 */}
         <div style={{ marginBottom: '1rem' }}>
           <label>종이 느낌</label>
-          <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
+          <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem', justifyContent: 'flex-start' }}>
             {['매끄러운', '러프한', '친환경'].map((type) => (
               <button
                 key={type}
                 onClick={() => setPaperType(type)}
                 style={{
                   flex: 1,
-                  padding: '0.5rem',
+                  padding: '0.4rem 1rem'',
                   border: '1px solid #ccc',
                   background: paperType === type ? 'black' : '#f9f9f9',
                   color: paperType === type ? 'white' : 'black',
