@@ -11,10 +11,13 @@ function App() {
   const [company, setCompany] = useState('');
   const [product, setProduct] = useState('');
   const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
   const [printSide, setPrintSide] = useState('');
   const [width, setWidth] = useState('');
   const [length, setLength] = useState('');
   const [height, setHeight] = useState('');
+  const [quantity, setQuantity] = useState('');
+  const [customQuantity, setCustomQuantity] = useState('');
 
   const boxTypeOptions = ['명함', 'B형', '고리걸이 B형', '상, 하짝 Y형', '슬리브+Y형', '손잡이형', '쇼핑백'];
   const bottomOptions = ['맞뚜껑', '십자다루마', '삼면접착'];
@@ -84,11 +87,6 @@ function App() {
     alert('확인되었습니다.');
   };
 
-  const shouldShowMaterial = () => {
-    if (boxType === '명함') return printSide;
-    return weight;
-  };
-
   const shouldShowBoxOptions = () => {
     if (boxType === '명함') {
       return width && length && printSide && material;
@@ -108,6 +106,11 @@ function App() {
           <input value={phone} onChange={e => setPhone(e.target.value)} style={{ width: '100%', padding: '0.5rem' }} />
         </div>
         <div style={{ marginBottom: '1rem' }}>
+          <label>이메일 주소</label>
+          <input value={email} onChange={e => setEmail(e.target.value)} style={{ width: '100%', padding: '0.5rem' }} />
+        </div>
+
+        <div style={{ marginBottom: '1rem' }}>
           <label>제품</label>
           <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
             {boxTypeOptions.map(type => (
@@ -123,6 +126,8 @@ function App() {
                 setWidth('');
                 setLength('');
                 setHeight('');
+                setQuantity('');
+                setCustomQuantity('');
               }} style={{ padding: '0.5rem', background: boxType === type ? 'black' : '#f0f0f0', color: boxType === type ? 'white' : 'black', border: '1px solid #ccc' }}>
                 {type}
               </button>
@@ -247,6 +252,24 @@ function App() {
                 </div>
               </div>
             )}
+
+            {/* ✅ 수량 선택 */}
+            <div style={{ marginBottom: '1rem' }}>
+              <label>수량 선택</label>
+              <select value={quantity} onChange={e => setQuantity(e.target.value)} style={{ width: '100%', padding: '0.5rem' }}>
+                <option value="">수량을 선택하세요</option>
+                {['500', '1000', '2000', '3000', '5000', '10000', '15000', '20000', '30000', '50000', '100000', '그 이상'].map(qty => (
+                  <option key={qty} value={qty}>{qty}</option>
+                ))}
+              </select>
+            </div>
+            {quantity === '그 이상' && (
+              <div style={{ marginBottom: '1rem' }}>
+                <label>희망 수량 입력</label>
+                <input type="number" placeholder="숫자만 입력" value={customQuantity} onChange={e => setCustomQuantity(e.target.value)} style={{ width: '100%', padding: '0.5rem' }} />
+              </div>
+            )}
+
             <iframe src="https://mtdl.co.kr/fileupload" width="100%" height="170" style={{ border: '1px solid #ccc', borderRadius: '12px', marginBottom: '1rem' }} title="파일 업로드" />
             <p>기재해주신 연락처로 담당자가 연락할 수 있습니다.</p>
             <button style={{ background: 'black', color: 'white', padding: '0.5rem 1rem', borderRadius: '6px', border: 'none', cursor: 'pointer' }} onClick={handleConfirm}>
