@@ -1,4 +1,4 @@
-// App.js - 완성된 입력 UI 포함
+// App.js - UI 복원 및 자동입력 정상화
 import React, { useState, useEffect } from 'react';
 
 function App() {
@@ -93,11 +93,11 @@ function App() {
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', padding: '2rem' }}>
-      <div style={{ width: '360px' }}>
+      <div style={{ width: '360px', marginLeft: 'auto' }}>
         <h2>B형 단상자</h2>
 
         {[{
-          label: '회사명', value: company, setter: setCompany, placeholder: '회사명을 입력하세요'
+          label: '회사명 또는 성함', value: company, setter: setCompany, placeholder: '회사명을 입력하세요'
         }, {
           label: '연락처', value: phone, setter: setPhone, placeholder: ''
         }, {
