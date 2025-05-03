@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 function App() {
-  const [paperFeel, setPaperFeel] = useState('');
+  const [selectedTexture, setSelectedTexture] = useState('매끄러운');
 
-  const materialOptions = {
+  const textureOptions = {
     매끄러운: ['AB', 'CCP', 'SC마닐라', '아이보리'],
     러프한: ['아코팩', '올드밀', '녹차지', '매직패브릭'],
     친환경: ['얼스팩', '크라프트'],
@@ -12,10 +12,10 @@ function App() {
   return (
     <div style={{ display: 'flex', justifyContent: 'center', padding: '2rem' }}>
       {/* 오른쪽 입력 영역 */}
-      <div style={{ marginLeft: 'auto', marginRight: '3rem', width: '300px' }}>
+      <div style={{ marginLeft: 'auto', width: '480px' }}>
         <h2>B형 단상자</h2>
 
-        {/* 회사명 또는 성함 */}
+        {/* 회사명 */}
         <div style={{ marginBottom: '1rem' }}>
           <label>회사명 또는 성함</label>
           <input
@@ -35,7 +35,7 @@ function App() {
           />
         </div>
 
-        {/* 사이즈 입력 */}
+        {/* 사이즈 */}
         <div style={{ marginBottom: '1rem' }}>
           <label>사이즈 (단위: mm)</label>
           <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
@@ -61,7 +61,7 @@ function App() {
           </div>
         </div>
 
-        {/* 종이 느낌 선택 */}
+        {/* 종이 느낌 */}
         <div style={{ marginBottom: '1rem' }}>
           <label>종이 느낌</label>
           <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
@@ -69,13 +69,14 @@ function App() {
               <button
                 key={index}
                 type="button"
-                onClick={() => setPaperFeel(label)}
+                onClick={() => setSelectedTexture(label)}
                 style={{
                   flex: 1,
                   padding: '0.5rem',
-                  border: paperFeel === label ? '2px solid black' : '1px solid #ccc',
-                  background: paperFeel === label ? '#ddd' : '#f9f9f9',
-                  borderRadius: '0.5rem', // 둥근 버튼 처리
+                  border: '1px solid #ccc',
+                  borderRadius: '8px',
+                  background: selectedTexture === label ? '#333' : '#f9f9f9',
+                  color: selectedTexture === label ? '#fff' : '#000',
                   cursor: 'pointer',
                 }}
               >
@@ -85,24 +86,31 @@ function App() {
           </div>
         </div>
 
-        {/* 종이 재질 선택지 */}
-        {paperFeel && materialOptions[paperFeel]?.length > 0 && (
+        {/* 재질 선택 */}
+        {selectedTexture && (
           <div style={{ marginBottom: '1rem' }}>
             <label>재질 선택</label>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginTop: '0.5rem' }}>
-              {materialOptions[paperFeel].map((material, idx) => (
+            <div
+              style={{
+                display: 'flex',
+                gap: '0.5rem',
+                marginTop: '0.5rem',
+                flexWrap: 'nowrap',
+                justifyContent: 'space-between',
+              }}
+            >
+              {textureOptions[selectedTexture].map((material, index) => (
                 <button
-                  key={idx}
+                  key={index}
                   type="button"
                   style={{
                     padding: '0.5rem',
                     border: '1px solid #ccc',
-                    background: '#f1f1f1',
-                    borderRadius: '0.5rem',
+                    borderRadius: '8px',
+                    background: '#f5f5f5',
                     cursor: 'pointer',
-                    width: 'calc(25% - 0.5rem)', // 한 줄에 4개 들어가게
-                    minWidth: '70px',
-                    textAlign: 'center',
+                    flex: 1,
+                    whiteSpace: 'nowrap',
                   }}
                 >
                   {material}
