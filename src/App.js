@@ -101,7 +101,7 @@ function App() {
                     borderRadius: '0.5rem',
                     cursor: 'pointer',
                     width: 'calc(25% - 0.5rem)', // 한 줄에 4개 들어가게
-                    minWidth: '60px',
+                    minWidth: '70px',
                     textAlign: 'center',
                   }}
                 >
