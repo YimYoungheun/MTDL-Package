@@ -75,6 +75,7 @@ function App() {
                   padding: '0.5rem',
                   border: paperFeel === label ? '2px solid black' : '1px solid #ccc',
                   background: paperFeel === label ? '#ddd' : '#f9f9f9',
+                  borderRadius: '0.5rem', // 둥근 버튼 처리
                   cursor: 'pointer',
                 }}
               >
@@ -84,7 +85,7 @@ function App() {
           </div>
         </div>
 
-        {/* 종이 재질 선택지: 해당 종이 느낌에 따라 동적 표시 */}
+        {/* 종이 재질 선택지 */}
         {paperFeel && materialOptions[paperFeel]?.length > 0 && (
           <div style={{ marginBottom: '1rem' }}>
             <label>재질 선택</label>
@@ -97,8 +98,11 @@ function App() {
                     padding: '0.5rem',
                     border: '1px solid #ccc',
                     background: '#f1f1f1',
+                    borderRadius: '0.5rem',
                     cursor: 'pointer',
-                    flex: '1 0 45%',
+                    width: 'calc(25% - 0.5rem)', // 한 줄에 4개 들어가게
+                    minWidth: '60px',
+                    textAlign: 'center',
                   }}
                 >
                   {material}
