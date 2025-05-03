@@ -7,6 +7,12 @@ function App() {
   const [weight, setWeight] = useState('');
   const [bottomStyle, setBottomStyle] = useState('');
 
+  const [company, setCompany] = useState('');
+  const [product, setProduct] = useState('');
+  const [phone, setPhone] = useState('');
+  const [file, setFile] = useState(null);
+  const [uploadComplete, setUploadComplete] = useState(false);
+
   const materialOptions = {
     매끄러운: ['AB', 'CCP', 'SC마닐라', '아이보리'],
     러프한: ['아코팩', '올드밀', '녹차지', '매직패브릭'],
@@ -71,21 +77,67 @@ function App() {
     return [];
   };
 
+  const handleUpload = async () => {
+    if (!file || !phone) {
+      alert('연락처와 파일을 모두 입력해주세요.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('phone', phone);
+    formData.append('company', company);
+    formData.append('product', product);
+
+    const response = await fetch('https://your-server.com/upload', {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (response.ok) {
+      setUploadComplete(true);
+    } else {
+      alert('업로드 실패. 다시 시도해주세요.');
+    }
+  };
+
   return (
     <div style={{ display: 'flex', justifyContent: 'center', padding: '2rem' }}>
       <div style={{ marginLeft: 'auto', width: '360px' }}>
         <h2>B형 단상자</h2>
 
-        {['회사명 또는 성함', '제품명'].map((label, idx) => (
-          <div style={{ marginBottom: '1rem' }} key={idx}>
-            <label>{label}</label>
-            <input
-              type="text"
-              placeholder={label === '제품명' ? '재발주시 제품명을 사용합니다' : '회사 이름을 입력해주세요'}
-              style={{ width: '90%', padding: '0.5rem', borderRadius: '6px' }}
-            />
-          </div>
-        ))}
+        <div style={{ marginBottom: '1rem' }}>
+          <label>회사명 또는 성함</label>
+          <input
+            type="text"
+            placeholder="회사 이름을 입력해주세요"
+            value={company}
+            onChange={(e) => setCompany(e.target.value)}
+            style={{ width: '90%', padding: '0.5rem', borderRadius: '6px' }}
+          />
+        </div>
+
+        <div style={{ marginBottom: '1rem' }}>
+          <label>연락처</label>
+          <input
+            type="text"
+            placeholder="010-0000-0000"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            style={{ width: '90%', padding: '0.5rem', borderRadius: '6px' }}
+          />
+        </div>
+
+        <div style={{ marginBottom: '1rem' }}>
+          <label>제품명</label>
+          <input
+            type="text"
+            placeholder="재발주시 제품명을 사용합니다"
+            value={product}
+            onChange={(e) => setProduct(e.target.value)}
+            style={{ width: '90%', padding: '0.5rem', borderRadius: '6px' }}
+          />
+        </div>
 
         <div style={{ marginBottom: '1rem' }}>
           <label>사이즈 (단위: mm)</label>
@@ -246,6 +298,54 @@ function App() {
                 </button>
               ))}
             </div>
+          </div>
+        )}
+
+        {bottomStyle && !uploadComplete && (
+          <>
+            <div style={{ marginBottom: '1rem' }}>
+              <label>도면 및 디자인 파일 업로드</label>
+              <input
+                type="file"
+                onChange={(e) => setFile(e.target.files[0])}
+                style={{ marginTop: '0.5rem' }}
+              />
+              <button
+                onClick={handleUpload}
+                style={{
+                  display: 'block',
+                  marginTop: '1rem',
+                  padding: '0.5rem 1rem',
+                  background: 'black',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '6px',
+                  cursor: 'pointer',
+                }}
+              >
+                업로드
+              </button>
+            </div>
+          </>
+        )}
+
+        {uploadComplete && (
+          <div style={{ marginTop: '1rem', textAlign: 'center' }}>
+            <p>기재해주신 연락처로 담당자가 연락할 수 있습니다.</p>
+            <button
+              onClick={() => window.location.reload()}
+              style={{
+                padding: '0.5rem 1rem',
+                background: 'black',
+                color: 'white',
+                border: 'none',
+                borderRadius: '6px',
+                marginTop: '0.5rem',
+                cursor: 'pointer',
+              }}
+            >
+              확인
+            </button>
           </div>
         )}
       </div>
