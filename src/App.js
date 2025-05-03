@@ -1,4 +1,4 @@
-// App.js - UI 복원 및 자동입력 정상화
+// App.js - iframe 자동입력 개선 버전
 import React, { useState, useEffect } from 'react';
 
 function App() {
@@ -7,30 +7,35 @@ function App() {
   const [color, setColor] = useState('');
   const [weight, setWeight] = useState('');
   const [bottomStyle, setBottomStyle] = useState('');
-
   const [company, setCompany] = useState('');
   const [product, setProduct] = useState('');
   const [phone, setPhone] = useState('');
 
   useEffect(() => {
     const iframe = document.getElementById('confirm-frame');
-    if (iframe && iframe.contentWindow) {
-      const doc = iframe.contentWindow.document;
-      if (doc) {
-        const trySet = (name, value) => {
-          const el = doc.querySelector(`input[name="${name}"]`);
-          if (el) el.value = value;
-        };
-        trySet('company', company);
-        trySet('phone', phone);
-        trySet('product', product);
-        trySet('paperFeel', paperFeel);
-        trySet('material', material);
-        trySet('color', color);
-        trySet('weight', weight);
-        trySet('bottomStyle', bottomStyle);
-      }
-    }
+    if (!iframe) return;
+
+    const handleLoad = () => {
+      const doc = iframe.contentWindow?.document;
+      if (!doc) return;
+
+      const trySet = (name, value) => {
+        const el = doc.querySelector(`input[name="${name}"]`);
+        if (el) el.value = value;
+      };
+
+      trySet('company', company);
+      trySet('phone', phone);
+      trySet('product', product);
+      trySet('paperFeel', paperFeel);
+      trySet('material', material);
+      trySet('color', color);
+      trySet('weight', weight);
+      trySet('bottomStyle', bottomStyle);
+    };
+
+    iframe.addEventListener('load', handleLoad);
+    return () => iframe.removeEventListener('load', handleLoad);
   }, [company, phone, product, paperFeel, material, color, weight, bottomStyle]);
 
   const materialOptions = {
