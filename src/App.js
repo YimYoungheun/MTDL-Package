@@ -80,7 +80,7 @@ function App() {
       bottomStyle,
     };
 
-    fetch('https://script.google.com/macros/s/AKfycbxGf_osSipZ96twdWLFuVJLuK3f8Hz2t8zL0NiH3gAUxe5Q0msFrvMipx4h9tdp1wtSqw/exec', {
+    fetch('https://script.google.com/macros/s/AKfycbzBaHp2-ReC-DJlZJgQhpoilnxgyeOlnvOt7aO3VgzdBnaF8znsv_mOrlaNg6Y6sOU5xg/exec', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
