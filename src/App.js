@@ -316,9 +316,9 @@ function App() {
                   display: 'block',
                   marginTop: '1rem',
                   padding: '0.5rem 1rem',
-                  background: 'black',
-                  color: 'white',
-                  border: 'none',
+                  background: 'white',
+                  color: 'black',
+                  border: '1px solid black',
                   borderRadius: '6px',
                   cursor: 'pointer',
                 }}
