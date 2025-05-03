@@ -1,4 +1,4 @@
-// App.js (최종버전)
+// App.js (수정 버전: 연락처만 공란, 버튼 단계별 노출 복원)
 import React, { useState } from 'react';
 
 function App() {
@@ -72,11 +72,6 @@ function App() {
     return [];
   };
 
-  const handleBottomStyleSelect = (opt) => {
-    setBottomStyle(opt);
-    setShowUpload(true);
-  };
-
   return (
     <div style={{ display: 'flex', justifyContent: 'center', padding: '2rem' }}>
       <div style={{ marginLeft: 'auto', width: '360px' }}>
@@ -86,7 +81,6 @@ function App() {
           <label>회사명 또는 성함</label>
           <input
             type="text"
-            placeholder=""
             value={company}
             onChange={(e) => setCompany(e.target.value)}
             style={{ width: '90%', padding: '0.5rem', borderRadius: '6px' }}
@@ -108,14 +102,132 @@ function App() {
           <label>제품명</label>
           <input
             type="text"
-            placeholder=""
             value={product}
             onChange={(e) => setProduct(e.target.value)}
             style={{ width: '90%', padding: '0.5rem', borderRadius: '6px' }}
           />
         </div>
 
-        {/* 나머지 선택 UI 생략... (기존과 동일하게 유지) */}
+        <div style={{ marginBottom: '1rem' }}>
+          <label>종이 느낌</label>
+          <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
+            {['매끄러운', '러프한', '친환경'].map((type) => (
+              <button
+                key={type}
+                onClick={() => {
+                  setPaperFeel(type);
+                  setMaterial('');
+                  setColor('');
+                  setWeight('');
+                  setBottomStyle('');
+                  setShowUpload(false);
+                  setConfirmed(false);
+                }}
+                style={{
+                  flex: 1,
+                  padding: '0.5rem',
+                  border: '1px solid #ccc',
+                  background: paperFeel === type ? 'black' : '#f9f9f9',
+                  color: paperFeel === type ? 'white' : 'black',
+                  cursor: 'pointer',
+                  borderRadius: '6px',
+                }}
+              >
+                {type}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {paperFeel && materialOptions[paperFeel] && (
+          <div style={{ marginBottom: '1rem' }}>
+            <label>재질 선택</label>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginTop: '0.5rem' }}>
+              {materialOptions[paperFeel].map((mat) => (
+                <button
+                  key={mat}
+                  onClick={() => {
+                    setMaterial(mat);
+                    setColor('');
+                    setWeight('');
+                    setBottomStyle('');
+                    setShowUpload(false);
+                    setConfirmed(false);
+                  }}
+                  style={{
+                    padding: '0.5rem',
+                    border: '1px solid #ccc',
+                    background: material === mat ? 'black' : '#f9f9f9',
+                    color: material === mat ? 'white' : 'black',
+                    cursor: 'pointer',
+                    borderRadius: '6px',
+                  }}
+                >
+                  {mat}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {paperFeel === '러프한' && material && colorOptions[material] && (
+          <div style={{ marginBottom: '1rem' }}>
+            <label>색상 선택</label>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginTop: '0.5rem' }}>
+              {colorOptions[material].map((c) => (
+                <button
+                  key={c}
+                  onClick={() => {
+                    setColor(c);
+                    setWeight('');
+                    setBottomStyle('');
+                    setShowUpload(false);
+                    setConfirmed(false);
+                  }}
+                  style={{
+                    padding: '0.5rem',
+                    border: '1px solid #ccc',
+                    background: color === c ? 'black' : '#f9f9f9',
+                    color: color === c ? 'white' : 'black',
+                    cursor: 'pointer',
+                    borderRadius: '6px',
+                  }}
+                >
+                  {c}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {showWeightOptions().length > 0 && (
+          <div style={{ marginBottom: '1rem' }}>
+            <label>용지 무게 선택</label>
+            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '0.5rem' }}>
+              {showWeightOptions().map((w) => (
+                <button
+                  key={w}
+                  onClick={() => {
+                    setWeight(w);
+                    setBottomStyle('');
+                    setShowUpload(false);
+                    setConfirmed(false);
+                  }}
+                  style={{
+                    padding: '0.5rem',
+                    border: '1px solid #ccc',
+                    background: weight === w ? 'black' : '#f9f9f9',
+                    color: weight === w ? 'white' : 'black',
+                    cursor: 'pointer',
+                    borderRadius: '6px',
+                  }}
+                >
+                  {w}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
         {weight && (
           <div style={{ marginBottom: '1rem' }}>
@@ -124,7 +236,10 @@ function App() {
               {bottomOptions.map((opt) => (
                 <button
                   key={opt}
-                  onClick={() => handleBottomStyleSelect(opt)}
+                  onClick={() => {
+                    setBottomStyle(opt);
+                    setShowUpload(true);
+                  }}
                   style={{
                     flex: 1,
                     padding: '0.5rem',
