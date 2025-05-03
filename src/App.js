@@ -21,7 +21,12 @@ function App() {
   };
 
   const weightOptions = {
-    매끄러운: ['300g', '350g'],
+    매끄러운: {
+      AB: ['300g', '350g'],
+      CCP: ['300g', '350g'],
+      SC마닐라: ['300g', '350g'],
+      아이보리: ['300g', '350g'],
+    },
     친환경: {
       얼스팩: ['295g'],
       크라프트: ['300g', '337g'],
@@ -54,8 +59,12 @@ function App() {
   const bottomOptions = ['맞뚜껑', '십자다루마', '삼면접착'];
 
   const showWeightOptions = () => {
-    if (paperFeel === '매끄러운') return weightOptions.매끄러운;
-    if (paperFeel === '친환경' && material) return weightOptions.친환경[material] || [];
+    if (paperFeel === '매끄러운' && material) {
+      return weightOptions.매끄러운[material] || [];
+    }
+    if (paperFeel === '친환경' && material) {
+      return weightOptions.친환경[material] || [];
+    }
     if (paperFeel === '러프한' && material && color) {
       return weightOptions.러프한[material]?.[color] || [];
     }
