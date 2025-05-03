@@ -187,7 +187,7 @@ function App() {
             <iframe
               src="https://mtdl.co.kr/fileupload"
               width="100%"
-              height="300"
+              height="150"
               style={{ border: '1px solid #ccc', borderRadius: '12px', marginBottom: '1rem' }}
               title="파일 업로드"
             />
@@ -206,7 +206,7 @@ function App() {
           width="0"
           height="0"
           style={{ display: 'none' }}
-          title="주문 확인 폼"
+          title="주문 접수 확인용"
         />
       </div>
     </div>
