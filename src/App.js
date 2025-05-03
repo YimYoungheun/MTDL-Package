@@ -190,7 +190,7 @@ function App() {
             <iframe
               src="https://mtdl.co.kr/fileupload"
               width="100%"
-              height="300"
+              height="170"
               style={{ border: '1px solid #ccc', borderRadius: '12px', marginBottom: '1rem' }}
               title="파일 업로드"
             />
