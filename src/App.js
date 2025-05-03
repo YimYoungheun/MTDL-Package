@@ -1,8 +1,7 @@
-import { useState } from 'react';
-
 function App() {
-  const [paperType, setPaperType] = useState('');
-  const paperOptions = {
+  const [paperFeel, setPaperFeel] = React.useState('매끄러운');
+
+  const materialOptions = {
     매끄러운: ['AB', 'CCP', 'SC마닐라', '아이보리'],
     러프한: ['아코팩', '올드밀', '녹차지', '매직패브릭'],
     친환경: ['얼스팩', '크라프트'],
@@ -10,31 +9,38 @@ function App() {
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', padding: '2rem' }}>
-      <div style={{ marginLeft: 'auto', width: '500px' }}>
+      {/* 오른쪽 입력 영역 */}
+      <div style={{ marginLeft: 'auto', width: '400px' }}>
         <h2>B형 단상자</h2>
 
         {/* 회사명 */}
         <div style={{ marginBottom: '1rem' }}>
           <label>회사명 또는 성함</label>
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <input
-              type="text"
-              placeholder="회사 이름을 입력해주세요"
-              style={{ width: '80%', padding: '0.5rem' }}
-            />
-          </div>
+          <input
+            type="text"
+            placeholder="회사 이름을 입력해주세요"
+            style={{
+              width: '100%',
+              padding: '0.5rem',
+              borderRadius: '6px',
+              border: '1px solid #ccc',
+            }}
+          />
         </div>
 
         {/* 제품명 */}
         <div style={{ marginBottom: '1rem' }}>
           <label>제품명</label>
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <input
-              type="text"
-              placeholder="재발주시 제품명을 사용합니다"
-              style={{ width: '80%', padding: '0.5rem' }}
-            />
-          </div>
+          <input
+            type="text"
+            placeholder="재발주시 제품명을 사용합니다"
+            style={{
+              width: '100%',
+              padding: '0.5rem',
+              borderRadius: '6px',
+              border: '1px solid #ccc',
+            }}
+          />
         </div>
 
         {/* 사이즈 입력 */}
@@ -50,6 +56,8 @@ function App() {
                   flex: 1,
                   padding: '0.5rem',
                   width: '70px',
+                  borderRadius: '6px',
+                  border: '1px solid #ccc',
                   MozAppearance: 'textfield',
                 }}
                 onWheel={(e) => e.target.blur()}
@@ -71,16 +79,16 @@ function App() {
               <button
                 key={index}
                 type="button"
-                onClick={() => setPaperType(label)}
                 style={{
                   flex: 1,
                   padding: '0.5rem',
                   border: '1px solid #ccc',
-                  background: paperType === label ? '#000' : '#f9f9f9',
-                  color: paperType === label ? '#fff' : '#000',
+                  borderRadius: '6px',
+                  background: paperFeel === label ? '#000' : '#f9f9f9',
+                  color: paperFeel === label ? '#fff' : '#000',
                   cursor: 'pointer',
-                  borderRadius: '0.5rem',
                 }}
+                onClick={() => setPaperFeel(label)}
               >
                 {label}
               </button>
@@ -88,31 +96,28 @@ function App() {
           </div>
         </div>
 
-        {/* 종이 종류 선택 */}
-        {paperType && (
-          <div>
-            <label>재질 선택</label>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginTop: '0.5rem' }}>
-              {paperOptions[paperType].map((option, index) => (
-                <button
-                  key={index}
-                  type="button"
-                  style={{
-                    padding: '0.5rem 1rem',
-                    border: '1px solid #ccc',
-                    background: '#f2f2f2',
-                    cursor: 'pointer',
-                    borderRadius: '0.5rem',
-                    minWidth: '80px',
-                    textAlign: 'center',
-                  }}
-                >
-                  {option}
-                </button>
-              ))}
-            </div>
+        {/* 재질 선택 */}
+        <div style={{ marginBottom: '1rem' }}>
+          <label>재질 선택</label>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginTop: '0.5rem' }}>
+            {materialOptions[paperFeel].map((option, index) => (
+              <button
+                key={index}
+                type="button"
+                style={{
+                  flex: '1 1 22%',
+                  padding: '0.5rem',
+                  border: '1px solid #ccc',
+                  borderRadius: '6px',
+                  background: '#f9f9f9',
+                  cursor: 'pointer',
+                }}
+              >
+                {option}
+              </button>
+            ))}
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
