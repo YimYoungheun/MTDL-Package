@@ -1,4 +1,3 @@
-// App.js - 자동 제출까지 포함된 최종 수정버전
 import React, { useState } from 'react';
 
 function App() {
@@ -70,28 +69,24 @@ function App() {
   };
 
   const handleConfirm = () => {
-    const iframe = document.getElementById('confirm-frame');
-    const doc = iframe?.contentWindow?.document;
-    if (!doc) return;
-
-    const trySet = (name, value) => {
-      const el = doc.querySelector(`input[name="${name}"]`);
-      if (el) el.value = value;
+    const payload = {
+      company,
+      phone,
+      product,
+      paperFeel,
+      material,
+      color,
+      weight,
+      bottomStyle,
     };
 
-    trySet('company', company);
-    trySet('phone', phone);
-    trySet('product', product);
-    trySet('paperFeel', paperFeel);
-    trySet('material', material);
-    trySet('color', color);
-    trySet('weight', weight);
-    trySet('bottomStyle', bottomStyle);
-
-    const submitBtn = doc.querySelector('button[type="submit"], input[type="submit"]');
-    if (submitBtn) submitBtn.click();
-
-    alert('확인되었습니다.');
+    fetch('https://script.google.com/macros/s/AKfycbylC8JciAQSYFFs2vciGYtpmxYXSdcULAP5AAwNgmurqXOzxnE11Vdzw5zRJ5oFgIK1Cw/exec', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    })
+      .then(() => alert('확인되었습니다.'))
+      .catch(() => alert('제출 중 오류가 발생했습니다.'));
   };
 
   return (
@@ -112,14 +107,14 @@ function App() {
         <div style={{ marginBottom: '1rem' }}>
           <label>종이 느낌</label>
           <div style={{ display: 'flex', gap: '0.5rem' }}>
-            {['매끄러운', '러프한', '친환경'].map((type) => (
+            {['매끄러운', '러프한', '친환경'].map(type => (
               <button
                 key={type}
-                onClick={() => {
-                  setPaperFeel(type); setMaterial(''); setColor(''); setWeight(''); setBottomStyle('');
-                }}
+                onClick={() => { setPaperFeel(type); setMaterial(''); setColor(''); setWeight(''); setBottomStyle(''); }}
                 style={{ flex: 1, padding: '0.5rem', background: paperFeel === type ? 'black' : '#f0f0f0', color: paperFeel === type ? 'white' : 'black', border: '1px solid #ccc' }}
-              >{type}</button>
+              >
+                {type}
+              </button>
             ))}
           </div>
         </div>
@@ -128,12 +123,14 @@ function App() {
           <div style={{ marginBottom: '1rem' }}>
             <label>재질 선택</label>
             <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-              {materialOptions[paperFeel].map((mat) => (
+              {materialOptions[paperFeel].map(mat => (
                 <button
                   key={mat}
                   onClick={() => { setMaterial(mat); setColor(''); setWeight(''); setBottomStyle(''); }}
                   style={{ padding: '0.5rem', background: material === mat ? 'black' : '#f0f0f0', color: material === mat ? 'white' : 'black', border: '1px solid #ccc' }}
-                >{mat}</button>
+                >
+                  {mat}
+                </button>
               ))}
             </div>
           </div>
@@ -143,12 +140,14 @@ function App() {
           <div style={{ marginBottom: '1rem' }}>
             <label>색상 선택</label>
             <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-              {colorOptions[material].map((c) => (
+              {colorOptions[material].map(c => (
                 <button
                   key={c}
                   onClick={() => { setColor(c); setWeight(''); setBottomStyle(''); }}
                   style={{ padding: '0.5rem', background: color === c ? 'black' : '#f0f0f0', color: color === c ? 'white' : 'black', border: '1px solid #ccc' }}
-                >{c}</button>
+                >
+                  {c}
+                </button>
               ))}
             </div>
           </div>
@@ -158,12 +157,14 @@ function App() {
           <div style={{ marginBottom: '1rem' }}>
             <label>용지 무게 선택</label>
             <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-              {showWeightOptions().map((w) => (
+              {showWeightOptions().map(w => (
                 <button
                   key={w}
                   onClick={() => { setWeight(w); setBottomStyle(''); }}
                   style={{ padding: '0.5rem', background: weight === w ? 'black' : '#f0f0f0', color: weight === w ? 'white' : 'black', border: '1px solid #ccc' }}
-                >{w}</button>
+                >
+                  {w}
+                </button>
               ))}
             </div>
           </div>
@@ -174,12 +175,14 @@ function App() {
             <div style={{ marginBottom: '1rem' }}>
               <label>하단 모양 선택</label>
               <div style={{ display: 'flex', gap: '0.5rem' }}>
-                {bottomOptions.map((opt) => (
+                {bottomOptions.map(opt => (
                   <button
                     key={opt}
                     onClick={() => setBottomStyle(opt)}
                     style={{ flex: 1, padding: '0.5rem', background: bottomStyle === opt ? 'black' : '#f0f0f0', color: bottomStyle === opt ? 'white' : 'black', border: '1px solid #ccc', borderRadius: '6px' }}
-                  >{opt}</button>
+                  >
+                    {opt}
+                  </button>
                 ))}
               </div>
             </div>
@@ -187,7 +190,7 @@ function App() {
             <iframe
               src="https://mtdl.co.kr/fileupload"
               width="100%"
-              height="150"
+              height="300"
               style={{ border: '1px solid #ccc', borderRadius: '12px', marginBottom: '1rem' }}
               title="파일 업로드"
             />
@@ -196,18 +199,11 @@ function App() {
             <button
               style={{ background: 'black', color: 'white', padding: '0.5rem 1rem', borderRadius: '6px', border: 'none', cursor: 'pointer' }}
               onClick={handleConfirm}
-            >확인</button>
+            >
+              확인
+            </button>
           </>
         )}
-
-        <iframe
-          id="confirm-frame"
-          src="https://mtdl.co.kr/confirm"
-          width="0"
-          height="0"
-          style={{ display: 'none' }}
-          title="주문 접수 확인용"
-        />
       </div>
     </div>
   );
