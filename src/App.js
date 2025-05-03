@@ -1,7 +1,9 @@
-function App() {
-  const [paperFeel, setPaperFeel] = React.useState('매끄러운');
+import React, { useState } from 'react';
 
-  const materialOptions = {
+function App() {
+  const [paperType, setPaperType] = useState('매끄러운');
+
+  const paperOptions = {
     매끄러운: ['AB', 'CCP', 'SC마닐라', '아이보리'],
     러프한: ['아코팩', '올드밀', '녹차지', '매직패브릭'],
     친환경: ['얼스팩', '크라프트'],
@@ -23,7 +25,6 @@ function App() {
               width: '100%',
               padding: '0.5rem',
               borderRadius: '6px',
-              border: '1px solid #ccc',
             }}
           />
         </div>
@@ -38,7 +39,6 @@ function App() {
               width: '100%',
               padding: '0.5rem',
               borderRadius: '6px',
-              border: '1px solid #ccc',
             }}
           />
         </div>
@@ -57,7 +57,6 @@ function App() {
                   padding: '0.5rem',
                   width: '70px',
                   borderRadius: '6px',
-                  border: '1px solid #ccc',
                   MozAppearance: 'textfield',
                 }}
                 onWheel={(e) => e.target.blur()}
@@ -71,26 +70,25 @@ function App() {
           </div>
         </div>
 
-        {/* 종이 느낌 선택 */}
+        {/* 종이 느낌 */}
         <div style={{ marginBottom: '1rem' }}>
           <label>종이 느낌</label>
           <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
-            {['매끄러운', '러프한', '친환경'].map((label, index) => (
+            {['매끄러운', '러프한', '친환경'].map((type) => (
               <button
-                key={index}
-                type="button"
+                key={type}
+                onClick={() => setPaperType(type)}
                 style={{
                   flex: 1,
                   padding: '0.5rem',
                   border: '1px solid #ccc',
-                  borderRadius: '6px',
-                  background: paperFeel === label ? '#000' : '#f9f9f9',
-                  color: paperFeel === label ? '#fff' : '#000',
+                  background: paperType === type ? 'black' : '#f9f9f9',
+                  color: paperType === type ? 'white' : 'black',
                   cursor: 'pointer',
+                  borderRadius: '6px',
                 }}
-                onClick={() => setPaperFeel(label)}
               >
-                {label}
+                {type}
               </button>
             ))}
           </div>
@@ -100,20 +98,19 @@ function App() {
         <div style={{ marginBottom: '1rem' }}>
           <label>재질 선택</label>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginTop: '0.5rem' }}>
-            {materialOptions[paperFeel].map((option, index) => (
+            {paperOptions[paperType].map((material) => (
               <button
-                key={index}
+                key={material}
                 type="button"
                 style={{
-                  flex: '1 1 22%',
-                  padding: '0.5rem',
+                  padding: '0.5rem 1rem',
                   border: '1px solid #ccc',
-                  borderRadius: '6px',
                   background: '#f9f9f9',
                   cursor: 'pointer',
+                  borderRadius: '6px',
                 }}
               >
-                {option}
+                {material}
               </button>
             ))}
           </div>
@@ -124,4 +121,3 @@ function App() {
 }
 
 export default App;
-import React from 'react';
