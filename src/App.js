@@ -4,14 +4,13 @@ function App() {
   const [paperType, setPaperType] = useState('매끄러운');
 
   const paperOptions = {
-    매끄러운: ['AB', 'CCP', 'SC마닐라', '아이보리'],
-    러프한: ['아코팩', '올드밀', '녹차지', '매직패브릭'],
-    친환경: ['얼스팩', '크라프트'],
+    '매끄러운': ['AB', 'CCP', 'SC마닐라', '아이보리'],
+    '러프한': ['아코팩', '올드밀', '녹차지', '매직패브릭'],
+    '친환경': ['얼스팩', '크라프트']
   };
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', padding: '2rem' }}>
-      {/* 오른쪽 입력 영역 */}
       <div style={{ marginLeft: 'auto', width: '400px' }}>
         <h2>B형 단상자</h2>
 
@@ -21,11 +20,7 @@ function App() {
           <input
             type="text"
             placeholder="회사 이름을 입력해주세요"
-            style={{
-              width: '90%',
-              padding: '0.5rem',
-              borderRadius: '6px',
-            }}
+            style={{ width: '100%', padding: '0.5rem', borderRadius: '6px' }}
           />
         </div>
 
@@ -35,11 +30,7 @@ function App() {
           <input
             type="text"
             placeholder="재발주시 제품명을 사용합니다"
-            style={{
-              width: '9  0%',
-              padding: '0.5rem',
-              borderRadius: '6px',
-            }}
+            style={{ width: '100%', padding: '0.5rem', borderRadius: '6px' }}
           />
         </div>
 
@@ -56,8 +47,8 @@ function App() {
                   flex: 1,
                   padding: '0.5rem',
                   width: '70px',
-                  borderRadius: '6px',
                   MozAppearance: 'textfield',
+                  borderRadius: '6px'
                 }}
                 onWheel={(e) => e.target.blur()}
                 onKeyDown={(e) => {
@@ -80,12 +71,12 @@ function App() {
                 onClick={() => setPaperType(type)}
                 style={{
                   flex: 1,
-                  padding: '0.4rem 1rem'',
+                  padding: '0.4rem 1rem',
                   border: '1px solid #ccc',
                   background: paperType === type ? 'black' : '#f9f9f9',
                   color: paperType === type ? 'white' : 'black',
                   cursor: 'pointer',
-                  borderRadius: '6px',
+                  borderRadius: '6px'
                 }}
               >
                 {type}
@@ -98,16 +89,15 @@ function App() {
         <div style={{ marginBottom: '1rem' }}>
           <label>재질 선택</label>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginTop: '0.5rem' }}>
-            {paperOptions[paperType].map((material) => (
+            {paperOptions[paperType].map((material, index) => (
               <button
-                key={material}
-                type="button"
+                key={index}
                 style={{
-                  padding: '0.5rem 1rem',
+                  padding: '0.4rem 1rem',
                   border: '1px solid #ccc',
                   background: '#f9f9f9',
-                  cursor: 'pointer',
                   borderRadius: '6px',
+                  cursor: 'pointer'
                 }}
               >
                 {material}
@@ -115,6 +105,7 @@ function App() {
             ))}
           </div>
         </div>
+
       </div>
     </div>
   );
