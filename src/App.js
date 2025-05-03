@@ -258,7 +258,7 @@ function App() {
               <label>수량 선택</label>
               <select value={quantity} onChange={e => setQuantity(e.target.value)} style={{ width: '100%', padding: '0.5rem' }}>
                 <option value="">수량을 선택하세요</option>
-                {['500', '1000', '2000', '3000', '5000', '10000', '15000', '20000', '30000', '50000', '100000', '그 이상'].map(qty => (
+                {['500', '1,000', '2,000', '3,000', '5,000', '10,000', '15,000', '20,000', '30,000', '50,000', '100,000', '그 이상'].map(qty => (
                   <option key={qty} value={qty}>{qty}</option>
                 ))}
               </select>
