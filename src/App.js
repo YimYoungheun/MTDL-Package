@@ -1,4 +1,4 @@
-// App.js - 자동 제출까지 포함된 최종 버전
+// App.js - 자동 제출까지 포함된 최종 수정버전
 import React, { useState } from 'react';
 
 function App() {
@@ -88,7 +88,6 @@ function App() {
     trySet('weight', weight);
     trySet('bottomStyle', bottomStyle);
 
-    // 자동 제출 트리거 추가
     const submitBtn = doc.querySelector('button[type="submit"], input[type="submit"]');
     if (submitBtn) submitBtn.click();
 
@@ -98,7 +97,77 @@ function App() {
   return (
     <div style={{ display: 'flex', justifyContent: 'center', padding: '2rem' }}>
       <div style={{ width: '360px', marginLeft: 'auto' }}>
-        {/* (이전 UI 구성은 그대로 유지됨) */}
+        <div style={{ marginBottom: '1rem' }}>
+          <label>회사명 또는 성함</label>
+          <input value={company} onChange={e => setCompany(e.target.value)} style={{ width: '100%', padding: '0.5rem' }} />
+        </div>
+        <div style={{ marginBottom: '1rem' }}>
+          <label>연락처</label>
+          <input value={phone} onChange={e => setPhone(e.target.value)} style={{ width: '100%', padding: '0.5rem' }} />
+        </div>
+        <div style={{ marginBottom: '1rem' }}>
+          <label>제품명</label>
+          <input placeholder="재발주시 제품명을 사용합니다" value={product} onChange={e => setProduct(e.target.value)} style={{ width: '100%', padding: '0.5rem' }} />
+        </div>
+        <div style={{ marginBottom: '1rem' }}>
+          <label>종이 느낌</label>
+          <div style={{ display: 'flex', gap: '0.5rem' }}>
+            {['매끄러운', '러프한', '친환경'].map((type) => (
+              <button
+                key={type}
+                onClick={() => {
+                  setPaperFeel(type); setMaterial(''); setColor(''); setWeight(''); setBottomStyle('');
+                }}
+                style={{ flex: 1, padding: '0.5rem', background: paperFeel === type ? 'black' : '#f0f0f0', color: paperFeel === type ? 'white' : 'black', border: '1px solid #ccc' }}
+              >{type}</button>
+            ))}
+          </div>
+        </div>
+
+        {paperFeel && (
+          <div style={{ marginBottom: '1rem' }}>
+            <label>재질 선택</label>
+            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+              {materialOptions[paperFeel].map((mat) => (
+                <button
+                  key={mat}
+                  onClick={() => { setMaterial(mat); setColor(''); setWeight(''); setBottomStyle(''); }}
+                  style={{ padding: '0.5rem', background: material === mat ? 'black' : '#f0f0f0', color: material === mat ? 'white' : 'black', border: '1px solid #ccc' }}
+                >{mat}</button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {paperFeel === '러프한' && material && colorOptions[material] && (
+          <div style={{ marginBottom: '1rem' }}>
+            <label>색상 선택</label>
+            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+              {colorOptions[material].map((c) => (
+                <button
+                  key={c}
+                  onClick={() => { setColor(c); setWeight(''); setBottomStyle(''); }}
+                  style={{ padding: '0.5rem', background: color === c ? 'black' : '#f0f0f0', color: color === c ? 'white' : 'black', border: '1px solid #ccc' }}
+                >{c}</button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {showWeightOptions().length > 0 && (
+          <div style={{ marginBottom: '1rem' }}>
+            <label>용지 무게 선택</label>
+            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+              {showWeightOptions().map((w) => (
+                <button
+                  key={w}
+                  onClick={() => { setWeight(w); setBottomStyle(''); }}
+                  style={{ padding: '0.5rem', background: weight === w ? 'black' : '#f0f0f0', color: weight === w ? 'white' : 'black', border: '1px solid #ccc' }}
+                >{w}</button>
+              ))}
+            </div>
+          </div>
+        )}
 
         {weight && (
           <>
