@@ -80,7 +80,7 @@ function App() {
       bottomStyle,
     };
 
-    fetch('https://script.google.com/macros/s/AKfycbylC8JciAQSYFFs2vciGYtpmxYXSdcULAP5AAwNgmurqXOzxnE11Vdzw5zRJ5oFgIK1Cw/exec', {
+    fetch('https://script.google.com/macros/s/AKfycby4okhC8ezuIVjv2pV62LwSKzk5IPQXhIIuR3mxA-P4SgO3lYKT6Hda3W7ByhIygM3v/exec', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -119,7 +119,7 @@ function App() {
           </div>
         </div>
 
-        {paperFeel && (
+        {paperFeel && materialOptions[paperFeel] && (
           <div style={{ marginBottom: '1rem' }}>
             <label>재질 선택</label>
             <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
