@@ -1,4 +1,4 @@
-// App.js (업데이트: 입력폼 숨김 처리, 값 자동입력 유지)
+// App.js (업데이트: 변수명 오류 수정 및 자동입력 필드명 영문 대응)
 import React, { useState, useEffect } from 'react';
 
 function App() {
@@ -21,14 +21,14 @@ function App() {
           const el = doc.querySelector(`input[name="${name}"]`);
           if (el) el.value = value;
         };
-        trySet('회사명', 회사명);
-        trySet('연락처', 연락처);
-        trySet('제품명', 제품명);
-        trySet('종이 느낌', 종이느낌);
-        trySet('재질', 재질);
-        trySet('색상', 색상);
-        trySet('용지 무게', 용지무게);
-        trySet('하단 모양', 하단모양);
+        trySet('company', company);
+        trySet('phone', phone);
+        trySet('product', product);
+        trySet('paperFeel', paperFeel);
+        trySet('material', material);
+        trySet('color', color);
+        trySet('weight', weight);
+        trySet('bottomStyle', bottomStyle);
       }
     }
   }, [company, phone, product, paperFeel, material, color, weight, bottomStyle]);
