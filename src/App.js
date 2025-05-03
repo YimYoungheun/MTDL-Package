@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 function App() {
+  const [boxType, setBoxType] = useState('');
   const [paperFeel, setPaperFeel] = useState('');
   const [material, setMaterial] = useState('');
   const [color, setColor] = useState('');
@@ -9,6 +10,7 @@ function App() {
   const [company, setCompany] = useState('');
   const [product, setProduct] = useState('');
   const [phone, setPhone] = useState('');
+  const [submitted, setSubmitted] = useState(false);
 
   const materialOptions = {
     매끄러운: ['AB', 'CCP', 'SC마닐라', '아이보리'],
@@ -60,6 +62,7 @@ function App() {
   };
 
   const bottomOptions = ['맞뚜껑', '십자다루마', '삼면접착'];
+  const boxTypeOptions = ['명함', 'B형', '고리걸이 B형', '상, 하짝 Y형', '슬리브+Y형', '손잡이형', '쇼핑백'];
 
   const showWeightOptions = () => {
     if (paperFeel === '매끄러운' && material) return weightOptions.매끄러운[material] || [];
@@ -69,25 +72,18 @@ function App() {
   };
 
   const handleConfirm = () => {
-    const payload = {
-      company,
-      phone,
-      product,
-      paperFeel,
-      material,
-      color,
-      weight,
-      bottomStyle,
-    };
+    const payload = { company, phone, product, boxType, paperFeel, material, color, weight, bottomStyle };
 
-    fetch('https://script.google.com/macros/s/AKfycbws7_27JSfGoyun4690ietmLtWC-TBsBY45y8-MDPMSwfy-fJSfeQq47xcCgSjtdXWD/exec', {
+    fetch('https://script.google.com/macros/s/AKfycby4okhC8ezuIVjv2pV62LwSKzk5IPQXhIIuR3mxA-P4SgO3lYKT6Hda3W7ByhIygM3v/exec', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     })
-      .then(() => alert('확인되었습니다.'))
+      .then(() => setSubmitted(true))
       .catch(() => alert('제출 중 오류가 발생했습니다.'));
   };
+
+  if (submitted) return null;
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', padding: '2rem' }}>
@@ -105,103 +101,64 @@ function App() {
           <input placeholder="재발주시 제품명을 사용합니다" value={product} onChange={e => setProduct(e.target.value)} style={{ width: '100%', padding: '0.5rem' }} />
         </div>
         <div style={{ marginBottom: '1rem' }}>
-          <label>종이 느낌</label>
-          <div style={{ display: 'flex', gap: '0.5rem' }}>
-            {['매끄러운', '러프한', '친환경'].map(type => (
-              <button
-                key={type}
-                onClick={() => { setPaperFeel(type); setMaterial(''); setColor(''); setWeight(''); setBottomStyle(''); }}
-                style={{ flex: 1, padding: '0.5rem', background: paperFeel === type ? 'black' : '#f0f0f0', color: paperFeel === type ? 'white' : 'black', border: '1px solid #ccc' }}
-              >
-                {type}
-              </button>
+          <label>상자 형태</label>
+          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+            {boxTypeOptions.map(type => (
+              <button key={type} onClick={() => setBoxType(type)} style={{ padding: '0.5rem', background: boxType === type ? 'black' : '#f0f0f0', color: boxType === type ? 'white' : 'black', border: '1px solid #ccc' }}>{type}</button>
             ))}
           </div>
         </div>
-
+        <div style={{ marginBottom: '1rem' }}>
+          <label>종이 느낌</label>
+          <div style={{ display: 'flex', gap: '0.5rem' }}>
+            {['매끄러운', '러프한', '친환경'].map(type => (
+              <button key={type} onClick={() => { setPaperFeel(type); setMaterial(''); setColor(''); setWeight(''); setBottomStyle(''); }} style={{ flex: 1, padding: '0.5rem', background: paperFeel === type ? 'black' : '#f0f0f0', color: paperFeel === type ? 'white' : 'black', border: '1px solid #ccc' }}>{type}</button>
+            ))}
+          </div>
+        </div>
         {paperFeel && materialOptions[paperFeel] && (
           <div style={{ marginBottom: '1rem' }}>
             <label>재질 선택</label>
             <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
               {materialOptions[paperFeel].map(mat => (
-                <button
-                  key={mat}
-                  onClick={() => { setMaterial(mat); setColor(''); setWeight(''); setBottomStyle(''); }}
-                  style={{ padding: '0.5rem', background: material === mat ? 'black' : '#f0f0f0', color: material === mat ? 'white' : 'black', border: '1px solid #ccc' }}
-                >
-                  {mat}
-                </button>
+                <button key={mat} onClick={() => { setMaterial(mat); setColor(''); setWeight(''); setBottomStyle(''); }} style={{ padding: '0.5rem', background: material === mat ? 'black' : '#f0f0f0', color: material === mat ? 'white' : 'black', border: '1px solid #ccc' }}>{mat}</button>
               ))}
             </div>
           </div>
         )}
-
         {paperFeel === '러프한' && material && colorOptions[material] && (
           <div style={{ marginBottom: '1rem' }}>
             <label>색상 선택</label>
             <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
               {colorOptions[material].map(c => (
-                <button
-                  key={c}
-                  onClick={() => { setColor(c); setWeight(''); setBottomStyle(''); }}
-                  style={{ padding: '0.5rem', background: color === c ? 'black' : '#f0f0f0', color: color === c ? 'white' : 'black', border: '1px solid #ccc' }}
-                >
-                  {c}
-                </button>
+                <button key={c} onClick={() => { setColor(c); setWeight(''); setBottomStyle(''); }} style={{ padding: '0.5rem', background: color === c ? 'black' : '#f0f0f0', color: color === c ? 'white' : 'black', border: '1px solid #ccc' }}>{c}</button>
               ))}
             </div>
           </div>
         )}
-
         {showWeightOptions().length > 0 && (
           <div style={{ marginBottom: '1rem' }}>
             <label>용지 무게 선택</label>
             <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
               {showWeightOptions().map(w => (
-                <button
-                  key={w}
-                  onClick={() => { setWeight(w); setBottomStyle(''); }}
-                  style={{ padding: '0.5rem', background: weight === w ? 'black' : '#f0f0f0', color: weight === w ? 'white' : 'black', border: '1px solid #ccc' }}
-                >
-                  {w}
-                </button>
+                <button key={w} onClick={() => { setWeight(w); setBottomStyle(''); }} style={{ padding: '0.5rem', background: weight === w ? 'black' : '#f0f0f0', color: weight === w ? 'white' : 'black', border: '1px solid #ccc' }}>{w}</button>
               ))}
             </div>
           </div>
         )}
-
         {weight && (
           <>
             <div style={{ marginBottom: '1rem' }}>
               <label>하단 모양 선택</label>
               <div style={{ display: 'flex', gap: '0.5rem' }}>
                 {bottomOptions.map(opt => (
-                  <button
-                    key={opt}
-                    onClick={() => setBottomStyle(opt)}
-                    style={{ flex: 1, padding: '0.5rem', background: bottomStyle === opt ? 'black' : '#f0f0f0', color: bottomStyle === opt ? 'white' : 'black', border: '1px solid #ccc', borderRadius: '6px' }}
-                  >
-                    {opt}
-                  </button>
+                  <button key={opt} onClick={() => setBottomStyle(opt)} style={{ flex: 1, padding: '0.5rem', background: bottomStyle === opt ? 'black' : '#f0f0f0', color: bottomStyle === opt ? 'white' : 'black', border: '1px solid #ccc', borderRadius: '6px' }}>{opt}</button>
                 ))}
               </div>
             </div>
-
-            <iframe
-              src="https://mtdl.co.kr/fileupload"
-              width="100%"
-              height="170"
-              style={{ border: '1px solid #ccc', borderRadius: '12px', marginBottom: '1rem' }}
-              title="파일 업로드"
-            />
-
+            <iframe src="https://mtdl.co.kr/fileupload" width="100%" height="170" style={{ border: '1px solid #ccc', borderRadius: '12px', marginBottom: '1rem' }} title="파일 업로드" />
             <p>기재해주신 연락처로 담당자가 연락할 수 있습니다.</p>
-            <button
-              style={{ background: 'black', color: 'white', padding: '0.5rem 1rem', borderRadius: '6px', border: 'none', cursor: 'pointer' }}
-              onClick={handleConfirm}
-            >
-              확인
-            </button>
+            <button style={{ background: 'black', color: 'white', padding: '0.5rem 1rem', borderRadius: '6px', border: 'none', cursor: 'pointer' }} onClick={handleConfirm}>확인</button>
           </>
         )}
       </div>
