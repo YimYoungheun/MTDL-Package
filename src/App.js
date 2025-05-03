@@ -3,7 +3,7 @@ function App() {
     <div style={{ display: 'flex', justifyContent: 'center', padding: '2rem' }}>
       {/* 오른쪽 입력 영역 */}
       <div style={{ marginLeft: 'auto', width: '300px' }}>
-        <h2>견적 정보 입력</h2>
+        <h2>B형 단상자</h2>
 
         {/* 회사명 또는 성함 */}
         <div style={{ marginBottom: '1rem' }}>
