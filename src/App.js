@@ -96,7 +96,6 @@ function App() {
           <label>연락처</label>
           <input
             type="text"
-            placeholder="010-0000-0000"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             style={{ width: '90%', padding: '0.5rem', borderRadius: '6px' }}
