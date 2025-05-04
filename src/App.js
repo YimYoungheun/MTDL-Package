@@ -94,7 +94,7 @@ function App() {
         <img
           src="/img/b_style_box.png"
           alt="B형 상자"
-          style={{ width: '700px', height: 'auto', objectFit: 'contain', borderRadius: '12px' }}
+          style={{ width: '900px', height: 'auto', objectFit: 'contain', borderRadius: '12px' }}
         />
       </div>
 
