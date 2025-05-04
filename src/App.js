@@ -89,7 +89,15 @@ function App() {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '2rem' }}>
+    <div style={{ display: 'flex', justifyContent: 'space-between', padding: '2rem' }}>
+      <div>
+        <img
+          src="/img/b_style_box.png"
+          alt="B형 상자"
+          style={{ width: '640px', height: 'auto', maxHeight: '300px', objectFit: 'contain', borderRadius: '12px' }}
+        />
+      </div>
+
       <div style={{ width: '360px' }}>
         <div style={{ marginBottom: '1rem' }}>
           <label>회사명 또는 성함</label>
