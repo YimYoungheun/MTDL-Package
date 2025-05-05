@@ -152,7 +152,7 @@ function App() {
 
           </div>
         </div>
-
+        <>
         {/* 종이 느낌 → 재질 → 색상 → 무게 */}
         {width && length && height && (
           <>
