@@ -106,7 +106,7 @@ function App() {
         <div style={{ marginBottom: '1rem' }}>
           <label>내경 (mm)</label>
           <div style={{ display: 'flex', gap: '0.5rem' }}>
-            <input
+           <input
               placeholder="가로"
               value={width}
               onFocus={() => setShowSizeGuide(true)}
@@ -118,15 +118,16 @@ function App() {
               value={length}
               onFocus={() => setShowSizeGuide(true)}
               onChange={e => setLength(e.target.value)}
-              ...
+              style={{ width: '70px', padding: '0.5rem' }}
             />
             <input
               placeholder="높이"
               value={height}
               onFocus={() => setShowSizeGuide(true)}
               onChange={e => setHeight(e.target.value)}
-              ...
+              style={{ width: '70px', padding: '0.5rem' }}
             />
+
 
           </div>
         </div>
