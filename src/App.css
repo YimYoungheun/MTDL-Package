@@ -37,6 +37,23 @@
   }
 }
 
+.size-guide-overlay {
+  position: absolute;
+  top: 30px;
+  left: 0;
+  width: 700px;
+  border-radius: 12px;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  pointer-events: none;
+}
+
+.fade-in {
+  opacity: 1;
+  transform: translateX(-10px);
+}
+
 .fade-out {
-  animation: fadeSlideOut 0.5s ease-out forwards;
+  opacity: 0;
+  transform: translateX(0);
 }
