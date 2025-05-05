@@ -82,7 +82,7 @@ function App() {
     <div style={{ display: 'flex', justifyContent: 'space-between', padding: '2rem' }}>
       <div>
         <img src="/img/b_style_box.png" alt="B형 상자" style={{ width: '700px', objectFit: 'contain', borderRadius: '12px' }} />
-        {showSizeGuide && (
+         {showSizeGuide && (
           <img
             src="/img/b_style_box_wdh.png"
             alt="내경 안내"
