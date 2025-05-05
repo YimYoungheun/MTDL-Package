@@ -91,6 +91,7 @@ function App() {
   };
 
   return (
+  <>
     <div style={{ position: 'relative' }}>
       <img
         src="/img/b_style_box.png"
@@ -105,6 +106,7 @@ function App() {
         />
       )}
     </div>
+
 
       <div style={{ width: '360px' }}>
         {/* 기본 정보 입력 */}
