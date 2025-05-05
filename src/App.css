@@ -21,7 +21,7 @@
   height: 700px;
   border-radius: 12px;
   opacity: 0;
-  transform: translateX(30px);
+  transform: translateX(-30px);
   animation: fadeSlideIn 0.5s ease-out forwards;
   z-index: 10;
 }
