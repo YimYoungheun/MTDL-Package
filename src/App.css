@@ -1,67 +1,6 @@
 /* App.css */
+
 .option-button {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  background: #f0f0f0;
-  color: black;
-  cursor: pointer;
-}
-
-.option-button.selected {
-  background: black;
-  color: white;
-}
-
-
-// 예시: 코팅 버튼
-{['없음', '무광', '유광', '벨벳'].map(type => (
-  <button
-    key={type}
-    className={`option-button ${(
-      type === '없음' ? coating === '' : coating === type
-    ) ? 'selected' : ''}`}
-    onClick={() => setCoating(type === '없음' ? '' : type)}
-  >
-    {type}
-  </button>
-))}
-
-{['없음', '음각', '양각'].map(type => (
-  <button
-    key={type}
-    className={`option-button ${(
-      type === '없음' ? embossing === '' : embossing === type
-    ) ? 'selected' : ''}`}
-    onClick={() => setEmbossing(type === '없음' ? '' : type)}
-  >
-    {type}
-  </button>
-))}
-
-{['없음', '금박', '은박', '먹박', '적박', '홀로그램박', '투명홀로그램박'].map(type => (
-  <button
-    key={type}
-    className={`option-button ${
-      (type === '없음' && foil.length === 0) || foil.includes(type) ? 'selected' : ''
-    }`}
-    onClick={() => {
-      if (type === '없음') {
-        setFoil([]);
-      } else {
-        setFoil(prev =>
-          prev.includes(type)
-            ? prev.filter(t => t !== type)
-            : [...prev, type]
-        );
-      }
-    }}
-  >
-    {type}
-  </button>
-))}
-
- .option-button {
   padding: 0.75rem 1.25rem;
   font-size: 1rem;
   background: white;
