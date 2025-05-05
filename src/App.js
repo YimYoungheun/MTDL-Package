@@ -1,160 +1,128 @@
 import React, { useState } from 'react';
 
 function App() {
-  const [paperCategory, setPaperCategory] = useState('');
-  const [paperFeel, setPaperFeel] = useState('');
-  const [material, setMaterial] = useState('');
-  const [color, setColor] = useState('');
-  const [weight, setWeight] = useState('');
-  const [bottomStyle, setBottomStyle] = useState('');
-  const [company, setCompany] = useState('');
-  const [product, setProduct] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [printSide, setPrintSide] = useState('');
-  const [width, setWidth] = useState('');
-  const [length, setLength] = useState('');
-  const [height, setHeight] = useState('');
-  const [quantity, setQuantity] = useState('');
-  const [customQuantity, setCustomQuantity] = useState('');
-  const [imageStack, setImageStack] = useState(['/img/b_style_box.png']);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [hasShownInnerSizeImage, setHasShownInnerSizeImage] = useState(false);
+const \[boxType, setBoxType] = useState('');
+const \[paperCategory, setPaperCategory] = useState('');
+const \[paperFeel, setPaperFeel] = useState('');
+const \[material, setMaterial] = useState('');
+const \[color, setColor] = useState('');
+const \[weight, setWeight] = useState('');
+const \[bottomStyle, setBottomStyle] = useState('');
+const \[company, setCompany] = useState('');
+const \[product, setProduct] = useState('');
+const \[phone, setPhone] = useState('');
+const \[email, setEmail] = useState('');
+const \[printSide, setPrintSide] = useState('');
+const \[width, setWidth] = useState('');
+const \[length, setLength] = useState('');
+const \[height, setHeight] = useState('');
+const \[quantity, setQuantity] = useState('');
+const \[customQuantity, setCustomQuantity] = useState('');
+const \[selectedCardSize, setSelectedCardSize] = useState('');
 
-  const materialMap = {
-    '매끄러운': ['AB', 'CCP', '아이보리', 'SC 마닐라'],
-    '러프한': ['올드밀', '아코팩', '매직패브릭', '녹차지'],
-    '친환경': ['얼스팩', '크라프트']
-  };
+const boxTypeOptions = \['명함', 'B형', '고리걸이 B형', '상, 하짝 Y형', '슬리브+Y형', '손잡이형', '쇼핑백'];
+const cardSizes = \['90×50', '90×55', '85×55'];
 
-  const colorMap = {
-    아코팩: ['웜 화이트', '네츄럴', '엑스트라 화이트'],
-    올드밀: ['비앙코', '엑스트라 화이트', '프리미엄 화이트'],
-    녹차지: ['백색'],
-    매직패브릭: ['검정색', '진곤색', '피색', '진한밤색', '체리색', '클래식블랙']
-  };
+const materialMap = {
+'매끄러운': \['AB', 'CCP', '아이보리', 'SC 마닐라'],
+'러프한': \['올드밀', '아코팩', '매직패브릭', '녹차지'],
+'친환경': \['얼스팩', '크라프트']
+};
 
-  const weightMap = {
-    '매끄러운': {
-      AB: ['300g', '350g'],
-      CCP: ['300g', '350g'],
-      'SC 마닐라': ['300g', '350g'],
-      아이보리: ['300g', '350g']
-    },
-    '친환경': {
-      얼스팩: ['295g'],
-      크라프트: ['300g', '337g']
-    },
-    '러프한': {
-      아코팩: {
-        '웜 화이트': ['300g', '350g', '400g'],
-        '네츄럴': ['300g', '350g', '400g'],
-        '엑스트라 화이트': ['410g']
-      },
-      올드밀: {
-        '비앙코': ['300g', '350g'],
-        '엑스트라 화이트': ['300g', '350g'],
-        '프리미엄 화이트': ['410g']
-      },
-      녹차지: {
-        백색: ['300g', '350g']
-      },
-      매직패브릭: {
-        검정색: ['300g', '350g', '400g'],
-        진곤색: ['300g', '350g', '400g'],
-        피색: ['300g', '350g', '400g'],
-        진한밤색: ['300g', '350g', '400g'],
-        체리색: ['300g', '350g', '400g'],
-        클래식블랙: ['300g', '350g', '400g']
-      }
-    }
-  };
+const colorMap = {
+아코팩: \['웜 화이트', '네츄럴', '엑스트라 화이트'],
+올드밀: \['비앙코', '엑스트라 화이트', '프리미엄 화이트'],
+녹차지: \['백색'],
+매직패브릭: \['검정색', '진곤색', '피색', '진한밤색', '체리색', '클래식블랙']
+};
 
-  const getColorOptions = () => {
-    if (paperFeel === '러프한') {
-      return colorMap[material] || [];
-    }
-    return [];
-  };
+const weightMap = {
+'매끄러운': {
+AB: \['300g', '350g'],
+CCP: \['300g', '350g'],
+'SC 마닐라': \['300g', '350g'],
+아이보리: \['300g', '350g']
+},
+'친환경': {
+얼스팩: \['295g'],
+크라프트: \['300g', '337g']
+},
+'러프한': {
+아코팩: {
+'웜 화이트': \['300g', '350g', '400g'],
+'네츄럴': \['300g', '350g', '400g'],
+'엑스트라 화이트': \['410g']
+},
+올드밀: {
+'비앙코': \['300g', '350g'],
+'엑스트라 화이트': \['300g', '350g'],
+'프리미엄 화이트': \['410g']
+},
+녹차지: {
+백색: \['300g', '350g']
+},
+매직패브릭: {
+검정색: \['300g', '350g', '400g'],
+진곤색: \['300g', '350g', '400g'],
+피색: \['300g', '350g', '400g'],
+진한밤색: \['300g', '350g', '400g'],
+체리색: \['300g', '350g', '400g'],
+클래식블랙: \['300g', '350g', '400g']
+}
+}
+};
 
-  const getWeightOptions = () => {
-    if (paperFeel === '매끄러운' || paperFeel === '친환경') {
-      return weightMap[paperFeel]?.[material] || [];
-    } else if (paperFeel === '러프한' && color) {
-      return weightMap['러프한']?.[material]?.[color] || [];
-    }
-    return [];
-  };
+const getColorOptions = () => {
+if (paperFeel === '러프한') {
+return colorMap\[material] || \[];
+}
+return \[];
+};
 
-  const handleShowInnerSizeImage = () => {
-    if (!hasShownInnerSizeImage) {
-      const newStack = [...imageStack, '/img/b_style_box.png'];
-      setImageStack(newStack);
-      setCurrentIndex(newStack.length - 1);
-      setHasShownInnerSizeImage(true);
-    }
-  };
+const getWeightOptions = () => {
+if (paperFeel === '매끄러운' || paperFeel === '친환경') {
+return (weightMap\[paperFeel]?.\[material]) || \[];
+} else if (paperFeel === '러프한' && color) {
+return (weightMap\['러프한']?.\[material]?.\[color]) || \[];
+}
+return \[];
+};
 
-  const handleWheel = (e) => {
-    if (e.deltaY < 0) {
-      setCurrentIndex((prev) => Math.max(0, prev - 1));
-    } else {
-      setCurrentIndex((prev) => Math.min(imageStack.length - 1, prev + 1));
-    }
-  };
+return (
+\<div style={{ display: 'flex', justifyContent: 'space-between', padding: '2rem' }}> <div>
+\<img
+src="/img/b\_style\_box.png"
+alt="B형 상자"
+style={{ width: '700px', height: 'auto', objectFit: 'contain', borderRadius: '12px' }}
+/> </div>
 
-  const showOptions = width && length && height;
+```
+  <div style={{ width: '360px' }}>
+    <div style={{ marginBottom: '1rem' }}>
+      <label>회사명 또는 성함</label>
+      <input value={company} onChange={e => setCompany(e.target.value)} style={{ width: '100%', padding: '0.5rem' }} />
+    </div>
+    <div style={{ marginBottom: '1rem' }}>
+      <label>연락처</label>
+      <input value={phone} onChange={e => setPhone(e.target.value)} style={{ width: '100%', padding: '0.5rem' }} />
+    </div>
+    <div style={{ marginBottom: '1rem' }}>
+      <label>이메일 주소</label>
+      <input value={email} onChange={e => setEmail(e.target.value)} style={{ width: '100%', padding: '0.5rem' }} />
+    </div>
 
-  return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', padding: '2rem' }}>
-      <div
-        style={{ position: 'relative', width: '700px', height: 'auto', overflow: 'hidden' }}
-        onWheel={handleWheel}
-      >
-        {imageStack.map((img, index) => (
-          <img
-            key={index}
-            src={img}
-            alt={`선택 이미지 ${index + 1}`}
-            style={{
-              position: 'absolute',
-              top: `${(index - currentIndex) * 150}px`,
-              left: 0,
-              width: '700px',
-              height: 'auto',
-              opacity: index <= currentIndex ? 1 : 0.5,
-              transition: 'all 0.3s ease',
-              objectFit: 'contain',
-              borderRadius: '12px',
-              zIndex: imageStack.length - index
-            }}
-          />
-        ))}
-      </div>
-
-      <div style={{ width: '360px' }}>
-        <div style={{ marginBottom: '1rem' }}>
-          <label>회사명 또는 성함</label>
-          <input value={company} onChange={e => setCompany(e.target.value)} style={{ width: '100%', padding: '0.5rem' }} />
-        </div>
-        <div style={{ marginBottom: '1rem' }}>
-          <label>연락처</label>
-          <input value={phone} onChange={e => setPhone(e.target.value)} style={{ width: '100%', padding: '0.5rem' }} />
-        </div>
-        <div style={{ marginBottom: '1rem' }}>
-          <label>이메일 주소</label>
-          <input value={email} onChange={e => setEmail(e.target.value)} style={{ width: '100%', padding: '0.5rem' }} />
-        </div>
+    {boxType !== '명함' && (
+      <>
         <div style={{ marginBottom: '1rem' }}>
           <label>내경 (mm)</label>
           <div style={{ display: 'flex', gap: '0.5rem' }}>
-            <input placeholder="가로" value={width} onClick={handleShowInnerSizeImage} onChange={e => setWidth(e.target.value)} style={{ width: '70px', padding: '0.5rem' }} />
-            <input placeholder="세로" value={length} onClick={handleShowInnerSizeImage} onChange={e => setLength(e.target.value)} style={{ width: '70px', padding: '0.5rem' }} />
-            <input placeholder="높이" value={height} onClick={handleShowInnerSizeImage} onChange={e => setHeight(e.target.value)} style={{ width: '70px', padding: '0.5rem' }} />
+            <input placeholder="가로" value={width} onChange={e => setWidth(e.target.value)} style={{ width: '70px', padding: '0.5rem' }} />
+            <input placeholder="세로" value={length} onChange={e => setLength(e.target.value)} style={{ width: '70px', padding: '0.5rem' }} />
+            <input placeholder="높이" value={height} onChange={e => setHeight(e.target.value)} style={{ width: '70px', padding: '0.5rem' }} />
           </div>
         </div>
 
-        {showOptions && (
+        {width && length && height && (
           <>
             <div style={{ marginBottom: '1rem' }}>
               <label>종이 느낌</label>
@@ -293,9 +261,13 @@ function App() {
             )}
           </>
         )}
-      </div>
-    </div>
-  );
+      </>
+    )}
+  </div>
+</div>
+```
+
+);
 }
 
 export default App;
