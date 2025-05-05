@@ -17,6 +17,9 @@ function App() {
   const [height, setHeight] = useState('');
   const [quantity, setQuantity] = useState('');
   const [customQuantity, setCustomQuantity] = useState('');
+  const [imageStack, setImageStack] = useState(['/img/b_style_box.png']);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [hasShownInnerSizeImage, setHasShownInnerSizeImage] = useState(false);
 
   const materialMap = {
     '매끄러운': ['AB', 'CCP', '아이보리', 'SC 마닐라'],
@@ -76,21 +79,57 @@ function App() {
 
   const getWeightOptions = () => {
     if (paperFeel === '매끄러운' || paperFeel === '친환경') {
-      return (weightMap[paperFeel]?.[material]) || [];
+      return weightMap[paperFeel]?.[material] || [];
     } else if (paperFeel === '러프한' && color) {
-      return (weightMap['러프한']?.[material]?.[color]) || [];
+      return weightMap['러프한']?.[material]?.[color] || [];
     }
     return [];
   };
 
+  const handleShowInnerSizeImage = () => {
+    if (!hasShownInnerSizeImage) {
+      const newStack = [...imageStack, '/img/b_style_box.png'];
+      setImageStack(newStack);
+      setCurrentIndex(newStack.length - 1);
+      setHasShownInnerSizeImage(true);
+    }
+  };
+
+  const handleWheel = (e) => {
+    if (e.deltaY < 0) {
+      setCurrentIndex((prev) => Math.max(0, prev - 1));
+    } else {
+      setCurrentIndex((prev) => Math.min(imageStack.length - 1, prev + 1));
+    }
+  };
+
+  const showOptions = width && length && height;
+
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between', padding: '2rem' }}>
-      <div>
-        <img
-          src="/img/b_style_box.png"
-          alt="B형 상자"
-          style={{ width: '700px', height: 'auto', objectFit: 'contain', borderRadius: '12px' }}
-        />
+      <div
+        style={{ position: 'relative', width: '700px', height: 'auto', overflow: 'hidden' }}
+        onWheel={handleWheel}
+      >
+        {imageStack.map((img, index) => (
+          <img
+            key={index}
+            src={img}
+            alt={`선택 이미지 ${index + 1}`}
+            style={{
+              position: 'absolute',
+              top: `${(index - currentIndex) * 150}px`,
+              left: 0,
+              width: '700px',
+              height: 'auto',
+              opacity: index <= currentIndex ? 1 : 0.5,
+              transition: 'all 0.3s ease',
+              objectFit: 'contain',
+              borderRadius: '12px',
+              zIndex: imageStack.length - index
+            }}
+          />
+        ))}
       </div>
 
       <div style={{ width: '360px' }}>
@@ -106,17 +145,16 @@ function App() {
           <label>이메일 주소</label>
           <input value={email} onChange={e => setEmail(e.target.value)} style={{ width: '100%', padding: '0.5rem' }} />
         </div>
-
         <div style={{ marginBottom: '1rem' }}>
           <label>내경 (mm)</label>
           <div style={{ display: 'flex', gap: '0.5rem' }}>
-            <input placeholder="가로" value={width} onChange={e => setWidth(e.target.value)} style={{ width: '70px', padding: '0.5rem' }} />
-            <input placeholder="세로" value={length} onChange={e => setLength(e.target.value)} style={{ width: '70px', padding: '0.5rem' }} />
-            <input placeholder="높이" value={height} onChange={e => setHeight(e.target.value)} style={{ width: '70px', padding: '0.5rem' }} />
+            <input placeholder="가로" value={width} onClick={handleShowInnerSizeImage} onChange={e => setWidth(e.target.value)} style={{ width: '70px', padding: '0.5rem' }} />
+            <input placeholder="세로" value={length} onClick={handleShowInnerSizeImage} onChange={e => setLength(e.target.value)} style={{ width: '70px', padding: '0.5rem' }} />
+            <input placeholder="높이" value={height} onClick={handleShowInnerSizeImage} onChange={e => setHeight(e.target.value)} style={{ width: '70px', padding: '0.5rem' }} />
           </div>
         </div>
 
-        {width && length && height && (
+        {showOptions && (
           <>
             <div style={{ marginBottom: '1rem' }}>
               <label>종이 느낌</label>
