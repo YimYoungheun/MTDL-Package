@@ -21,14 +21,16 @@ function App() {
   const [embossing, setEmbossing] = useState(null);
   const [foil, setFoil] = useState([]);
   const [showSizeGuide, setShowSizeGuide] = useState(false);
-  const [showGuide, setShowGuide] = useState(false);
-  const [guideVisibleOnce, setGuideVisibleOnce] = useState(false); // 최초 한 번만
+  const [fadeOut, setFadeOut] = useState(false);
 
   const handleSizeFocus = () => {
-    if (!guideVisibleOnce) {
-      setShowGuide(true);
-      setGuideVisibleOnce(true);
-    }
+    setShowSizeGuide(true);
+    setFadeOut(false);
+  };
+
+  const handleSizeBlur = () => {
+    setFadeOut(true);
+    setTimeout(() => setShowSizeGuide(false), 300); // 애니메이션 시간 후에 숨김
   };
 
   const materialMap = {
@@ -82,23 +84,27 @@ function App() {
 
   const getColorOptions = () => paperFeel === '러프한' ? colorMap[material] || [] : [];
   const getWeightOptions = () => {
+
     if (paperFeel === '매끄러운' || paperFeel === '친환경') return weightMap[paperFeel]?.[material] || [];
     if (paperFeel === '러프한' && color) return weightMap['러프한']?.[material]?.[color] || [];
     return [];
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', padding: '2rem' }}>
-      <div style={{ position: 'relative' }}>
-        <img src="/img/b_style_box.png" alt="B형 상자" style={{ width: '700px', objectFit: 'contain', borderRadius: '12px' }} />
-         {showSizeGuide && (
-          <img
-            src="/img/b_style_box_wdh.png"
-            alt="내경 안내"
-            className={`size-guide-overlay ${showSizeGuide ? 'fade-in' : 'fade-out'}`}
-          />
-        )}
-      </div>
+    <div style={{ position: 'relative' }}>
+      <img
+        src="/img/b_style_box.png"
+        alt="B형 상자"
+        style={{ width: '700px', objectFit: 'contain', borderRadius: '12px' }}
+      />
+      {showSizeGuide && (
+        <img
+          src="/img/b_style_box_wdh.png"
+          alt="내경 안내"
+          className={`size-guide-overlay ${fadeOut ? 'fade-out' : 'fade-in'}`}
+        />
+      )}
+    </div>
 
       <div style={{ width: '360px' }}>
         {/* 기본 정보 입력 */}
@@ -112,27 +118,36 @@ function App() {
         ))}
 
         {/* 내경 입력 */}
-        <div style={{ marginBottom: '1rem' }}>
-          <label>내경 (mm)</label>
-          <div style={{ display: 'flex', gap: '0.5rem' }}>
-            <input
-              placeholder="가로"
-              value={width}
-              onChange={e => setWidth(e.target.value)}
-              onFocus={handleSizeFocus}
-            />
-            <input
-              placeholder="세로"
-              value={length}
-              onChange={e => setLength(e.target.value)}
-              onFocus={handleSizeFocus}
-            />
-            <input
-              placeholder="높이"
-              value={height}
-              onChange={e => setHeight(e.target.value)}
-              onFocus={handleSizeFocus}
-            />
+          <div style={{ marginBottom: '1rem' }}>
+            <label>내경 (mm)</label>
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <input
+                placeholder="가로"
+                value={width}
+                onChange={e => setWidth(e.target.value)}
+                onFocus={handleSizeFocus}
+                onBlur={handleSizeBlur}
+                style={{ width: '70px', padding: '0.5rem' }}
+              />
+              <input
+                placeholder="세로"
+                value={length}
+                onChange={e => setLength(e.target.value)}
+                onFocus={handleSizeFocus}
+                onBlur={handleSizeBlur}
+                style={{ width: '70px', padding: '0.5rem' }}
+              />
+              <input
+                placeholder="높이"
+                value={height}
+                onChange={e => setHeight(e.target.value)}
+                onFocus={handleSizeFocus}
+                onBlur={handleSizeBlur}
+                style={{ width: '70px', padding: '0.5rem' }}
+              />
+            </div>
+          </div>
+
 
 
           </div>
