@@ -80,7 +80,7 @@ function App() {
 
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between', padding: '2rem' }}>
-      <div>
+      <div style={{ position: 'relative' }}>
         <img src="/img/b_style_box.png" alt="B형 상자" style={{ width: '700px', objectFit: 'contain', borderRadius: '12px' }} />
          {showSizeGuide && (
           <img
