@@ -30,7 +30,7 @@ function App() {
 
   const handleSizeBlur = () => {
     setFadeOut(true);
-    setTimeout(() => setShowSizeGuide(false), 300); // 애니메이션 시간 후에 숨김
+    setTimeout(() => setShowSizeGuide(false), 300);
   };
 
   const materialMap = {
@@ -84,63 +84,44 @@ function App() {
 
   const getColorOptions = () => paperFeel === '러프한' ? colorMap[material] || [] : [];
   const getWeightOptions = () => {
-
     if (paperFeel === '매끄러운' || paperFeel === '친환경') return weightMap[paperFeel]?.[material] || [];
     if (paperFeel === '러프한' && color) return weightMap['러프한']?.[material]?.[color] || [];
     return [];
   };
 
-    return (
-      <>
-        <div style={{ position: 'relative' }}>
-          <img
-            src="/img/b_style_box.png"
-            alt="B형 상자"
-            style={{ width: '700px', objectFit: 'contain', borderRadius: '12px' }}
-          />
-          {showSizeGuide && (
-            <img
-              src="/img/b_style_box_wdh.png"
-              alt="내경 안내"
-              className={`size-guide-overlay ${fadeOut ? 'fade-out' : 'fade-in'}`}
-            />
-          )}
-        </div>
-  
-        <div style={{ width: '360px' }}>
-          {/* 기본 정보 입력 */}
-          {[{ label: '회사명 또는 성함', value: company, setter: setCompany },
-            { label: '연락처', value: phone, setter: setPhone },
-            { label: '이메일 주소', value: email, setter: setEmail }].map((f, i) => (
-              <div key={i} style={{ marginBottom: '1rem' }}>
-                <label>{f.label}</label>
-                <input value={f.value} onChange={e => f.setter(e.target.value)} style={{ width: '100%', padding: '0.5rem' }} />
-              </div>
-          ))}
-  
-          {/* 내경 입력 */}
-          <div style={{ marginBottom: '1rem' }}>
-            <label>내경 (mm)</label>
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
-              <input placeholder="가로" value={width} onChange={e => setWidth(e.target.value)} onFocus={handleSizeFocus} onBlur={handleSizeBlur} style={{ width: '70px', padding: '0.5rem' }} />
-              <input placeholder="세로" value={length} onChange={e => setLength(e.target.value)} onFocus={handleSizeFocus} onBlur={handleSizeBlur} style={{ width: '70px', padding: '0.5rem' }} />
-              <input placeholder="높이" value={height} onChange={e => setHeight(e.target.value)} onFocus={handleSizeFocus} onBlur={handleSizeBlur} style={{ width: '70px', padding: '0.5rem' }} />
-            </div>
+  return (
+    <div className="App">
+      <div style={{ position: 'relative' }}>
+        <img src="/img/b_style_box.png" alt="B형 상자" style={{ width: '700px', objectFit: 'contain', borderRadius: '12px' }} />
+        {showSizeGuide && (
+          <img src="/img/b_style_box_wdh.png" alt="내경 안내" className={`size-guide-overlay ${fadeOut ? 'fade-out' : 'fade-in'}`} />
+        )}
+      </div>
+
+      <div style={{ width: '360px', margin: '0 auto' }}>
+        {[{ label: '회사명 또는 성함', value: company, setter: setCompany }, { label: '연락처', value: phone, setter: setPhone }, { label: '이메일 주소', value: email, setter: setEmail }].map((f, i) => (
+          <div key={i} style={{ marginBottom: '1rem' }}>
+            <label>{f.label}</label>
+            <input value={f.value} onChange={e => f.setter(e.target.value)} style={{ width: '100%', padding: '0.5rem' }} />
           </div>
+        ))}
 
-
-
+        <div style={{ marginBottom: '1rem' }}>
+          <label>내경 (mm)</label>
+          <div style={{ display: 'flex', gap: '0.5rem' }}>
+            <input placeholder="가로" value={width} onChange={e => setWidth(e.target.value)} onFocus={handleSizeFocus} onBlur={handleSizeBlur} style={{ width: '70px', padding: '0.5rem' }} />
+            <input placeholder="세로" value={length} onChange={e => setLength(e.target.value)} onFocus={handleSizeFocus} onBlur={handleSizeBlur} style={{ width: '70px', padding: '0.5rem' }} />
+            <input placeholder="높이" value={height} onChange={e => setHeight(e.target.value)} onFocus={handleSizeFocus} onBlur={handleSizeBlur} style={{ width: '70px', padding: '0.5rem' }} />
           </div>
         </div>
-        <>
-        {/* 종이 느낌 → 재질 → 색상 → 무게 */}
+
         {width && length && height && (
           <>
             <div style={{ marginBottom: '1rem' }}>
               <label>종이 느낌</label>
               <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                 {Object.keys(materialMap).map(feel => (
-                  <button key={feel} className={`option-button ${paperFeel === feel ? 'selected' : ''}`} onClick={() => { setPaperFeel(feel); setMaterial(''); setColor(''); setWeight(''); setShowSizeGuide(false);}}>
+                  <button key={feel} className={`option-button ${paperFeel === feel ? 'selected' : ''}`} onClick={() => { setPaperFeel(feel); setMaterial(''); setColor(''); setWeight(''); }}>
                     {feel}
                   </button>
                 ))}
@@ -186,7 +167,6 @@ function App() {
               </div>
             )}
 
-            {/* ✅ 코팅 → 형압 → 박 → 하단모양 순서 */}
             {weight && (
               <>
                 <div style={{ marginBottom: '1rem' }}>
