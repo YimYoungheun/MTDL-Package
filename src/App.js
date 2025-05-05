@@ -1,4 +1,4 @@
-// ✅ 단계별 조건 노출 로직으로 리팩터링된 App.js
+// ✅ App.js (정렬 + 기능 모두 포함)
 import React, { useState } from 'react';
 import './App.css';
 
@@ -90,16 +90,28 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', gap: '3rem', padding: '2rem' }}>
+      {/* 좌측 이미지 영역 */}
       <div style={{ position: 'relative' }}>
-        <img src="/img/b_style_box.png" alt="B형 상자" style={{ width: '700px', objectFit: 'contain', borderRadius: '12px' }} />
+        <img
+          src="/img/b_style_box.png"
+          alt="B형 상자"
+          style={{ width: '700px', objectFit: 'contain', borderRadius: '12px' }}
+        />
         {showSizeGuide && (
-          <img src="/img/b_style_box_wdh.png" alt="내경 안내" className={`size-guide-overlay ${fadeOut ? 'fade-out' : 'fade-in'}`} />
+          <img
+            src="/img/b_style_box_wdh.png"
+            alt="내경 안내"
+            className={`size-guide-overlay ${fadeOut ? 'fade-out' : 'fade-in'}`}
+          />
         )}
       </div>
 
-      <div style={{ width: '360px', margin: '0 auto' }}>
-        {[{ label: '회사명 또는 성함', value: company, setter: setCompany }, { label: '연락처', value: phone, setter: setPhone }, { label: '이메일 주소', value: email, setter: setEmail }].map((f, i) => (
+      {/* 우측 입력 폼 영역 */}
+      <div style={{ width: '360px' }}>
+        {[{ label: '회사명 또는 성함', value: company, setter: setCompany },
+        { label: '연락처', value: phone, setter: setPhone },
+        { label: '이메일 주소', value: email, setter: setEmail }].map((f, i) => (
           <div key={i} style={{ marginBottom: '1rem' }}>
             <label>{f.label}</label>
             <input value={f.value} onChange={e => f.setter(e.target.value)} style={{ width: '100%', padding: '0.5rem' }} />
@@ -115,13 +127,14 @@ function App() {
           </div>
         </div>
 
+        {/* 조건부 렌더링 시작 */}
         {width && length && height && (
           <>
             <div style={{ marginBottom: '1rem' }}>
               <label>종이 느낌</label>
               <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                 {Object.keys(materialMap).map(feel => (
-                  <button key={feel} className={`option-button ${paperFeel === feel ? 'selected' : ''}`} onClick={() => { setPaperFeel(feel); setMaterial(''); setColor(''); setWeight(''); }}>
+                  <button key={feel} className={`option-button ${paperFeel === feel ? 'selected' : ''}`} onClick={() => { setPaperFeel(feel); setMaterial(''); setColor(''); setWeight(''); setShowSizeGuide(false); }}>
                     {feel}
                   </button>
                 ))}
@@ -205,7 +218,8 @@ function App() {
                                 onClick={() => {
                                   if (type === '없음') setFoil([]);
                                   else setFoil(prev => prev.includes(type) ? prev.filter(t => t !== type) : [...prev, type]);
-                                }}>
+                                }}
+                              >
                                 {type}
                               </button>
                             ))}
