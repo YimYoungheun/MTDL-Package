@@ -86,7 +86,7 @@ function App() {
           <img
             src="/img/b_style_box_wdh.png"
             alt="내경 안내"
-            className={`size-guide-overlay ${!showSizeGuide ? 'fade-out' : ''}`}
+            className={`size-guide-overlay ${showSizeGuide ? 'fade-in' : 'fade-out'}`}
           />
         )}
       </div>
