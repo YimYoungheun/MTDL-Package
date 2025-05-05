@@ -1,38 +1,70 @@
-.App {
-  text-align: center;
+// ✅ 1. App.css에 아래 클래스 추가 (이 파일은 JSX가 아닌 CSS 파일)
+
+/* App.css */
+.option-button {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #f0f0f0;
+  color: black;
+  cursor: pointer;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.option-button.selected {
+  background: black;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+// ✅ 2. JSX에서 버튼 스타일 전부 className으로 교체
+// 예시: 코팅 버튼
+{['없음', '무광', '유광', '벨벳'].map(type => (
+  <button
+    key={type}
+    className={`option-button ${(
+      type === '없음' ? coating === '' : coating === type
+    ) ? 'selected' : ''}`}
+    onClick={() => setCoating(type === '없음' ? '' : type)}
+  >
+    {type}
+  </button>
+))}
+
+// ✅ 형압 버튼도 동일하게 적용
+{['없음', '음각', '양각'].map(type => (
+  <button
+    key={type}
+    className={`option-button ${(
+      type === '없음' ? embossing === '' : embossing === type
+    ) ? 'selected' : ''}`}
+    onClick={() => setEmbossing(type === '없음' ? '' : type)}
+  >
+    {type}
+  </button>
+))}
+
+// ✅ 박 버튼은 다중 선택이므로 배열 포함 여부로 class 결정
+{['없음', '금박', '은박', '먹박', '적박', '홀로그램박', '투명홀로그램박'].map(type => (
+  <button
+    key={type}
+    className={`option-button ${
+      (type === '없음' && foil.length === 0) || foil.includes(type) ? 'selected' : ''
+    }`}
+    onClick={() => {
+      if (type === '없음') {
+        setFoil([]);
+      } else {
+        setFoil(prev =>
+          prev.includes(type)
+            ? prev.filter(t => t !== type)
+            : [...prev, type]
+        );
+      }
+    }}
+  >
+    {type}
+  </button>
+))}
+
+// ✅ 기타 종이 느낌, 재질 등 버튼도 동일하게 변경 가능 (선택사항)
+// 단, 지금처럼 인라인 스타일이 구조를 해치지 않으면 유지도 OK
