@@ -20,6 +20,7 @@ function App() {
   const [coating, setCoating] = useState(null);
   const [embossing, setEmbossing] = useState(null);
   const [foil, setFoil] = useState([]);
+  const [showSizeGuide, setShowSizeGuide] = useState(false);
 
   const materialMap = {
     '매끄러운': ['AB', 'CCP', '아이보리', 'SC 마닐라'],
@@ -81,6 +82,13 @@ function App() {
     <div style={{ display: 'flex', justifyContent: 'space-between', padding: '2rem' }}>
       <div>
         <img src="/img/b_style_box.png" alt="B형 상자" style={{ width: '700px', objectFit: 'contain', borderRadius: '12px' }} />
+        {showSizeGuide && (
+          <img
+            src="/img/b_style_box_wdh.png"
+            alt="내경 안내"
+            className="size-guide-overlay"
+          />
+        )}
       </div>
 
       <div style={{ width: '360px' }}>
@@ -98,9 +106,28 @@ function App() {
         <div style={{ marginBottom: '1rem' }}>
           <label>내경 (mm)</label>
           <div style={{ display: 'flex', gap: '0.5rem' }}>
-            <input placeholder="가로" value={width} onChange={e => setWidth(e.target.value)} style={{ width: '70px', padding: '0.5rem' }} />
-            <input placeholder="세로" value={length} onChange={e => setLength(e.target.value)} style={{ width: '70px', padding: '0.5rem' }} />
-            <input placeholder="높이" value={height} onChange={e => setHeight(e.target.value)} style={{ width: '70px', padding: '0.5rem' }} />
+            <input
+              placeholder="가로"
+              value={width}
+              onFocus={() => setShowSizeGuide(true)}
+              onChange={e => setWidth(e.target.value)}
+              style={{ width: '70px', padding: '0.5rem' }}
+            />
+            <input
+              placeholder="세로"
+              value={length}
+              onFocus={() => setShowSizeGuide(true)}
+              onChange={e => setLength(e.target.value)}
+              ...
+            />
+            <input
+              placeholder="높이"
+              value={height}
+              onFocus={() => setShowSizeGuide(true)}
+              onChange={e => setHeight(e.target.value)}
+              ...
+            />
+
           </div>
         </div>
 
@@ -111,7 +138,7 @@ function App() {
               <label>종이 느낌</label>
               <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                 {Object.keys(materialMap).map(feel => (
-                  <button key={feel} className={`option-button ${paperFeel === feel ? 'selected' : ''}`} onClick={() => { setPaperFeel(feel); setMaterial(''); setColor(''); setWeight(''); }}>
+                  <button key={feel} className={`option-button ${paperFeel === feel ? 'selected' : ''}`} onClick={() => { setPaperFeel(feel); setMaterial(''); setColor(''); setWeight(''); setShowSizeGuide(false);}}>
                     {feel}
                   </button>
                 ))}
