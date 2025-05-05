@@ -106,24 +106,29 @@ function App() {
         <div style={{ marginBottom: '1rem' }}>
           <label>내경 (mm)</label>
           <div style={{ display: 'flex', gap: '0.5rem' }}>
-           <input
+             <input
               placeholder="가로"
               value={width}
               onFocus={() => setShowSizeGuide(true)}
+              onBlur={() => setShowSizeGuide(false)}
               onChange={e => setWidth(e.target.value)}
               style={{ width: '70px', padding: '0.5rem' }}
             />
-            <input
+              
+             <input
               placeholder="세로"
               value={length}
               onFocus={() => setShowSizeGuide(true)}
+              onBlur={() => setShowSizeGuide(false)}
               onChange={e => setLength(e.target.value)}
               style={{ width: '70px', padding: '0.5rem' }}
             />
+            
             <input
               placeholder="높이"
               value={height}
               onFocus={() => setShowSizeGuide(true)}
+              onBlur={() => setShowSizeGuide(false)}
               onChange={e => setHeight(e.target.value)}
               style={{ width: '70px', padding: '0.5rem' }}
             />
