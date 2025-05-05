@@ -1,5 +1,6 @@
 // ✅ 단계별 조건 노출 로직으로 리팩터링된 App.js
 import React, { useState } from 'react';
+import './App.css';
 
 function App() {
   const [paperFeel, setPaperFeel] = useState('');
