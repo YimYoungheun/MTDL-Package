@@ -15,6 +15,10 @@ function App() {
   const [height, setHeight] = useState('');
   const [quantity, setQuantity] = useState('');
   const [customQuantity, setCustomQuantity] = useState('');
+  const [coating, setCoating] = useState('');
+  const [embossing, setEmbossing] = useState('');
+  const [foil, setFoil] = useState([]);
+
 
   const materialMap = {
     '매끄러운': ['AB', 'CCP', '아이보리', 'SC 마닐라'],
@@ -194,8 +198,67 @@ function App() {
               </div>
             )}
 
-            {weight && (
-              <>
+                {weight && (
+                  <>
+                   {/* 후가공 - 코팅 */}
+                    <div style={{ marginBottom: '1rem' }}>
+                     <label>코팅</label>
+                     <div style={{ display: 'flex', gap: '0.5rem' }}>
+                      {['무광', '유광', '벨벳'].map(type => (
+                    <button
+                    key={type}
+                    onClick={() => setCoating(type)}
+                    style={{ padding: '0.5rem', background: coating === type ? 'black' : '#f0f0f0', color: coating === type ? 'white' : 'black', border: '1px solid #ccc' }}
+                    >
+                  {type}
+                </button>
+              ))}
+            </div>
+          </div>
+
+              {/* 후가공 - 형압 */}
+               <div style={{ marginBottom: '1rem' }}>
+                <label>형압</label>
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                 {['음각', '양각'].map(type => (
+                  <button
+                   key={type}
+                   onClick={() => setEmbossing(type)}
+                   style={{ padding: '0.5rem', background: embossing === type ? 'black' : '#f0f0f0', color: embossing === type ? 'white' : 'black', border: '1px solid #ccc' }}
+                  >
+                {type}
+              </button>
+            ))}
+          </div>
+         </div>
+
+              {/* 후가공 - 박 */}
+               <div style={{ marginBottom: '1rem' }}>
+                <label>박 (복수 선택 가능)</label>
+                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                 {['금박', '은박', '먹박', '적박', '홀로그램박', '투명홀로그램박'].map(type => (
+                 <button
+                  key={type}
+                  onClick={() =>
+                  setFoil(prev =>
+                  prev.includes(type)
+                  ? prev.filter(t => t !== type)
+                  : [...prev, type]
+                  )
+                }
+                      style={{
+                        padding: '0.5rem',
+                        background: foil.includes(type) ? 'black' : '#f0f0f0',
+                        color: foil.includes(type) ? 'white' : 'black',
+                        border: '1px solid #ccc'
+                      }}
+                    >
+                      {type}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
                 <div style={{ marginBottom: '1rem' }}>
                   <label>하단 모양</label>
                   <div style={{ display: 'flex', gap: '0.5rem' }}>
