@@ -21,6 +21,15 @@ function App() {
   const [embossing, setEmbossing] = useState(null);
   const [foil, setFoil] = useState([]);
   const [showSizeGuide, setShowSizeGuide] = useState(false);
+  const [showGuide, setShowGuide] = useState(false);
+  const [guideVisibleOnce, setGuideVisibleOnce] = useState(false); // 최초 한 번만
+
+  const handleSizeFocus = () => {
+    if (!guideVisibleOnce) {
+      setShowGuide(true);
+      setGuideVisibleOnce(true);
+    }
+  };
 
   const materialMap = {
     '매끄러운': ['AB', 'CCP', '아이보리', 'SC 마닐라'],
@@ -106,31 +115,23 @@ function App() {
         <div style={{ marginBottom: '1rem' }}>
           <label>내경 (mm)</label>
           <div style={{ display: 'flex', gap: '0.5rem' }}>
-             <input
+            <input
               placeholder="가로"
               value={width}
-              onFocus={() => setShowSizeGuide(true)}
-              onBlur={() => setShowSizeGuide(false)}
               onChange={e => setWidth(e.target.value)}
-              style={{ width: '70px', padding: '0.5rem' }}
+              onFocus={handleSizeFocus}
             />
-              
-             <input
+            <input
               placeholder="세로"
               value={length}
-              onFocus={() => setShowSizeGuide(true)}
-              onBlur={() => setShowSizeGuide(false)}
               onChange={e => setLength(e.target.value)}
-              style={{ width: '70px', padding: '0.5rem' }}
+              onFocus={handleSizeFocus}
             />
-            
             <input
               placeholder="높이"
               value={height}
-              onFocus={() => setShowSizeGuide(true)}
-              onBlur={() => setShowSizeGuide(false)}
               onChange={e => setHeight(e.target.value)}
-              style={{ width: '70px', padding: '0.5rem' }}
+              onFocus={handleSizeFocus}
             />
 
 
