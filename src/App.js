@@ -1,8 +1,9 @@
 // ✅ App.js (정렬 + 기능 모두 포함)
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
 
 function App() {
+  
   const [paperFeel, setPaperFeel] = useState('');
   const [material, setMaterial] = useState('');
   const [color, setColor] = useState('');
@@ -32,6 +33,18 @@ function App() {
     setFadeOut(true);
     setTimeout(() => setShowSizeGuide(false), 300);
   };
+  useEffect(() => {
+  const handleClickOutside = (e) => {
+    if (inputContainerRef.current && !inputContainerRef.current.contains(e.target)) {
+      setShowSizeGuide(false);
+    }
+  };
+
+  document.addEventListener('click', handleClickOutside); // ⬅ 클릭일 때만 작동
+  return () => {
+    document.removeEventListener('click', handleClickOutside);
+  };
+}, []);
 
   const materialMap = {
     '매끄러운': ['AB', 'CCP', '아이보리', 'SC 마닐라'],
@@ -121,10 +134,28 @@ function App() {
         <div style={{ marginBottom: '1rem' }}>
           <label>내경 (mm)</label>
           <div style={{ display: 'flex', gap: '0.5rem' }}>
-            <input placeholder="가로" value={width} onChange={e => setWidth(e.target.value)} onFocus={handleSizeFocus} onBlur={handleSizeBlur} style={{ width: '70px', padding: '0.5rem' }} />
-            <input placeholder="세로" value={length} onChange={e => setLength(e.target.value)} onFocus={handleSizeFocus} onBlur={handleSizeBlur} style={{ width: '70px', padding: '0.5rem' }} />
-            <input placeholder="높이" value={height} onChange={e => setHeight(e.target.value)} onFocus={handleSizeFocus} onBlur={handleSizeBlur} style={{ width: '70px', padding: '0.5rem' }} />
-          </div>
+            <input
+    placeholder="가로"
+    value={width}
+    onChange={e => setWidth(e.target.value)}
+    onFocus={() => setShowSizeGuide(true)}
+    style={{ width: '70px', padding: '0.5rem' }}
+  />
+  <input
+    placeholder="세로"
+    value={length}
+    onChange={e => setLength(e.target.value)}
+    onFocus={() => setShowSizeGuide(true)}
+    style={{ width: '70px', padding: '0.5rem' }}
+  />
+  <input
+    placeholder="높이"
+    value={height}
+    onChange={e => setHeight(e.target.value)}
+    onFocus={() => setShowSizeGuide(true)}
+    style={{ width: '70px', padding: '0.5rem' }}
+  />
+</div>
         </div>
 
         {/* 조건부 렌더링 시작 */}
