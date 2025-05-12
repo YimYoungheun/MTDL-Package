@@ -28,18 +28,23 @@ function App() {
     setFadeOut(true);
     setTimeout(() => setShowSizeGuide(false), 300);
   };
-  useEffect(() => {
-  const handleClickOutside = (e) => {
-    if (inputContainerRef.current && !inputContainerRef.current.contains(e.target)) {
-      setShowSizeGuide(false);
-    }
-  };
+    useEffect(() => {
+    const handleClick = (e) => {
+      if (inputContainerRef.current?.contains(e.target)) {
+        // 내경 영역 클릭 → 이미지 켜기
+        setShowSizeGuide(true);
+      } else {
+        // 그 외 클릭 → 이미지 끄기
+        setShowSizeGuide(false);
+      }
+    };
+  
+    document.addEventListener('mousedown', handleClick);
+    return () => {
+      document.removeEventListener('mousedown', handleClick);
+    };
+  }, []);
 
-  document.addEventListener('mousedown', handleClickOutside);
-  return () => {
-    document.removeEventListener('mousedown', handleClickOutside);
-  };
-}, []);
 
   const materialMap = {
     '매끄러운': ['AB', 'CCP', '아이보리', 'SC 마닐라'],
@@ -105,14 +110,14 @@ function App() {
           alt="B형 상자"
           style={{ width: '700px', objectFit: 'contain', borderRadius: '12px' }}
         />
-        {showSizeGuide && (
-          <img
-            src="/img/b_style_box_wdh.png"
-            alt="내경 안내"
-            className="size-guide-overlay"
-          />
-        )}
-      </div>
+         {showSizeGuide && (
+    <img
+      src="/img/b_style_box_wdh.png"
+      alt="내경 안내"
+      className="size-guide-overlay fade-in"
+    />
+  )}
+
 
 
 
@@ -134,21 +139,18 @@ function App() {
               placeholder="가로"
               value={width}
               onChange={e => setWidth(e.target.value)}
-              onFocus={() => setShowSizeGuide(true)}
               style={{ width: '70px', padding: '0.5rem' }}
             />
             <input
               placeholder="세로"
               value={length}
               onChange={e => setLength(e.target.value)}
-              onFocus={() => setShowSizeGuide(true)}
               style={{ width: '70px', padding: '0.5rem' }}
             />
             <input
               placeholder="높이"
               value={height}
               onChange={e => setHeight(e.target.value)}
-              onFocus={() => setShowSizeGuide(true)}
               style={{ width: '70px', padding: '0.5rem' }}
             />
           </div>
