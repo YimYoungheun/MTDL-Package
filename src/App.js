@@ -231,10 +231,15 @@ function App() {
                               </select>
                             </div>
 
-                            {quantity === '그 이상' && (
+                             {quantity === '그 이상' && (
                               <div style={{ marginBottom: '1rem' }}>
                                 <label>희망 수량 입력</label>
-                                <input type="number" value={customQuantity} onChange={e => setCustomQuantity(e.target.value)} style={{ width: '100%', padding: '0.5rem' }} />
+                                <input
+                                  type="number"
+                                  value={customQuantity}
+                                  onChange={e => setCustomQuantity(e.target.value)}
+                                  style={{ width: '100%', padding: '0.5rem' }}
+                                />
                               </div>
                             )}
 
