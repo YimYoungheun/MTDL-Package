@@ -1,4 +1,4 @@
-// App.js (완전한 버전 – 300줄 전체 UI 구성 포함)
+// App.js (전체 UI 포함, 이미지 700px, 입력칸 조정)
 import React, { useState } from 'react';
 import './App.css';
 
@@ -20,6 +20,9 @@ function App() {
   const [coating, setCoating] = useState(null);
   const [embossing, setEmbossing] = useState(null);
   const [foil, setFoil] = useState([]);
+
+  const inputStyle = { width: '360px', padding: '0.5rem' };
+  const shortInputStyle = { width: '110px', padding: '0.5rem' };
 
   const materialMap = {
     '매끄러운': ['AB', 'CCP', '아이보리', 'SC 마닐라'],
@@ -78,8 +81,8 @@ function App() {
   };
 
   return (
-    <div style={{ display: 'flex', height: '100vh', boxSizing: 'border-box' }}>
-      <div style={{ flex: 4, position: 'sticky', top: 0, height: '100vh', overflow: 'hidden' }}>
+    <div style={{ display: 'flex', boxSizing: 'border-box' }}>
+      <div style={{ width: '700px', height: '100vh', position: 'sticky', top: 0, flexShrink: 0 }}>
         <img
           src="/img/b_style_box.png"
           alt="B형 상자"
@@ -87,22 +90,22 @@ function App() {
         />
       </div>
 
-      <div style={{ flex: 1, height: '100vh', overflowY: 'scroll', padding: '2rem' }}>
+      <div style={{ flex: 1, padding: '2rem', overflowY: 'auto', height: '100vh' }}>
         {[{ label: '회사명 또는 성함', value: company, setter: setCompany },
-        { label: '연락처', value: phone, setter: setPhone },
-        { label: '이메일 주소', value: email, setter: setEmail }].map((f, i) => (
+          { label: '연락처', value: phone, setter: setPhone },
+          { label: '이메일 주소', value: email, setter: setEmail }].map((f, i) => (
           <div key={i} style={{ marginBottom: '1rem' }}>
-            <label>{f.label}</label>
-            <input value={f.value} onChange={e => f.setter(e.target.value)} style={{ width: '100%', padding: '0.5rem' }} />
+            <label>{f.label}</label><br />
+            <input value={f.value} onChange={e => f.setter(e.target.value)} style={inputStyle} />
           </div>
         ))}
 
         <div style={{ marginBottom: '1rem' }}>
           <label>내경 (mm)</label>
-          <div style={{ display: 'flex', gap: '0.5rem' }}>
-            <input placeholder="가로" value={width} onChange={e => setWidth(e.target.value)} style={{ flex: 1, padding: '0.5rem' }} />
-            <input placeholder="세로" value={length} onChange={e => setLength(e.target.value)} style={{ flex: 1, padding: '0.5rem' }} />
-            <input placeholder="높이" value={height} onChange={e => setHeight(e.target.value)} style={{ flex: 1, padding: '0.5rem' }} />
+          <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.3rem' }}>
+            <input placeholder="가로" value={width} onChange={e => setWidth(e.target.value)} style={shortInputStyle} />
+            <input placeholder="세로" value={length} onChange={e => setLength(e.target.value)} style={shortInputStyle} />
+            <input placeholder="높이" value={height} onChange={e => setHeight(e.target.value)} style={shortInputStyle} />
           </div>
         </div>
 
@@ -110,7 +113,7 @@ function App() {
           <>
             <div style={{ marginBottom: '1rem' }}>
               <label>종이 느낌</label>
-              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                 {Object.keys(materialMap).map(feel => (
                   <button key={feel} className={`option-button ${paperFeel === feel ? 'selected' : ''}`} onClick={() => { setPaperFeel(feel); setMaterial(''); setColor(''); setWeight(''); }}>{feel}</button>
                 ))}
@@ -120,7 +123,7 @@ function App() {
             {paperFeel && (
               <div style={{ marginBottom: '1rem' }}>
                 <label>재질</label>
-                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                   {materialMap[paperFeel].map(mat => (
                     <button key={mat} className={`option-button ${material === mat ? 'selected' : ''}`} onClick={() => { setMaterial(mat); setColor(''); setWeight(''); }}>{mat}</button>
                   ))}
@@ -131,7 +134,7 @@ function App() {
             {paperFeel === '러프한' && material && getColorOptions().length > 0 && (
               <div style={{ marginBottom: '1rem' }}>
                 <label>색상</label>
-                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                   {getColorOptions().map(c => (
                     <button key={c} className={`option-button ${color === c ? 'selected' : ''}`} onClick={() => { setColor(c); setWeight(''); }}>{c}</button>
                   ))}
@@ -142,7 +145,7 @@ function App() {
             {material && getWeightOptions().length > 0 && (
               <div style={{ marginBottom: '1rem' }}>
                 <label>무게</label>
-                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                   {getWeightOptions().map(w => (
                     <button key={w} className={`option-button ${weight === w ? 'selected' : ''}`} onClick={() => setWeight(w)}>{w}</button>
                   ))}
@@ -154,7 +157,7 @@ function App() {
               <>
                 <div style={{ marginBottom: '1rem' }}>
                   <label>코팅</label>
-                  <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                     {['없음', '무광', '유광', '벨벳'].map(type => (
                       <button key={type} className={`option-button ${(type === '없음' ? coating === '' : coating === type) ? 'selected' : ''}`} onClick={() => setCoating(type === '없음' ? '' : type)}>{type}</button>
                     ))}
@@ -165,7 +168,7 @@ function App() {
                   <>
                     <div style={{ marginBottom: '1rem' }}>
                       <label>형압</label>
-                      <div style={{ display: 'flex', gap: '0.5rem' }}>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                         {['없음', '음각', '양각'].map(type => (
                           <button key={type} className={`option-button ${(type === '없음' ? embossing === '' : embossing === type) ? 'selected' : ''}`} onClick={() => setEmbossing(type === '없음' ? '' : type)}>{type}</button>
                         ))}
@@ -176,7 +179,7 @@ function App() {
                       <>
                         <div style={{ marginBottom: '1rem' }}>
                           <label>박 (복수 선택 가능)</label>
-                          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                             {['없음', '금박', '은박', '먹박', '적박', '홀로그램박', '투명홀로그램박'].map(type => (
                               <button
                                 key={type}
@@ -192,7 +195,7 @@ function App() {
 
                         <div style={{ marginBottom: '1rem' }}>
                           <label>하단 모양</label>
-                          <div style={{ display: 'flex', gap: '0.5rem' }}>
+                          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                             {['맞뚜껑', '십자다루마', '삼면접착'].map(opt => (
                               <button key={opt} className={`option-button ${bottomStyle === opt ? 'selected' : ''}`} onClick={() => setBottomStyle(opt)}>{opt}</button>
                             ))}
@@ -203,7 +206,7 @@ function App() {
                           <>
                             <div style={{ marginBottom: '1rem' }}>
                               <label>수량 선택</label>
-                              <select value={quantity} onChange={e => setQuantity(e.target.value)} style={{ width: '100%', padding: '0.5rem' }}>
+                              <select value={quantity} onChange={e => setQuantity(e.target.value)} style={inputStyle}>
                                 <option value="">수량을 선택하세요</option>
                                 {[500, 1000, 2000, 3000, 5000, 10000, 20000, 30000, 50000, 100000, '그 이상'].map(qty => (
                                   <option key={qty} value={String(qty)}>{qty === '그 이상' ? '그 이상' : Number(qty).toLocaleString()}</option>
@@ -214,7 +217,7 @@ function App() {
                             {quantity === '그 이상' && (
                               <div style={{ marginBottom: '1rem' }}>
                                 <label>희망 수량 입력</label>
-                                <input type="number" value={customQuantity} onChange={e => setCustomQuantity(e.target.value)} style={{ width: '100%', padding: '0.5rem' }} />
+                                <input type="number" value={customQuantity} onChange={e => setCustomQuantity(e.target.value)} style={inputStyle} />
                               </div>
                             )}
 
