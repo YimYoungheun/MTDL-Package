@@ -3,7 +3,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
 
 function App() {
-  
+
+  const inputContainerRef = useRef();
   const [paperFeel, setPaperFeel] = useState('');
   const [material, setMaterial] = useState('');
   const [color, setColor] = useState('');
@@ -40,9 +41,9 @@ function App() {
     }
   };
 
-  document.addEventListener('click', handleClickOutside); // ⬅ 클릭일 때만 작동
+  document.addEventListener('mousedown', handleClickOutside); // 클릭했을 때만 작동
   return () => {
-    document.removeEventListener('click', handleClickOutside);
+    document.removeEventListener('mousedown', handleClickOutside);
   };
 }, []);
 
@@ -103,22 +104,23 @@ function App() {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', gap: '3rem', padding: '2rem' }}>
-      {/* 좌측 이미지 영역 */}
+          {/* 좌측 이미지 영역 */}
       <div style={{ position: 'relative' }}>
         <img
           src="/img/b_style_box.png"
           alt="B형 상자"
           style={{ width: '700px', objectFit: 'contain', borderRadius: '12px' }}
         />
+        
         {showSizeGuide && (
           <img
             src="/img/b_style_box_wdh.png"
             alt="내경 안내"
-            className={`size-guide-overlay ${fadeOut ? 'fade-out' : 'fade-in'}`}
+            className="size-guide-overlay"
           />
         )}
       </div>
+
 
       {/* 우측 입력 폼 영역 */}
       <div style={{ width: '360px' }}>
@@ -133,29 +135,29 @@ function App() {
 
         <div style={{ marginBottom: '1rem' }}>
           <label>내경 (mm)</label>
-          <div style={{ display: 'flex', gap: '0.5rem' }}>
+          <div style={{ display: 'flex', gap: '0.5rem' }} ref={inputContainerRef}>
             <input
-    placeholder="가로"
-    value={width}
-    onChange={e => setWidth(e.target.value)}
-    onFocus={() => setShowSizeGuide(true)}
-    style={{ width: '70px', padding: '0.5rem' }}
-  />
-  <input
-    placeholder="세로"
-    value={length}
-    onChange={e => setLength(e.target.value)}
-    onFocus={() => setShowSizeGuide(true)}
-    style={{ width: '70px', padding: '0.5rem' }}
-  />
-  <input
-    placeholder="높이"
-    value={height}
-    onChange={e => setHeight(e.target.value)}
-    onFocus={() => setShowSizeGuide(true)}
-    style={{ width: '70px', padding: '0.5rem' }}
-  />
-</div>
+              placeholder="가로"
+              value={width}
+              onChange={e => setWidth(e.target.value)}
+              onFocus={() => setShowSizeGuide(true)}
+              style={{ width: '70px', padding: '0.5rem' }}
+            />
+            <input
+              placeholder="세로"
+              value={length}
+              onChange={e => setLength(e.target.value)}
+              onFocus={() => setShowSizeGuide(true)}
+              style={{ width: '70px', padding: '0.5rem' }}
+            />
+            <input
+              placeholder="높이"
+              value={height}
+              onChange={e => setHeight(e.target.value)}
+              onFocus={() => setShowSizeGuide(true)}
+              style={{ width: '70px', padding: '0.5rem' }}
+            />
+          </div>
         </div>
 
         {/* 조건부 렌더링 시작 */}
