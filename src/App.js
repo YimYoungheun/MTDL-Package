@@ -117,6 +117,7 @@ function App() {
       className="size-guide-overlay fade-in"
     />
   )}
+</div>
 
 
 
