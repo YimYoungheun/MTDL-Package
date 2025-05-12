@@ -22,7 +22,7 @@ function App() {
   const [foil, setFoil] = useState([]);
 
   const inputStyle = { width: '360px', padding: '0.5rem' };
-  const shortInputStyle = { width: '110px', padding: '0.5rem' };
+  const shortInputStyle = { width: '90px', padding: '0.5rem' };
 
   const materialMap = {
     '매끄러운': ['AB', 'CCP', '아이보리', 'SC 마닐라'],
