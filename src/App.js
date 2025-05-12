@@ -223,13 +223,14 @@ function App() {
                           <>
                             <div style={{ marginBottom: '1rem' }}>
                               <label>수량 선택</label>
-                              value={quantity} onChange={e => setQuantity(e.target.value)} style={{ width: '200px', padding: '0.5rem' }}>
+                              <select value={quantity} onChange={e => setQuantity(e.target.value)} style={{ width: '200px', padding: '0.5rem' }}>
                                 <option value="">수량을 선택하세요</option>
-                                {[500, 1000, 2000, 3000, 5000, 10000, 15000, 20000, 30000, 50000, 100000, '그 이상'].map(qty => (
-                                  <option key={qty} value={qty}>{qty === '그 이상' ? '그 이상' : Number(qty).toLocaleString()}</option>
+                                {[500, 1000, ..., '그 이상'].map(qty => (
+                                  <option key={qty} value={String(qty)}>
+                                    {qty === '그 이상' ? '그 이상' : Number(qty).toLocaleString()}
+                                  </option>
                                 ))}
                               </select>
-                            </div>
 
                              {quantity === '그 이상' && (
                               <div style={{ marginBottom: '1rem' }}>
