@@ -82,7 +82,7 @@ function App() {
 
   return (
     <div style={{ display: 'flex', boxSizing: 'border-box' }}>
-      <div style={{ width: '700px', height: '100vh', position: 'sticky', top: 0, flexShrink: 0 }}>
+      <div style={{ width: '700px', height: '100vh', position: 'sticky', top: '40px', flexShrink: 0 }}>
         <img
           src="/img/b_style_box.png"
           alt="B형 상자"
