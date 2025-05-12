@@ -243,11 +243,12 @@ function App() {
                               </div>
                             )}
 
-                            {quantity && (
+                            {(quantity !== '그 이상' || (quantity === '그 이상' && customQuantity)) && (
                               <div style={{ margin: '1rem 0', color: 'crimson', fontWeight: 'bold', fontSize: '1.3rem' }}>
                                 100,000원부터 ~
                               </div>
                             )}
+
 
                             <iframe
                               src="https://mtdl.co.kr/fileupload"
