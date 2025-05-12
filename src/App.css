@@ -16,26 +16,25 @@
 
 .size-guide-overlay {
   position: absolute;
-  top: 30px;
+  top: 0;
   left: 0;
   width: 700px;
-  height: 700px;
+  height: auto;
+  object-fit: contain;
   border-radius: 12px;
   z-index: 10;
   opacity: 0;
-  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
   pointer-events: none;
 }
 
 .fade-in {
   opacity: 1;
-  transform: translateX(-10px);
   pointer-events: auto;
 }
 
 .fade-out {
   opacity: 0;
-  transform: translateX(0);
   pointer-events: none;
 }
 
@@ -50,11 +49,5 @@
   opacity: 0;
   animation: fadeIn 0.3s forwards;
   z-index: 10;
-}
-
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-  }
 }
 
