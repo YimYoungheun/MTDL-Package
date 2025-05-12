@@ -81,7 +81,7 @@ function App() {
   return (
     <div style={{ display: 'flex', height: '100vh' }}>
       {/* 좌측 이미지 영역 */}
-     <div style={{ width: '700px', position: 'sticky', top: 40px, alignSelf: 'flex-start' }}>
+     <div style={{ width: '700px', position: 'sticky', top: '40px', alignSelf: 'flex-start' }}>
         <img
           src="/img/b_style_box.png"
           alt="B형 상자"
