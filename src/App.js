@@ -238,6 +238,12 @@ function App() {
                               </div>
                             )}
 
+                            {quantity && (
+                              <div style={{ margin: '1rem 0', color: 'crimson', fontWeight: 'bold', fontSize: '1.3rem' }}>
+                                100,000원부터 ~
+                              </div>
+                            )}
+
                             <iframe
                               src="https://mtdl.co.kr/fileupload"
                               width="100%"
