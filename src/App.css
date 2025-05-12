@@ -38,3 +38,23 @@
   transform: translateX(0);
   pointer-events: none;
 }
+
+.size-guide-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 700px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+  opacity: 0;
+  animation: fadeIn 0.3s forwards;
+  z-index: 10;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
