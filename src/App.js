@@ -23,12 +23,6 @@ function App() {
   const [embossing, setEmbossing] = useState(null);
   const [foil, setFoil] = useState([]);
   const [showSizeGuide, setShowSizeGuide] = useState(false);
-  const [fadeOut, setFadeOut] = useState(false);
-
-  const handleSizeFocus = () => {
-    setShowSizeGuide(true);
-    setFadeOut(false);
-  };
 
   const handleSizeBlur = () => {
     setFadeOut(true);
@@ -41,7 +35,7 @@ function App() {
     }
   };
 
-  document.addEventListener('mousedown', handleClickOutside); // 클릭했을 때만 작동
+  document.addEventListener('mousedown', handleClickOutside);
   return () => {
     document.removeEventListener('mousedown', handleClickOutside);
   };
@@ -111,7 +105,6 @@ function App() {
           alt="B형 상자"
           style={{ width: '700px', objectFit: 'contain', borderRadius: '12px' }}
         />
-        
         {showSizeGuide && (
           <img
             src="/img/b_style_box_wdh.png"
@@ -120,6 +113,7 @@ function App() {
           />
         )}
       </div>
+
 
 
       {/* 우측 입력 폼 영역 */}
