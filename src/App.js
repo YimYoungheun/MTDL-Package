@@ -1,10 +1,9 @@
-// ✅ App.js (정렬 + 기능 모두 포함)
-import React, { useState, useRef, useEffect } from 'react';
+// App.js (내경 이미지 제거 버전)
+
+import React, { useState } from 'react';
 import './App.css';
 
 function App() {
-
-  const inputContainerRef = useRef();
   const [paperFeel, setPaperFeel] = useState('');
   const [material, setMaterial] = useState('');
   const [color, setColor] = useState('');
@@ -22,29 +21,6 @@ function App() {
   const [coating, setCoating] = useState(null);
   const [embossing, setEmbossing] = useState(null);
   const [foil, setFoil] = useState([]);
-  const [showSizeGuide, setShowSizeGuide] = useState(false);
-
-  const handleSizeBlur = () => {
-    setFadeOut(true);
-    setTimeout(() => setShowSizeGuide(false), 300);
-  };
-    useEffect(() => {
-    const handleClick = (e) => {
-      if (inputContainerRef.current?.contains(e.target)) {
-        // 내경 영역 클릭 → 이미지 켜기
-        setShowSizeGuide(true);
-      } else {
-        // 그 외 클릭 → 이미지 끄기
-        setShowSizeGuide(false);
-      }
-    };
-  
-    document.addEventListener('mousedown', handleClick);
-    return () => {
-      document.removeEventListener('mousedown', handleClick);
-    };
-  }, []);
-
 
   const materialMap = {
     '매끄러운': ['AB', 'CCP', '아이보리', 'SC 마닐라'],
@@ -103,26 +79,17 @@ function App() {
   };
 
   return (
-          {/* 좌측 이미지 영역 */}
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', gap: '3rem', padding: '2rem' }}>
+      {/* 좌측 이미지 영역 */}
       <div style={{ position: 'relative' }}>
         <img
           src="/img/b_style_box.png"
           alt="B형 상자"
           style={{ width: '700px', objectFit: 'contain', borderRadius: '12px' }}
         />
-         {showSizeGuide && (
-    <img
-      src="/img/b_style_box_wdh.png"
-      alt="내경 안내"
-      className="size-guide-overlay fade-in"
-    />
-  )}
-</div>
+      </div>
 
-
-
-
-      {/* 우측 입력 폼 영역 */}
+      {/* 우측 입력 폼 */}
       <div style={{ width: '360px' }}>
         {[{ label: '회사명 또는 성함', value: company, setter: setCompany },
         { label: '연락처', value: phone, setter: setPhone },
@@ -135,25 +102,10 @@ function App() {
 
         <div style={{ marginBottom: '1rem' }}>
           <label>내경 (mm)</label>
-          <div style={{ display: 'flex', gap: '0.5rem' }} ref={inputContainerRef}>
-            <input
-              placeholder="가로"
-              value={width}
-              onChange={e => setWidth(e.target.value)}
-              style={{ width: '70px', padding: '0.5rem' }}
-            />
-            <input
-              placeholder="세로"
-              value={length}
-              onChange={e => setLength(e.target.value)}
-              style={{ width: '70px', padding: '0.5rem' }}
-            />
-            <input
-              placeholder="높이"
-              value={height}
-              onChange={e => setHeight(e.target.value)}
-              style={{ width: '70px', padding: '0.5rem' }}
-            />
+          <div style={{ display: 'flex', gap: '0.5rem' }}>
+            <input placeholder="가로" value={width} onChange={e => setWidth(e.target.value)} style={{ width: '70px', padding: '0.5rem' }} />
+            <input placeholder="세로" value={length} onChange={e => setLength(e.target.value)} style={{ width: '70px', padding: '0.5rem' }} />
+            <input placeholder="높이" value={height} onChange={e => setHeight(e.target.value)} style={{ width: '70px', padding: '0.5rem' }} />
           </div>
         </div>
 
@@ -164,7 +116,7 @@ function App() {
               <label>종이 느낌</label>
               <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                 {Object.keys(materialMap).map(feel => (
-                  <button key={feel} className={`option-button ${paperFeel === feel ? 'selected' : ''}`} onClick={() => { setPaperFeel(feel); setMaterial(''); setColor(''); setWeight(''); setShowSizeGuide(false); }}>
+                  <button key={feel} className={`option-button ${paperFeel === feel ? 'selected' : ''}`} onClick={() => { setPaperFeel(feel); setMaterial(''); setColor(''); setWeight(''); }}>
                     {feel}
                   </button>
                 ))}
