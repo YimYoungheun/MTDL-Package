@@ -79,9 +79,9 @@ function App() {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', gap: '3rem', padding: '2rem' }}>
+    <div style={{ display: 'flex', height: '100vh' }}>
       {/* 좌측 이미지 영역 */}
-      <div style={{ position: 'relative' }}>
+     <div style={{ width: '700px', position: 'sticky', top: 0, alignSelf: 'flex-start' }}>
         <img
           src="/img/b_style_box.png"
           alt="B형 상자"
@@ -90,7 +90,7 @@ function App() {
       </div>
 
       {/* 우측 입력 폼 */}
-      <div style={{ width: '360px' }}>
+      <div style={{ flex: 1, height: '100vh', overflowY: 'auto', padding: '2rem' }}>
         {[{ label: '회사명 또는 성함', value: company, setter: setCompany },
         { label: '연락처', value: phone, setter: setPhone },
         { label: '이메일 주소', value: email, setter: setEmail }].map((f, i) => (
