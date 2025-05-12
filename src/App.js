@@ -96,7 +96,7 @@ function App() {
         { label: '이메일 주소', value: email, setter: setEmail }].map((f, i) => (
           <div key={i} style={{ marginBottom: '1rem' }}>
             <label>{f.label}</label>
-            <input value={f.value} onChange={e => f.setter(e.target.value)} style={{ width: '100%', padding: '0.5rem' }} />
+            <input value={f.value} setCompany={e => f.setter(e.target.value)} style={{ width: '200px', padding: '0.5rem' }} />
           </div>
         ))}
 
@@ -223,7 +223,7 @@ function App() {
                           <>
                             <div style={{ marginBottom: '1rem' }}>
                               <label>수량 선택</label>
-                              <select value={quantity} onChange={e => setQuantity(e.target.value)} style={{ width: '100%', padding: '0.5rem' }}>
+                              value={quantity} onChange={e => setQuantity(e.target.value)} style={{ width: '200px', padding: '0.5rem' }}>
                                 <option value="">수량을 선택하세요</option>
                                 {[500, 1000, 2000, 3000, 5000, 10000, 15000, 20000, 30000, 50000, 100000, '그 이상'].map(qty => (
                                   <option key={qty} value={qty}>{qty === '그 이상' ? '그 이상' : Number(qty).toLocaleString()}</option>
@@ -237,8 +237,8 @@ function App() {
                                 <input
                                   type="number"
                                   value={customQuantity}
-                                  onChange={e => setCustomQuantity(e.target.value)}
-                                  style={{ width: '100%', padding: '0.5rem' }}
+                                  onChange={e => setCompany(e.target.value)}
+                                  style={{ width: '200px', padding: '0.5rem' }}
                                 />
                               </div>
                             )}
