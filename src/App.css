@@ -14,38 +14,14 @@
   color: white;
 }
 
-.size-guide-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 700px;
-  height: auto;
-  object-fit: contain;
-  border-radius: 12px;
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-  z-index: 10;
-}
-
 .fade-in {
   opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.3s ease-in-out;
 }
 
 .fade-out {
   opacity: 0;
   pointer-events: none;
+  transition: opacity 0.3s ease-in-out;
 }
-
-.size-guide-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 700px;
-  height: auto;
-  object-fit: contain;
-  border-radius: 12px;
-  opacity: 0;
-  animation: fadeIn 0.3s forwards;
-  z-index: 10;
-}
-
