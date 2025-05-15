@@ -165,6 +165,39 @@ function App() {
           </div>
         </div>
 
+{width && length && height && bottomStyle && (
+  (() => {
+    const w = parseInt(width);
+    const l = parseInt(length);
+    const h = parseInt(height);
+
+    const dogaWidth = w * 2 + 16;
+    let dogaHeight = 0;
+
+    if (bottomStyle === '맞뚜껑') {
+      dogaHeight = (h + 16) * 2 + l + 20;
+    } else if (bottomStyle === '십자다루마' || bottomStyle === '삼면접착') {
+      dogaHeight = h * 0.75 * 2 + l * 2 + h + 16 + 5 + 20;
+    }
+
+    const sheetSizes = [
+      { name: '국4절', width: 318, height: 469 },
+      { name: '4절', width: 394, height: 545 },
+      { name: '국2절', width: 465, height: 636 },
+      { name: '2절', width: 545, height: 788 },
+      { name: '국전지', width: 636, height: 939 }
+    ];
+
+    const matched = sheetSizes.find(s => s.width >= dogaWidth && s.height >= dogaHeight);
+
+    return (
+      <div style={{ marginBottom: '1rem', backgroundColor: '#eee', padding: '0.5rem', borderRadius: '8px' }}>
+        전개도 크기: {dogaWidth} × {dogaHeight}mm / 추천 절지: {matched ? matched.name : '해당 없음'}
+      </div>
+    );
+  })()
+)}
+        
         {width && length && height && (
           <>
             <div style={{ marginBottom: '1rem' }}>
