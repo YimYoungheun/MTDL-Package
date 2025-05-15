@@ -368,25 +368,58 @@ function App() {
                       );
                     })()}
 
-                  <iframe
-                    src="https://mtdl.co.kr/fileupload"
-                    width="100%"
-                    height="170"
-                    style={{ border: '1px solid #ccc', borderRadius: '12px', marginBottom: '1rem' }}
-                    title="파일 업로드"
-                  />
-  
-                  <button
-                    style={{ background: 'black', color: 'white', padding: '0.5rem 1rem', borderRadius: '6px', border: 'none', cursor: 'pointer' }}
-                    onClick={() => alert('기재해주신 연락처로 담당자가 연락할 수 있습니다.')}
-                  >
-                    확인
-          </button>
-        </>
+                          {(quantity !== '' && (quantity !== '그 이상' || (quantity === '그 이상' && customQuantity))) && (
+          <>
+            {width && length && height && bottomStyle && (() => {
+              const w = parseInt(width);
+              const l = parseInt(length);
+              const h = parseInt(height);
+              const dogaWidth = w * 2 + 16;
+              let dogaHeight = 0;
+
+              if (bottomStyle === '맞뚜껑') {
+                dogaHeight = (h + 16) * 2 + l + 20;
+              } else if (bottomStyle === '십자다루마' || bottomStyle === '삼면접착') {
+                dogaHeight = h * 0.75 * 2 + l * 2 + h + 16 + 5 + 20;
+              }
+
+              const sheetSizes = [
+                { name: '국4절', width: 318, height: 469 },
+                { name: '4절', width: 394, height: 545 },
+                { name: '국2절', width: 465, height: 636 },
+                { name: '2절', width: 545, height: 788 },
+                { name: '국전지', width: 636, height: 939 }
+              ];
+
+              const matched = sheetSizes.find(s => s.width >= dogaWidth && s.height >= dogaHeight);
+
+              return (
+                <div style={{ marginBottom: '1rem', backgroundColor: '#eee', padding: '0.5rem', borderRadius: '8px' }}>
+                  전개도 크기: {dogaWidth} × {dogaHeight}mm / 추천 절지: {matched ? matched.name : '해당 없음'}
+                </div>
+              );
+            })()}
+
+            <iframe
+              src="https://mtdl.co.kr/fileupload"
+              width="100%"
+              height="170"
+              style={{ border: '1px solid #ccc', borderRadius: '12px', marginBottom: '1rem' }}
+              title="파일 업로드"
+            />
+
+            <button
+              style={{ background: 'black', color: 'white', padding: '0.5rem 1rem', borderRadius: '6px', border: 'none', cursor: 'pointer' }}
+              onClick={() => alert('기재해주신 연락처로 담당자가 연락할 수 있습니다.')}
+            >
+              확인
+            </button>
+          </>
+        )}
+
+      </div>
     </div>
   );
 }
 
 export default App;
-    
-  
