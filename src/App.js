@@ -307,52 +307,61 @@ function App() {
                                 <input type="number" value={customQuantity} onChange={e => setCustomQuantity(e.target.value)} style={inputStyle} />
                               </div>
 
-                            {(quantity !== '' && (quantity !== '그 이상' || (quantity === '그 이상' && customQuantity))) && (
-  <>
-    <div style={{ marginBottom: '1rem', color: 'crimson', fontWeight: 'bold', fontSize: '1.3rem' }}>
-      {getEstimatedPrice() ? `${getEstimatedPrice().toLocaleString()}원부터 ~` : '금액 계산 불가'}
-    </div>
+                           {(quantity !== '' && (quantity !== '그 이상' || (quantity === '그 이상' && customQuantity))) && (
+                            <>
+                              <div style={{ marginBottom: '1rem', color: 'crimson', fontWeight: 'bold', fontSize: '1.3rem' }}>
+                                {getEstimatedPrice() ? `${getEstimatedPrice().toLocaleString()}원부터 ~` : '금액 계산 불가'}
+                              </div>
+                          
+                              <div style={{ marginBottom: '1rem' }}>
+                                <label>하단 모양</label>
+                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                                  {['맞뚜껑', '십자다루마', '삼면접착'].map(opt => (
+                                    <button
+                                      key={opt}
+                                      className={`option-button ${bottomStyle === opt ? 'selected' : ''}`}
+                                      onClick={() => setBottomStyle(opt)}
+                                    >
+                                      {opt}
+                                    </button>
+                                  ))}
+                                </div>
+                              </div>
+                            </>
+                          )}
 
-    <div style={{ marginBottom: '1rem' }}>
-      <label>하단 모양</label>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-        {['맞뚜껑', '십자다루마', '삼면접착'].map(opt => (
-          <button key={opt} className={`option-button ${bottomStyle === opt ? 'selected' : ''}`} onClick={() => setBottomStyle(opt)}>{opt}</button>
-        ))}
-      </div>
-    </div>
 
-    {width && length && height && bottomStyle && (() => {
-      const w = parseInt(width);
-      const l = parseInt(length);
-      const h = parseInt(height);
-      const dogaWidth = w * 2 + 16;
-      let dogaHeight = 0;
-
-      if (bottomStyle === '맞뚜껑') {
-        dogaHeight = (h + 16) * 2 + l + 20;
-      } else if (bottomStyle === '십자다루마' || bottomStyle === '삼면접착') {
-        dogaHeight = h * 0.75 * 2 + l * 2 + h + 16 + 5 + 20;
-      }
-
-      const sheetSizes = [
-        { name: '국4절', width: 318, height: 469 },
-        { name: '4절', width: 394, height: 545 },
-        { name: '국2절', width: 465, height: 636 },
-        { name: '2절', width: 545, height: 788 },
-        { name: '국전지', width: 636, height: 939 }
-      ];
-
-      const matched = sheetSizes.find(s => s.width >= dogaWidth && s.height >= dogaHeight);
-
-      return (
-        <div style={{ marginBottom: '1rem', backgroundColor: '#eee', padding: '0.5rem', borderRadius: '8px' }}>
-          전개도 크기: {dogaWidth} × {dogaHeight}mm / 추천 절지: {matched ? matched.name : '해당 없음'}
-        </div>
-      );
-    })()}
-  </>
-)}
+                          {width && length && height && bottomStyle && (() => {
+                            const w = parseInt(width);
+                            const l = parseInt(length);
+                            const h = parseInt(height);
+                            const dogaWidth = w * 2 + 16;
+                            let dogaHeight = 0;
+                      
+                            if (bottomStyle === '맞뚜껑') {
+                              dogaHeight = (h + 16) * 2 + l + 20;
+                            } else if (bottomStyle === '십자다루마' || bottomStyle === '삼면접착') {
+                              dogaHeight = h * 0.75 * 2 + l * 2 + h + 16 + 5 + 20;
+                            }
+                      
+                            const sheetSizes = [
+                              { name: '국4절', width: 318, height: 469 },
+                              { name: '4절', width: 394, height: 545 },
+                              { name: '국2절', width: 465, height: 636 },
+                              { name: '2절', width: 545, height: 788 },
+                              { name: '국전지', width: 636, height: 939 }
+                            ];
+                      
+                            const matched = sheetSizes.find(s => s.width >= dogaWidth && s.height >= dogaHeight);
+                      
+                            return (
+                              <div style={{ marginBottom: '1rem', backgroundColor: '#eee', padding: '0.5rem', borderRadius: '8px' }}>
+                                전개도 크기: {dogaWidth} × {dogaHeight}mm / 추천 절지: {matched ? matched.name : '해당 없음'}
+                              </div>
+                            );
+                          })()}
+                        </>
+                      )}
 
        
                                 
