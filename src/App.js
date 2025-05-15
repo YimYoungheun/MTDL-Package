@@ -27,7 +27,7 @@ function App() {
     };
     const getEstimatedPrice = () => {
     if (!paperFeel || !material || !weight) return null;
-    const weightValue = weight.replace('g', '');
+    const weightValue = weight;
     if (paperFeel === '러프한' && color) {
       return paperPrices[paperFeel]?.[material]?.[color]?.[weightValue] || null;
     } else {
