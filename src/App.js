@@ -3,6 +3,37 @@ import React, { useState } from 'react';
 import './App.css';
 
 function App() {
+  const paperPrices = {
+      '매끄러운': {
+        AB: { '300g': 359390, '350g': 420690 },
+        CCP: { '300g': 386260, '350g': 450640 },
+        아이보리: { '300g': 235040, '350g': 272400 },
+        'SC 마닐라': { '300g': 181630, '350g': 211550 }
+      },
+      '러프한': {
+        올드밀: {
+          비앙코: { '300g': 764500, '350g': 891000 },
+          '엑스트라 화이트': { '300g': 695000, '350g': 810000 },
+          '프리미엄 화이트': { '300g': 695000, '350g': 810000 }
+        },
+        아코팩: {
+          '웜 화이트': { '300g': 435000, '350g': 510000, '400g': 595000 },
+          '네츄럴': { '300g': 435000, '350g': 510000 }
+        },
+        녹차지: {
+          백색: { '300g': 400000, '350g': 430000 }
+        }
+      }
+    };
+    const getEstimatedPrice = () => {
+    if (!paperFeel || !material || !weight) return null;
+    const weightValue = weight.replace('g', '');
+    if (paperFeel === '러프한' && color) {
+      return paperPrices[paperFeel]?.[material]?.[color]?.[weightValue] || null;
+    } else {
+      return paperPrices[paperFeel]?.[material]?.[weightValue] || null;
+    }
+  };
   const [paperFeel, setPaperFeel] = useState('');
   const [material, setMaterial] = useState('');
   const [color, setColor] = useState('');
@@ -20,7 +51,6 @@ function App() {
   const [coating, setCoating] = useState(null);
   const [embossing, setEmbossing] = useState(null);
   const [foil, setFoil] = useState([]);
-
   const inputStyle = { width: '360px', padding: '0.5rem' };
   const shortInputStyle = { width: '90px', padding: '0.5rem' };
 
@@ -254,8 +284,9 @@ function App() {
 
                             {(quantity !== '' && (quantity !== '그 이상' || (quantity === '그 이상' && customQuantity))) && (
                               <div style={{ marginBottom: '1rem', color: 'crimson', fontWeight: 'bold', fontSize: '1.3rem' }}>
-                                100,000원부터 ~
+                                {getEstimatedPrice() ? `${getEstimatedPrice().toLocaleString()}원부터 ~` : '금액 계산 불가'}
                               </div>
+
                             )}
 
                             <iframe
