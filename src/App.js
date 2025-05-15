@@ -174,6 +174,14 @@ function App() {
     const dogaWidth = w * 2 + 16;
     let dogaHeight = 0;
 
+    const canFitTwo = sheetSizes.some(s =>
+      (dogaWidth * 2 <= s.width && dogaHeight <= s.height) ||
+      (dogaWidth <= s.width && dogaHeight * 2 <= s.height) ||
+      (dogaWidth * 2 <= s.height && dogaHeight <= s.width) ||
+      (dogaWidth <= s.height && dogaHeight * 2 <= s.width)
+    );
+
+    
     if (bottomStyle === '맞뚜껑') {
       dogaHeight = (h + 16) * 2 + l + 20;
     } else if (bottomStyle === '십자다루마' || bottomStyle === '삼면접착') {
