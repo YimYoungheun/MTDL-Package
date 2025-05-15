@@ -197,18 +197,19 @@ function App() {
       { name: '국전지', width: 636, height: 939 }
     ];
 
-    const canFitTwo = sheetSizes.some(s =>
-      (dogaWidth * 2 <= s.width && dogaHeight <= s.height) ||
-      (dogaWidth <= s.width && dogaHeight * 2 <= s.height) ||
-      (dogaWidth * 2 <= s.height && dogaHeight <= s.width) ||
-      (dogaWidth <= s.height && dogaHeight * 2 <= s.width)
-    );
-
     const matched = sheetSizes.find(s => s.width >= dogaWidth && s.height >= dogaHeight);
+
+    const canFitTwo = matched && (
+      (dogaWidth * 2 <= matched.width && dogaHeight <= matched.height) ||
+      (dogaWidth <= matched.width && dogaHeight * 2 <= matched.height) ||
+      (dogaWidth * 2 <= matched.height && dogaHeight <= matched.width) ||
+      (dogaWidth <= matched.height && dogaHeight * 2 <= matched.width)
+    );
 
     return (
       <div style={{ marginBottom: '1rem', backgroundColor: '#eee', padding: '0.5rem', borderRadius: '8px' }}>
-        전개도 크기: {dogaWidth} × {dogaHeight}mm / 추천 절지: {matched ? matched.name : '해당 없음'}
+        전개도 크기: {dogaWidth} × {dogaHeight}mm / 추천 절지: {matched ? matched.name : '해당 없음'}<br />
+        배치 가능 수량: {canFitTwo ? '2개 이상 가능' : '1개만 가능'}
       </div>
     );
   })()
