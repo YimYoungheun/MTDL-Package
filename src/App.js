@@ -168,21 +168,21 @@ function App() {
             )}
 
             {material && getWeightOptions().length > 0 && (
-            {weight && (
-                  <div style={{ marginBottom: '1rem', backgroundColor: '#eee', padding: '0.75rem', borderRadius: '8px', fontSize: '0.9rem' }}>
-                    <strong>선택된 종이값 (임시):</strong><br />
-                    느낌: {paperFeel} / 재질: {material} / 색상: {color || '없음'} / 무게: {weight}
-                  </div>
-                )}
-              <div style={{ marginBottom: '1rem' }}>
-                <label>무게</label>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-                  {getWeightOptions().map(w => (
-                    <button key={w} className={`option-button ${weight === w ? 'selected' : ''}`} onClick={() => setWeight(w)}>{w}</button>
-                  ))}
-                </div>
-              </div>
-            )}
+  <div style={{ marginBottom: '1rem' }}>
+    {weight && (
+      <div style={{ marginBottom: '1rem', backgroundColor: '#eee', padding: '0.75rem', borderRadius: '8px', fontSize: '0.9rem' }}>
+        <strong>선택된 종이값 (임시):</strong><br />
+        느낌: {paperFeel} / 재질: {material} / 색상: {color || '없음'} / 무게: {weight}
+      </div>
+    )}
+    <label>무게</label>
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+      {getWeightOptions().map(w => (
+        <button key={w} className={`option-button ${weight === w ? 'selected' : ''}`} onClick={() => setWeight(w)}>{w}</button>
+      ))}
+    </div>
+  </div>
+)}
 
             {weight && (
               <>
