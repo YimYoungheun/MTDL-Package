@@ -291,44 +291,52 @@ function App() {
                         </div>
 
                         <>
+                          <div style={{ marginBottom: '1rem' }}>
+                            <label>수량 선택</label>
+                            <select value={quantity} onChange={e => setQuantity(e.target.value)} style={inputStyle}>
+                              <option value="">수량을 선택하세요</option>
+                              {[500, 1000, 2000, 3000, 5000, 10000, 20000, 30000, 50000, 100000, '그 이상'].map(qty => (
+                                <option key={qty} value={String(qty)}>{qty === '그 이상' ? '그 이상' : Number(qty).toLocaleString()}</option>
+                              ))}
+                            </select>
+                          </div>
+                        
+                          {quantity === '그 이상' && (
                             <div style={{ marginBottom: '1rem' }}>
-                              <label>수량 선택</label>
-                              <select value={quantity} onChange={e => setQuantity(e.target.value)} style={inputStyle}>
-                                <option value="">수량을 선택하세요</option>
-                                {[500, 1000, 2000, 3000, 5000, 10000, 20000, 30000, 50000, 100000, '그 이상'].map(qty => (
-                                  <option key={qty} value={String(qty)}>{qty === '그 이상' ? '그 이상' : Number(qty).toLocaleString()}</option>
-                                ))}
-                              </select>
+                              <label>희망 수량 입력</label>
+                              <input
+                                type="number"
+                                value={customQuantity}
+                                onChange={e => setCustomQuantity(e.target.value)}
+                                style={inputStyle}
+                              />
                             </div>
-
-                            {quantity === '그 이상' && (
-                              <div style={{ marginBottom: '1rem' }}>
-                                <label>희망 수량 입력</label>
-                                <input type="number" value={customQuantity} onChange={e => setCustomQuantity(e.target.value)} style={inputStyle} />
+                          )}
+                        
+                          {(quantity !== '' && (quantity !== '그 이상' || (quantity === '그 이상' && customQuantity))) && (
+                            <>
+                              <div style={{ marginBottom: '1rem', color: 'crimson', fontWeight: 'bold', fontSize: '1.3rem' }}>
+                                {getEstimatedPrice() ? `${getEstimatedPrice().toLocaleString()}원부터 ~` : '금액 계산 불가'}
                               </div>
+                        
+                              <div style={{ marginBottom: '1rem' }}>
+                                <label>하단 모양</label>
+                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                                  {['맞뚜껑', '십자다루마', '삼면접착'].map(opt => (
+                                    <button
+                                      key={opt}
+                                      className={`option-button ${bottomStyle === opt ? 'selected' : ''}`}
+                                      onClick={() => setBottomStyle(opt)}
+                                    >
+                                      {opt}
+                                    </button>
+                                  ))}
+                                </div>
+                              </div>
+                            </>
+                          )}
+                        </>
 
-                           {(quantity !== '' && (quantity !== '그 이상' || (quantity === '그 이상' && customQuantity))) && (
-  <>
-    <div style={{ marginBottom: '1rem', color: 'crimson', fontWeight: 'bold', fontSize: '1.3rem' }}>
-      {getEstimatedPrice() ? `${getEstimatedPrice().toLocaleString()}원부터 ~` : '금액 계산 불가'}
-    </div>
-
-    <div style={{ marginBottom: '1rem' }}>
-      <label>하단 모양</label>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-        {['맞뚜껑', '십자다루마', '삼면접착'].map(opt => (
-          <button
-            key={opt}
-            className={`option-button ${bottomStyle === opt ? 'selected' : ''}`}
-            onClick={() => setBottomStyle(opt)}
-          >
-            {opt}
-          </button>
-        ))}
-      </div>
-    </div>
-  </>
-)}
 
 
 
