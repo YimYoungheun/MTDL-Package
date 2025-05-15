@@ -388,6 +388,7 @@ function App() {
   >
     확인
   </button>
+  </>
 </div>
 );
 }
