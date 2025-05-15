@@ -28,6 +28,7 @@ function App() {
     const getEstimatedPrice = () => {
     if (!paperFeel || !material || !weight) return null;
     const weightValue = weight;
+
     if (paperFeel === '러프한' && color) {
       return paperPrices[paperFeel]?.[material]?.[color]?.[weightValue] || null;
     } else {
@@ -199,12 +200,6 @@ function App() {
 
             {material && getWeightOptions().length > 0 && (
   <div style={{ marginBottom: '1rem' }}>
-    {weight && (
-      <div style={{ marginBottom: '1rem', backgroundColor: '#eee', padding: '0.75rem', borderRadius: '8px', fontSize: '0.9rem' }}>
-        <strong>선택된 종이값 (임시):</strong><br />
-        느낌: {paperFeel} / 재질: {material} / 색상: {color || '없음'} / 무게: {weight}
-      </div>
-    )}
     <label>무게</label>
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
       {getWeightOptions().map(w => (
