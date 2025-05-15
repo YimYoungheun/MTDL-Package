@@ -388,8 +388,7 @@ function App() {
   >
     확인
   </button>
-</>
-</div> {/* 🔐 App 전체를 감싸는 div */}
+</div>
 );
 }
 
