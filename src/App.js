@@ -385,8 +385,8 @@ function App() {
   확인
 </button>
 
-</div> {/* 🔐 반드시 닫아야 할 div */}
-</div> {/* 🔐 App 전체를 감싸는 div */}
+</div>
+</div>
 );
 }
 
