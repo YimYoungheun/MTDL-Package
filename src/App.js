@@ -391,18 +391,17 @@ function App() {
                                   확인
                                 </button>
                               </div>
+                              )}
                             </>
                           )}
                         </>
                       )}
                     </>
                   )}
-                </>
-              )}
-          </div>
-        </div>
-      );
-      }
+              </div>
+            </div>
+          );
+          }
 
 export default App;
 
