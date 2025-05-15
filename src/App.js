@@ -25,15 +25,7 @@ function App() {
         }
       }
     };
-  const getEstimatedPrice = () => {
-    if (!paperFeel || !material || !weight) return null;
-    const weightValue = weight;
-    if (paperFeel === '러프한' && color) {
-      return paperPrices[paperFeel]?.[material]?.[color]?.[weightValue] || null;
-    } else {
-      return paperPrices[paperFeel]?.[material]?.[weightValue] || null;
-    }
-  };
+
   const [paperFeel, setPaperFeel] = useState('');
   const [material, setMaterial] = useState('');
   const [color, setColor] = useState('');
@@ -103,6 +95,16 @@ function App() {
     }
   };
 
+  const getEstimatedPrice = () => {
+    if (!paperFeel || !material || !weight) return null;
+    const weightValue = weight;
+    if (paperFeel === '러프한' && color) {
+      return paperPrices[paperFeel]?.[material]?.[color]?.[weightValue] || null;
+    } else {
+      return paperPrices[paperFeel]?.[material]?.[weightValue] || null;
+    }
+  };
+
   const getColorOptions = () => paperFeel === '러프한' ? colorMap[material] || [] : [];
   const getWeightOptions = () => {
     if (paperFeel === '매끄러운' || paperFeel === '친환경') return weightMap[paperFeel]?.[material] || [];
@@ -110,8 +112,67 @@ function App() {
     return [];
   };
 
+  const renderDogaInfo = () => {
+    const w = parseInt(width);
+    const l = parseInt(length);
+    const h = parseInt(height);
+    if (!w || !l || !h || !bottomStyle) return null;
+
+    const dogaWidth = w * 2 + 16;
+    let dogaHeight = 0;
+    if (bottomStyle === '맞뚜껑') {
+      dogaHeight = (h + 16) * 2 + l + 20;
+    } else if (bottomStyle === '십자다루마' || bottomStyle === '삼면접착') {
+      dogaHeight = h * 0.75 * 2 + l * 2 + h + 16 + 5 + 20;
+    }
+
+    const sheetSizes = [
+      { name: '국4절', width: 318, height: 469 },
+      { name: '4절', width: 394, height: 545 },
+      { name: '국2절', width: 465, height: 636 },
+      { name: '2절', width: 545, height: 788 },
+      { name: '국전지', width: 636, height: 939 }
+    ];
+
+    const matched = sheetSizes.find(s => s.width >= dogaWidth && s.height >= dogaHeight);
+
+    const canFitTwo = matched && (
+      (dogaWidth * 2 <= matched.width && dogaHeight <= matched.height) ||
+      (dogaWidth <= matched.width && dogaHeight * 2 <= matched.height) ||
+      (dogaWidth * 2 <= matched.height && dogaHeight <= matched.width) ||
+      (dogaWidth <= matched.height && dogaHeight * 2 <= matched.width)
+    );
+
+    return `전개도 크기: ${dogaWidth} × ${dogaHeight}mm / 추천 절지: ${matched ? matched.name : '해당 없음'} / 배치 가능 수량: ${canFitTwo ? '2개 이상 가능' : '1개만 가능'}`;
+  };
+
   return (
-    <div>코드 전체 렌더링</div>
+    <div style={{ padding: '2rem' }}>
+      <h2>패키지 주문 UI</h2>
+      <div style={{ marginBottom: '1rem' }}>
+        <label>내경 입력</label><br />
+        <input placeholder="가로(mm)" value={width} onChange={e => setWidth(e.target.value)} style={shortInputStyle} />
+        <input placeholder="세로(mm)" value={length} onChange={e => setLength(e.target.value)} style={shortInputStyle} />
+        <input placeholder="높이(mm)" value={height} onChange={e => setHeight(e.target.value)} style={shortInputStyle} />
+      </div>
+
+      {width && length && height && (
+        <div style={{ marginBottom: '1rem' }}>
+          <label>하단 모양</label><br />
+          {['맞뚜껑', '십자다루마', '삼면접착'].map(opt => (
+            <button key={opt} onClick={() => setBottomStyle(opt)} style={{ marginRight: '0.5rem' }}>
+              {opt}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {bottomStyle && (
+        <div style={{ marginTop: '1rem', padding: '1rem', backgroundColor: '#f8f8f8', borderRadius: '8px' }}>
+          {renderDogaInfo()}
+        </div>
+      )}
+    </div>
   );
 }
 
