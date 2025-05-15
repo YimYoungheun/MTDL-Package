@@ -91,6 +91,36 @@ function App() {
       </div>
 
       <div style={{ flex: 1, padding: '2rem', overflowY: 'auto', height: '100vh' }}>
+        <button
+          onClick={() => {
+            setPaperFeel('');
+            setMaterial('');
+            setColor('');
+            setWeight('');
+            setBottomStyle('');
+            setProduct('');
+            setPhone('');
+            setEmail('');
+            setWidth('');
+            setLength('');
+            setHeight('');
+            setQuantity('');
+            setCustomQuantity('');
+            setCoating(null);
+            setEmbossing(null);
+            setFoil([]);
+          }}
+          style={{
+            marginBottom: '1.5rem',
+            backgroundColor: '#ddd',
+            border: 'none',
+            padding: '0.5rem 1rem',
+            borderRadius: '6px',
+            cursor: 'pointer'
+          }}
+        >
+          다시 선택하기
+        </button>
         {[{ label: '회사명 또는 성함', value: company, setter: setCompany },
           { label: '연락처', value: phone, setter: setPhone },
           { label: '이메일 주소', value: email, setter: setEmail }].map((f, i) => (
