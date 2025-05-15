@@ -308,27 +308,28 @@ function App() {
                               </div>
 
                            {(quantity !== '' && (quantity !== '그 이상' || (quantity === '그 이상' && customQuantity))) && (
-                            <>
-                              <div style={{ marginBottom: '1rem', color: 'crimson', fontWeight: 'bold', fontSize: '1.3rem' }}>
-                                {getEstimatedPrice() ? `${getEstimatedPrice().toLocaleString()}원부터 ~` : '금액 계산 불가'}
-                              </div>
-                          
-                              <div style={{ marginBottom: '1rem' }}>
-                                <label>하단 모양</label>
-                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-                                  {['맞뚜껑', '십자다루마', '삼면접착'].map(opt => (
-                                    <button
-                                      key={opt}
-                                      className={`option-button ${bottomStyle === opt ? 'selected' : ''}`}
-                                      onClick={() => setBottomStyle(opt)}
-                                    >
-                                      {opt}
-                                    </button>
-                                  ))}
-                                </div>
-                              </div>
-                            </>
-                          )}
+  <>
+    <div style={{ marginBottom: '1rem', color: 'crimson', fontWeight: 'bold', fontSize: '1.3rem' }}>
+      {getEstimatedPrice() ? `${getEstimatedPrice().toLocaleString()}원부터 ~` : '금액 계산 불가'}
+    </div>
+
+    <div style={{ marginBottom: '1rem' }}>
+      <label>하단 모양</label>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+        {['맞뚜껑', '십자다루마', '삼면접착'].map(opt => (
+          <button
+            key={opt}
+            className={`option-button ${bottomStyle === opt ? 'selected' : ''}`}
+            onClick={() => setBottomStyle(opt)}
+          >
+            {opt}
+          </button>
+        ))}
+      </div>
+    </div>
+  </>
+)}
+
 
 
                           {width && length && height && bottomStyle && (() => {
