@@ -290,8 +290,7 @@ function App() {
                           </div>
                         </div>
 
-                        {bottomStyle && (
-                          <>
+                        <>
                             <div style={{ marginBottom: '1rem' }}>
                               <label>수량 선택</label>
                               <select value={quantity} onChange={e => setQuantity(e.target.value)} style={inputStyle}>
@@ -307,7 +306,6 @@ function App() {
                                 <label>희망 수량 입력</label>
                                 <input type="number" value={customQuantity} onChange={e => setCustomQuantity(e.target.value)} style={inputStyle} />
                               </div>
-                            )}
 
                             {(quantity !== '' && (quantity !== '그 이상' || (quantity === '그 이상' && customQuantity))) && (
   <>
