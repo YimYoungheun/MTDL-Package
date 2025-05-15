@@ -165,6 +165,15 @@ function App() {
           </div>
         </div>
 
+<div style={{ marginBottom: '1rem' }}>
+  <label>하단 모양</label>
+  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+    {['맞뚜껑', '십자다루마', '삼면접착'].map(opt => (
+      <button key={opt} className={`option-button ${bottomStyle === opt ? 'selected' : ''}`} onClick={() => setBottomStyle(opt)}>{opt}</button>
+    ))}
+  </div>
+</div>
+
 {width && length && height && bottomStyle && (
   (() => {
     const w = parseInt(width);
@@ -174,14 +183,6 @@ function App() {
     const dogaWidth = w * 2 + 16;
     let dogaHeight = 0;
 
-    const canFitTwo = sheetSizes.some(s =>
-      (dogaWidth * 2 <= s.width && dogaHeight <= s.height) ||
-      (dogaWidth <= s.width && dogaHeight * 2 <= s.height) ||
-      (dogaWidth * 2 <= s.height && dogaHeight <= s.width) ||
-      (dogaWidth <= s.height && dogaHeight * 2 <= s.width)
-    );
-
-    
     if (bottomStyle === '맞뚜껑') {
       dogaHeight = (h + 16) * 2 + l + 20;
     } else if (bottomStyle === '십자다루마' || bottomStyle === '삼면접착') {
@@ -195,6 +196,13 @@ function App() {
       { name: '2절', width: 545, height: 788 },
       { name: '국전지', width: 636, height: 939 }
     ];
+
+    const canFitTwo = sheetSizes.some(s =>
+      (dogaWidth * 2 <= s.width && dogaHeight <= s.height) ||
+      (dogaWidth <= s.width && dogaHeight * 2 <= s.height) ||
+      (dogaWidth * 2 <= s.height && dogaHeight <= s.width) ||
+      (dogaWidth <= s.height && dogaHeight * 2 <= s.width)
+    );
 
     const matched = sheetSizes.find(s => s.width >= dogaWidth && s.height >= dogaHeight);
 
