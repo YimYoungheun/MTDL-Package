@@ -298,7 +298,7 @@ function App() {
                             ))}
                           </div>
                         </div>
-
+                        
                         {bottomStyle && (
                           <>
                             <div style={{ marginBottom: '1rem' }}>
@@ -310,21 +310,19 @@ function App() {
                                 ))}
                               </select>
                             </div>
-
+                        
                             {quantity === '그 이상' && (
                               <div style={{ marginBottom: '1rem' }}>
                                 <label>희망 수량 입력</label>
                                 <input type="number" value={customQuantity} onChange={e => setCustomQuantity(e.target.value)} style={inputStyle} />
                               </div>
                             )}
-
+                        
                             {(quantity !== '' && (quantity !== '그 이상' || (quantity === '그 이상' && customQuantity))) && (
                               <div style={{ marginBottom: '1rem', color: 'crimson', fontWeight: 'bold', fontSize: '1.3rem' }}>
                                 {getEstimatedPrice() ? `${getEstimatedPrice().toLocaleString()}원부터 ~` : '금액 계산 불가'}
                               </div>
-
                             )}
-
                             <iframe
                               src="https://mtdl.co.kr/fileupload"
                               width="100%"
