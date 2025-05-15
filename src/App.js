@@ -98,12 +98,6 @@ function App() {
             setColor('');
             setWeight('');
             setBottomStyle('');
-            setProduct('');
-            setPhone('');
-            setEmail('');
-            setWidth('');
-            setLength('');
-            setHeight('');
             setQuantity('');
             setCustomQuantity('');
             setCoating(null);
