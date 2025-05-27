@@ -196,7 +196,7 @@ function App() {
 
         {/* 도면/끼워박기/절지 안내 (DogaPreview) */}
         {width && length && height && bottomStyle && (
-          <DogaPreview
+           <DogaPreview
             width={width}
             length={length}
             height={height}
