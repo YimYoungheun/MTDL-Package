@@ -111,19 +111,21 @@ function App() {
     }
   };
 
-  // 전개도 안내 계산
+    // 전개도 안내 계산 (getDogaInfo)
   const getDogaInfo = () => {
     if (!(width && length && height && bottomStyle)) return null;
     const w = parseInt(width);
-    const l = parseInt(length);
+    const l = parseInt(length); // 세로
     const h = parseInt(height);
+  
     const dogaWidth = w * 2 + 16;
     let dogaHeight = 0;
     if (bottomStyle === '맞뚜껑') {
-      dogaHeight = (h + 16) * 2 + l + 20;
+      dogaHeight = (16 + l) * 2 + h + 20;
     } else if (bottomStyle === '십자다루마' || bottomStyle === '삼면접착') {
-      dogaHeight = h * 0.75 * 2 + l * 2 + h + 16 + 5 + 20;
+      dogaHeight = (l * 0.75) + h + l + 16 + 20;
     }
+  
     const sheetSizes = [
       { name: '국4절', width: 318, height: 469 },
       { name: '4절', width: 394, height: 545 },
