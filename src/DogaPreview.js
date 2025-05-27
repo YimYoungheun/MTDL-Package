@@ -1,7 +1,5 @@
-// DogaPreview.js
 import React from 'react';
 
-// 절지(종이) 종류와 크기 정보
 const SHEETS = [
   { name: '국4절', width: 318, height: 469 },
   { name: '4절', width: 394, height: 545 },
@@ -15,7 +13,6 @@ const SHEETS = [
 function getDogaWidth(w, l) {
   return (w * 2) + (l * 2) + 16 + 10;
 }
-
 // 전개도 세로(높이) 계산식
 function getDogaHeight(l, h, bottomStyle) {
   if (bottomStyle === '맞뚜껑') {
@@ -26,7 +23,6 @@ function getDogaHeight(l, h, bottomStyle) {
   }
   return 0;
 }
-
 // 끼워박기 세로 계산식
 function getDogaHeightKkiwo(l, h, bottomStyle) {
   if (bottomStyle === '맞뚜껑') {
@@ -38,25 +34,34 @@ function getDogaHeightKkiwo(l, h, bottomStyle) {
   return 0;
 }
 
-// 절지별로 배치 가능 여부/끼워박기 가능 여부 계산
+function getMaxGaroBatch(dogaWidth, maxWidth) {
+  // 1개씩, 최대 6개까지 반복하며 도면 가로*n이 절지보다 작으면 증가
+  for (let n = 6; n >= 1; n--) {
+    if ((dogaWidth * n) <= maxWidth) {
+      return n;
+    }
+  }
+  return 0;
+}
+
+// 실제 알고리즘: 절지별, 가로 최대 6개, 필요시 세로 끼워박기까지
 function getSheetRecommendation(dogaWidth, dogaHeight, dogaHeightKkiwo) {
   for (const sheet of SHEETS) {
-    let countGaro = Math.floor(sheet.width / dogaWidth);
-    if (countGaro > 4) countGaro = 4;
-    if (countGaro > 0) {
-      // 남는 세로 공간
-      const remHeight = sheet.height - dogaHeight;
-      if (remHeight >= 0) {
-        // 기본 배치 가능
-        return {
-          sheet: sheet.name,
-          count: countGaro,
-          kkiwo: false,
-        };
-      } else if (countGaro > 1) {
-        // 끼워박기 시도(가로로 2개 이상 배치할 때만 의미 있음)
-        const remHeightKkiwo = sheet.height - dogaHeightKkiwo;
-        if (remHeightKkiwo >= 0) {
+    // 6~1개까지 배치 시도 (최대 가로 배치 우선)
+    for (let countGaro = 6; countGaro >= 1; countGaro--) {
+      // 5개, 6개 하리꼬미는 없음 등, 실제 규칙도 추가 가능
+      // 여기선 요청대로 최대 6개까지 허용
+      if ((dogaWidth * countGaro) <= sheet.width) {
+        // 기본 배치
+        if (dogaHeight <= sheet.height) {
+          return {
+            sheet: sheet.name,
+            count: countGaro,
+            kkiwo: false,
+          };
+        }
+        // 세로 끼워박기 시도(가로배치 2개 이상에서만 의미 있음)
+        if (countGaro > 1 && dogaHeightKkiwo <= sheet.height) {
           return {
             sheet: sheet.name,
             count: countGaro,
@@ -66,20 +71,16 @@ function getSheetRecommendation(dogaWidth, dogaHeight, dogaHeightKkiwo) {
       }
     }
   }
-  // 어느 절지에도 불가능하면
   return null;
 }
 
 export default function DogaPreview({ width, length, height, bottomStyle }) {
-  // 입력값을 정수로 변환
   const w = parseInt(width, 10);
   const l = parseInt(length, 10);
   const h = parseInt(height, 10);
 
-  // 입력값이 없으면 미리보기 안보임
   if (!(w > 0 && l > 0 && h > 0 && bottomStyle)) return null;
 
-  // 전개도/끼워박기/추천 절지 계산
   const dogaWidth = getDogaWidth(w, l);
   const dogaHeight = getDogaHeight(l, h, bottomStyle);
   const dogaHeightKkiwo = getDogaHeightKkiwo(l, h, bottomStyle);
