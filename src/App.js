@@ -112,13 +112,16 @@ function App() {
   };
 
     // 전개도 안내 계산 (getDogaInfo)
-  const getDogaInfo = () => {
+    const getDogaInfo = () => {
     if (!(width && length && height && bottomStyle)) return null;
-    const w = parseInt(width);
-    const l = parseInt(length); // 세로
-    const h = parseInt(height);
+    const w = parseInt(width);    // 가로
+    const l = parseInt(length);   // 세로
+    const h = parseInt(height);   // 높이
   
-    const dogaWidth = w * 2 + 16;
+    // 전개도 가로 계산: (가로*2) + (세로*2) + 16 + 10
+    const dogaWidth = (w * 2) + (l * 2) + 16 + 10;
+  
+    // 전개도 세로(높이) 계산
     let dogaHeight = 0;
     if (bottomStyle === '맞뚜껑') {
       dogaHeight = (16 + l) * 2 + h + 20;
