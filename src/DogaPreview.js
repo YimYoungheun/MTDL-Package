@@ -55,7 +55,7 @@ export default function DogaPreview({ width, length, height, bottomStyle, quanti
   const w = parseInt(width, 10);
   const l = parseInt(length, 10);
   const h = parseInt(height, 10);
-  const q = parseInt(quantity, 10) || 0;
+  const q = Number(quantity) || 0;
 
   if (!(w > 0 && l > 0 && h > 0 && bottomStyle)) return null;
 
