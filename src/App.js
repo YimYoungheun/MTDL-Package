@@ -1,5 +1,6 @@
 // App.js
 import React, { useState } from 'react';
+import DogaPreview from './DogaPreview';
 import './App.css';
 
 function App() {
@@ -95,7 +96,7 @@ function App() {
   const inputStyle = { width: '360px', padding: '0.5rem' };
   const shortInputStyle = { width: '90px', padding: '0.5rem' };
 
-  // 함수
+  // 옵션 함수
   const getColorOptions = () => paperFeel === '러프한' ? colorMap[material] || [] : [];
   const getWeightOptions = () => {
     if (paperFeel === '매끄러운' || paperFeel === '친환경') return weightMap[paperFeel]?.[material] || [];
@@ -109,39 +110,6 @@ function App() {
     } else {
       return paperPrices[paperFeel]?.[material]?.[weight] || null;
     }
-  };
-
-    // 전개도 안내 계산 (getDogaInfo)
-    const getDogaInfo = () => {
-    if (!(width && length && height && bottomStyle)) return null;
-    const w = parseInt(width);    // 가로
-    const l = parseInt(length);   // 세로
-    const h = parseInt(height);   // 높이
-  
-    // 전개도 가로 계산: (가로*2) + (세로*2) + 16 + 10
-    const dogaWidth = (w * 2) + (l * 2) + 16 + 10;
-  
-    // 전개도 세로(높이) 계산
-    let dogaHeight = 0;
-    if (bottomStyle === '맞뚜껑') {
-      dogaHeight = (16 + l) * 2 + h + 20;
-    } else if (bottomStyle === '십자다루마' || bottomStyle === '삼면접착') {
-      dogaHeight = (l * 0.75) + h + l + 16 + 20;
-    }
-  
-    const sheetSizes = [
-      { name: '국4절', width: 318, height: 469 },
-      { name: '4절', width: 394, height: 545 },
-      { name: '국2절', width: 465, height: 636 },
-      { name: '2절', width: 545, height: 788 },
-      { name: '국전지', width: 636, height: 939 }
-    ];
-    const matched = sheetSizes.find(s => s.width >= dogaWidth && s.height >= dogaHeight);
-    return {
-      dogaWidth,
-      dogaHeight,
-      sheetName: matched ? matched.name : '해당 없음'
-    };
   };
 
   // 전체 리셋
@@ -164,7 +132,7 @@ function App() {
     setCustomQuantity('');
   };
 
-  // 실제 렌더링
+  // 렌더링
   return (
     <div style={{ display: 'flex', boxSizing: 'border-box' }}>
       {/* 왼쪽 이미지 영역 */}
@@ -226,17 +194,14 @@ function App() {
           </div>
         )}
 
-        {/* 전개도 안내 */}
+        {/* 도면/끼워박기/절지 안내 (DogaPreview) */}
         {width && length && height && bottomStyle && (
-          <div style={{ marginBottom: '1rem', backgroundColor: '#eee', padding: '0.5rem', borderRadius: '8px' }}>
-            {(() => {
-              const info = getDogaInfo();
-              if (!info) return null;
-              return (
-                <>전개도 크기: {info.dogaWidth} × {info.dogaHeight}mm / 추천 절지: {info.sheetName}</>
-              );
-            })()}
-          </div>
+          <DogaPreview
+            width={width}
+            length={length}
+            height={height}
+            bottomStyle={bottomStyle}
+          />
         )}
 
         {/* 종이 느낌, 재질, 색상, 무게 */}
