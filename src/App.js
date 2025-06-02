@@ -195,15 +195,18 @@ function App() {
         )}
 
         {/* 도면/끼워박기/절지 안내 (DogaPreview) */}
-          {width && length && height && bottomStyle && (
-            <DogaPreview
-              width={width}
-              length={length}
-              height={height}
-              bottomStyle={bottomStyle}
-              quantity={quantity === '그 이상' ? customQuantity : quantity}
-            />
-          )}
+          /*
+            {width && length && height && bottomStyle && (
+              <DogaPreview
+                width={width}
+                length={length}
+                height={height}
+                bottomStyle={bottomStyle}
+                quantity={quantity === '그 이상' ? customQuantity : quantity}
+              />
+            )}
+          */
+
 
         {/* 종이 느낌, 재질, 색상, 무게 */}
         {width && length && height && bottomStyle && (
