@@ -1,6 +1,6 @@
 // App.js
 import React, { useState } from 'react';
-import DogaPreview from './DogaPreview';
+import  from './';
 import './App.css';
 
 function App() {
@@ -103,14 +103,6 @@ function App() {
     if (paperFeel === '러프한' && color) return weightMap['러프한']?.[material]?.[color] || [];
     return [];
   };
-  const getEstimatedPrice = () => {
-    if (!paperFeel || !material || !weight) return null;
-    if (paperFeel === '러프한' && color) {
-      return paperPrices[paperFeel]?.[material]?.[color]?.[weight] || null;
-    } else {
-      return paperPrices[paperFeel]?.[material]?.[weight] || null;
-    }
-  };
 
   // 전체 리셋
   const handleReset = () => {
@@ -193,7 +185,6 @@ function App() {
             </div>
           </div>
         )}
-
 
         {/* 종이 느낌, 재질, 색상, 무게 */}
         {width && length && height && bottomStyle && (
@@ -299,17 +290,19 @@ function App() {
                 />
               </div>
             )}
-               <EstimatePrice
-                    width={width}
-                    length={length}
-                    height={height}
-                    bottomStyle={bottomStyle}
-                    paperFeel={paperFeel}
-                    paperType={material}
-                    paperWeight={weight}
-                    color={color}
-                    quantity={quantity === '그 이상' ? customQuantity : quantity}
-                  />
+            {(quantity !== '' && (quantity !== '그 이상' || (quantity === '그 이상' && customQuantity))) && (
+              <>
+                <
+                  width={width}
+                  length={length}
+                  height={height}
+                  bottomStyle={bottomStyle}
+                  paperFeel={paperFeel}
+                  paperType={material}
+                  paperWeight={weight}
+                  color={color}
+                  quantity={quantity === '그 이상' ? customQuantity : quantity}
+                />
                 <iframe
                   src="https://mtdl.co.kr/fileupload"
                   width="100%"
