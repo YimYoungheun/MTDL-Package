@@ -100,11 +100,8 @@ const EstimatePrice = ({
     return <div style={{ color: 'crimson' }}>종이 종류/두께를 다시 선택해 주세요.</div>;
   }
 
-  // 총 견적 계산
+  // 총 견적, 고정비 추가 (칼비 + 판비)
   const totalQuantity = parseInt(quantity);
-  const estimate = unitPrice * totalQuantity;
-
-  // 고정비 추가 (칼비 + 판비)
   const diecutFee = 180000;
   const plateFee = 100000;
   const estimate = (pricePerBox * boxCount) + diecutFee + plateFee;
