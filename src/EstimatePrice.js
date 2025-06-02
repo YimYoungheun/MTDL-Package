@@ -216,7 +216,7 @@ const EstimatePrice = ({
   const unitPriceWithMargin = Math.ceil(estimateExceptDiecutWithMargin / totalQuantity);
 
    return (
-    <div style={{ margin: '1rem 0', color: 'blue', fontWeight: 'bold', fontSize: '1.3rem' }}>
+    <div style={{ margin: '1rem 0', color: '#6EC1E4', fontWeight: 'bold', fontSize: '1.3rem' }}>
       예상 견적: {estimateWithMargin.toLocaleString()}원
       <br />
       <span style={{
