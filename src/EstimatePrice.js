@@ -216,20 +216,31 @@ const EstimatePrice = ({
   const unitPriceWithMargin = Math.ceil(estimateExceptDiecutWithMargin / totalQuantity);
 
    return (
-    <div style={{ margin: '1rem 0', color: '#1976d2', fontWeight: 'bold', fontSize: '1.3rem' }}>
-      예상 견적: {estimateWithMargin.toLocaleString()}원
-      <br />
-      <span style={{
-        color: 'black',
-        fontWeight: 'normal',
-        fontSize: '1rem',
-        display: 'block',
-        marginTop: '0.5rem'
-      }}>
-        개당 금액: {unitPriceWithMargin.toLocaleString()}원
-      </span>
-    </div>
-  );
-};
+      <div style={{ margin: '1rem 0', color: '#338cd9', fontWeight: 'bold', fontSize: '1.3rem' }}>
+        예상 견적: {estimateWithMargin.toLocaleString()}원
+        <br />
+        <span style={{
+          color: 'black',
+          fontWeight: 'normal',
+          fontSize: '1rem',
+          display: 'block',
+          marginTop: '0.5rem'
+        }}>
+          개당 금액: {unitPriceWithMargin.toLocaleString()}원
+        </span>
+        {totalQuantity < 500 && (
+          <span style={{
+            color: 'crimson',
+            fontSize: '0.9rem',
+            fontWeight: 'normal',
+            display: 'block',
+            marginTop: '0.3rem'
+          }}>
+            최소 수량은 500개 이상입니다
+          </span>
+        )}
+      </div>
+    );
+  };
 
 export default EstimatePrice;
