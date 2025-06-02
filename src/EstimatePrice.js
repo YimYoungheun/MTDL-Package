@@ -68,6 +68,20 @@ function getUnitPrice(paperFeel, paperType, paperWeight, color, perSheetCount) {
   return unitPrice;
 }
 
+// ⭐️ 코팅비 계산 함수
+function getCoatingFee(coatingType, totalQty, perSheetCount) {
+  if (!coatingType || coatingType === '없음') return 0;
+  const sheets = ceil(totalQty / perSheetCount);
+  let baseFee = 80000;
+  if (sheets > 250) {
+    baseFee += (sheets - 250) * 100;
+  }
+  if (coatingType === '벨벳') {
+    baseFee *= 2;
+  }
+  return baseFee;
+}
+
 const EstimatePrice = ({
   width,
   length,
@@ -77,7 +91,8 @@ const EstimatePrice = ({
   paperType = 'AB',
   paperWeight = '300g',
   color = '',
-  quantity
+  quantity,
+  coatingType = '없음'   // ⭐️ props에 코팅 옵션 추가
 }) => {
   if (!width || !length || !height || !bottomStyle || !quantity) {
     return <div style={{ color: 'gray', margin: '1rem 0' }}>모든 정보를 입력하면 예상 견적이 나옵니다.</div>;
@@ -108,7 +123,11 @@ const EstimatePrice = ({
   const sheetCount = ceil(totalQuantity / perSheetCount); // 필요한 전지 장수
   const printFee = ceil(sheetCount / 250) * 80000;         // 250장당 8만원
 
-  const estimate = unitPrice * totalQuantity + diecutFee + plateFee + printFee;
+  // ⭐️ 코팅비
+  const coatingFee = getCoatingFee(coatingType, totalQuantity, perSheetCount);
+
+  // 전체 견적
+  const estimate = unitPrice * totalQuantity + diecutFee + plateFee + printFee + coatingFee;
 
   return (
     <div style={{ margin: '1rem 0', color: 'crimson', fontWeight: 'bold', fontSize: '1.3rem' }}>
