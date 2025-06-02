@@ -215,19 +215,21 @@ const EstimatePrice = ({
   // 개당금액 (원 단위, 올림)
   const unitPriceWithMargin = Math.ceil(estimateExceptDiecutWithMargin / totalQuantity);
 
-  return (
-  <div style={{ margin: '1rem 0', color: 'crimson', fontWeight: 'bold', fontSize: '1.3rem' }}>
-    예상 견적: {estimateWithMargin.toLocaleString()}원
-    <br />
-    <span style={{ 
-      color: 'black', 
-      fontWeight: 'normal', 
-      fontSize: '1rem', 
-      display: 'block', 
-      marginTop: '0.5rem'
-    }}>
-      개당 금액: {unitPriceWithMargin.toLocaleString()}원
-    </span>
-  </div>
-);
+   return (
+    <div style={{ margin: '1rem 0', color: 'crimson', fontWeight: 'bold', fontSize: '1.3rem' }}>
+      예상 견적: {estimateWithMargin.toLocaleString()}원
+      <br />
+      <span style={{
+        color: 'black',
+        fontWeight: 'normal',
+        fontSize: '1rem',
+        display: 'block',
+        marginTop: '0.5rem'
+      }}>
+        개당 금액: {unitPriceWithMargin.toLocaleString()}원
+      </span>
+    </div>
+  );
+};
+
 export default EstimatePrice;
