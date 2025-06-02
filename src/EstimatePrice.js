@@ -85,7 +85,6 @@ function getUnitPrice(paperFeel, paperType, paperWeight, color, perSheetCount) {
   return unitPrice;
 }
 
-// 코팅비
 function getCoatingFee(coatingType, totalQty, perSheetCount) {
   if (!coatingType || coatingType === '없음') return 0;
   const sheets = ceil(totalQty / perSheetCount);
@@ -101,7 +100,6 @@ function getCoatingFee(coatingType, totalQty, perSheetCount) {
   return fee;
 }
 
-// 톰슨비
 function getThomsonFee(totalQty, perSheetCount) {
   const sheets = ceil(totalQty / perSheetCount);
   if (sheets <= 250) {
@@ -111,13 +109,13 @@ function getThomsonFee(totalQty, perSheetCount) {
   }
 }
 
-// 박비 (120,000원 기준/480원 단가, 선택 개수만큼 동판·작업비 모두 곱)
+// 박비 (120,000원/480원, 선택 개수만큼)
 function getFoilFee(foil, totalQty, perSheetCount) {
   const selected = Array.isArray(foil) ? foil.filter(f => f !== '없음') : [];
   if (selected.length === 0) return 0;
   const count = selected.length;
   const sheets = ceil(totalQty / perSheetCount);
-  let fee = 120000 * count; // 동판비
+  let fee = 120000 * count;
   if (sheets <= 250) {
     fee += 120000 * count;
   } else {
@@ -126,7 +124,7 @@ function getFoilFee(foil, totalQty, perSheetCount) {
   return fee;
 }
 
-// 형압비 (동판1개, 작업비 251장부터 1장당 400원)
+// 형압비
 function getEmbossFee(embossing, totalQty, perSheetCount) {
   if (!embossing || embossing === '없음') return 0;
   const sheets = ceil(totalQty / perSheetCount);
@@ -155,8 +153,6 @@ function getBondingFee(bottomStyle, totalQty) {
     return totalQty * perUnit;
   }
 }
-
-// ====== 메인 컴포넌트 ======
 
 const EstimatePrice = ({
   width,
@@ -189,11 +185,10 @@ const EstimatePrice = ({
   }
 
   const totalQuantity = parseInt(quantity);
-  const diecutFee = 180000; // 목형칼비(고정)
-  const plateFee = 100000;  // 판비(고정)
+  const diecutFee = 180000;
+  const plateFee = 100000;
   const sheetCount = ceil(totalQuantity / perSheetCount);
   const printFee = ceil(sheetCount / 250) * 80000;
-
   const coatingFee = getCoatingFee(coatingType, totalQuantity, perSheetCount);
   const thomsonFee = getThomsonFee(totalQuantity, perSheetCount);
   const foilFee = getFoilFee(foil, totalQuantity, perSheetCount);
@@ -211,12 +206,19 @@ const EstimatePrice = ({
     embossFee +
     bondingFee;
 
-  // ⭐️ 15% 마진 추가 (올림)
   const estimateWithMargin = Math.ceil(estimate * 1.15);
+
+  // 목형칼비 제외 견적(마진포함)
+  const estimateExceptDiecut = estimate - diecutFee;
+  const estimateExceptDiecutWithMargin = Math.ceil(estimateExceptDiecut * 1.15);
+
+  // 개당금액 (원 단위, 올림)
+  const unitPriceWithMargin = Math.ceil(estimateExceptDiecutWithMargin / totalQuantity);
 
   return (
     <div style={{ margin: '1rem 0', color: 'crimson', fontWeight: 'bold', fontSize: '1.3rem' }}>
-      예상 견적: {estimateWithMargin.toLocaleString()}원
+      예상 견적: {estimateWithMargin.toLocaleString()}원<br />
+      개당 금액(목형칼비 제외): {unitPriceWithMargin.toLocaleString()}원
     </div>
   );
 };
