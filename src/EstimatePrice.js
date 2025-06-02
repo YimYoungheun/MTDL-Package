@@ -104,6 +104,11 @@ const EstimatePrice = ({
   const totalQuantity = parseInt(quantity);
   const estimate = unitPrice * totalQuantity;
 
+  // 고정비 추가 (칼비 + 판비)
+  const diecutFee = 180000;
+  const plateFee = 100000;
+  const estimate = (pricePerBox * boxCount) + diecutFee + plateFee;
+
   return (
     <div style={{ margin: '1rem 0', color: 'crimson', fontWeight: 'bold', fontSize: '1.3rem' }}>
       예상 견적: {estimate.toLocaleString()}원
