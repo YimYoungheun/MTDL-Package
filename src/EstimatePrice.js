@@ -1,7 +1,5 @@
 import React from 'react';
 
-// --- 상단 계산 함수들 ---
-
 function ceil(num) {
   return Math.ceil(num);
 }
@@ -87,7 +85,7 @@ function getUnitPrice(paperFeel, paperType, paperWeight, color, perSheetCount) {
   return unitPrice;
 }
 
-// 코팅비 (250장까지 10만원, 251장부터 전체장수×400, 벨벳은 2배)
+// 코팅비
 function getCoatingFee(coatingType, totalQty, perSheetCount) {
   if (!coatingType || coatingType === '없음') return 0;
   const sheets = ceil(totalQty / perSheetCount);
@@ -103,7 +101,7 @@ function getCoatingFee(coatingType, totalQty, perSheetCount) {
   return fee;
 }
 
-// 톰슨비 (250장까지 7만원, 251장부터 전체장수×280)
+// 톰슨비
 function getThomsonFee(totalQty, perSheetCount) {
   const sheets = ceil(totalQty / perSheetCount);
   if (sheets <= 250) {
@@ -113,9 +111,8 @@ function getThomsonFee(totalQty, perSheetCount) {
   }
 }
 
-// 박비 (박 종류만큼 곱해서: 동판/작업비, 251장부터 1장당 480원, 250장까지 12만)
+// 박비 (120,000원 기준/480원 단가, 선택 개수만큼 동판·작업비 모두 곱)
 function getFoilFee(foil, totalQty, perSheetCount) {
-  // foil: 배열, '없음'이거나 빈배열이면 0
   const selected = Array.isArray(foil) ? foil.filter(f => f !== '없음') : [];
   if (selected.length === 0) return 0;
   const count = selected.length;
@@ -131,10 +128,9 @@ function getFoilFee(foil, totalQty, perSheetCount) {
 
 // 형압비 (동판1개, 작업비 251장부터 1장당 400원)
 function getEmbossFee(embossing, totalQty, perSheetCount) {
-  // embossing: ''/없음/음각/양각 등
   if (!embossing || embossing === '없음') return 0;
   const sheets = ceil(totalQty / perSheetCount);
-  let fee = 100000; // 동판비 1개
+  let fee = 100000;
   if (sheets <= 250) {
     fee += 100000;
   } else {
@@ -143,15 +139,15 @@ function getEmbossFee(embossing, totalQty, perSheetCount) {
   return fee;
 }
 
-// 접착비 (단면: 15원, 삼면: 20원, 모두 7만원이 기준. 단면 4,666개/삼면 3,500개까지 7만원)
+// 접착비
 function getBondingFee(bottomStyle, totalQty) {
   let baseUnit, perUnit;
   if (bottomStyle === '삼면접착') {
     perUnit = 20;
-    baseUnit = Math.floor(70000 / 20); // 3,500개
+    baseUnit = Math.floor(70000 / 20);
   } else {
     perUnit = 15;
-    baseUnit = Math.floor(70000 / 15); // 4,666개
+    baseUnit = Math.floor(70000 / 15);
   }
   if (totalQty <= baseUnit) {
     return 70000;
@@ -160,7 +156,7 @@ function getBondingFee(bottomStyle, totalQty) {
   }
 }
 
-// --- 메인 컴포넌트 ---
+// ====== 메인 컴포넌트 ======
 
 const EstimatePrice = ({
   width,
@@ -215,9 +211,12 @@ const EstimatePrice = ({
     embossFee +
     bondingFee;
 
+  // ⭐️ 15% 마진 추가 (올림)
+  const estimateWithMargin = Math.ceil(estimate * 1.15);
+
   return (
     <div style={{ margin: '1rem 0', color: 'crimson', fontWeight: 'bold', fontSize: '1.3rem' }}>
-      예상 견적: {estimate.toLocaleString()}원
+      예상 견적: {estimateWithMargin.toLocaleString()}원
     </div>
   );
 };
