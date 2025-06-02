@@ -1,13 +1,11 @@
 import React from 'react';
 
-// ====== 단일 계산 함수들 (컴포넌트 바깥에!) ======
+// --- 상단 계산 함수들 ---
 
-// 소수점 올림
 function ceil(num) {
   return Math.ceil(num);
 }
 
-// 종이 가격
 const paperPrices = {
   '매끄러운': {
     AB: { '300g': 359390, '350g': 420690 },
@@ -44,11 +42,9 @@ const paperPrices = {
   }
 };
 
-// 전지 크기(mm)
 const SHEET_WIDTH = 1081;
 const SHEET_HEIGHT = 768;
 
-// 도면 사이즈 계산
 function getDogaSize(width, length, height, bottomStyle) {
   width = parseInt(width);
   length = parseInt(length);
@@ -65,7 +61,6 @@ function getDogaSize(width, length, height, bottomStyle) {
   return { dogaWidth, dogaHeight };
 }
 
-// 1장당 배치 개수
 function getPerSheetCount(dogaWidth, dogaHeight) {
   if (!dogaWidth || !dogaHeight) return 0;
   const row = Math.floor(SHEET_WIDTH / dogaWidth);
@@ -73,7 +68,6 @@ function getPerSheetCount(dogaWidth, dogaHeight) {
   return row * col;
 }
 
-// 종이 단가
 function getUnitPrice(paperFeel, paperType, paperWeight, color, perSheetCount) {
   let paperPrice;
   if (paperFeel === '매끄러운') {
@@ -119,17 +113,28 @@ function getThomsonFee(totalQty, perSheetCount) {
   }
 }
 
-// 박/형압 동판비+작업비 (250장까지 10만+10만, 251장부터 10만+전체장수×400)
-function getFoilEmbossFee(optionType, totalQty, perSheetCount) {
-  let isNone = false;
-  if (Array.isArray(optionType)) {
-    isNone = optionType.length === 0 || (optionType.length === 1 && optionType[0] === '없음');
-  } else {
-    isNone = !optionType || optionType === '없음';
-  }
-  if (isNone) return 0;
+// 박비 (박 종류만큼 곱해서: 동판/작업비, 251장부터 1장당 480원, 250장까지 12만)
+function getFoilFee(foil, totalQty, perSheetCount) {
+  // foil: 배열, '없음'이거나 빈배열이면 0
+  const selected = Array.isArray(foil) ? foil.filter(f => f !== '없음') : [];
+  if (selected.length === 0) return 0;
+  const count = selected.length;
   const sheets = ceil(totalQty / perSheetCount);
-  let fee = 100000;
+  let fee = 120000 * count; // 동판비
+  if (sheets <= 250) {
+    fee += 120000 * count;
+  } else {
+    fee += sheets * 480 * count;
+  }
+  return fee;
+}
+
+// 형압비 (동판1개, 작업비 251장부터 1장당 400원)
+function getEmbossFee(embossing, totalQty, perSheetCount) {
+  // embossing: ''/없음/음각/양각 등
+  if (!embossing || embossing === '없음') return 0;
+  const sheets = ceil(totalQty / perSheetCount);
+  let fee = 100000; // 동판비 1개
   if (sheets <= 250) {
     fee += 100000;
   } else {
@@ -155,7 +160,7 @@ function getBondingFee(bottomStyle, totalQty) {
   }
 }
 
-// ====== 메인 컴포넌트 ======
+// --- 메인 컴포넌트 ---
 
 const EstimatePrice = ({
   width,
@@ -171,12 +176,10 @@ const EstimatePrice = ({
   foil = [],
   embossing = ''
 }) => {
-  // 필수정보 입력안됐을 때 안내
   if (!width || !length || !height || !bottomStyle || !quantity) {
     return <div style={{ color: 'gray', margin: '1rem 0' }}>모든 정보를 입력하면 예상 견적이 나옵니다.</div>;
   }
 
-  // 도면 및 배치 계산
   const doga = getDogaSize(width, length, height, bottomStyle);
   if (!doga) return <div style={{ color: 'gray' }}>도면 계산이 불가능합니다.</div>;
   const perSheetCount = getPerSheetCount(doga.dogaWidth, doga.dogaHeight);
@@ -184,7 +187,6 @@ const EstimatePrice = ({
     return <div style={{ color: 'crimson', fontWeight: 'bold' }}>전지(1091×788)로 도면 제작 불가</div>;
   }
 
-  // 단가
   const unitPrice = getUnitPrice(paperFeel, paperType, paperWeight, color, perSheetCount);
   if (!unitPrice) {
     return <div style={{ color: 'crimson' }}>종이 종류/두께를 다시 선택해 주세요.</div>;
@@ -196,14 +198,12 @@ const EstimatePrice = ({
   const sheetCount = ceil(totalQuantity / perSheetCount);
   const printFee = ceil(sheetCount / 250) * 80000;
 
-  // 각각 계산
   const coatingFee = getCoatingFee(coatingType, totalQuantity, perSheetCount);
   const thomsonFee = getThomsonFee(totalQuantity, perSheetCount);
-  const foilFee = getFoilEmbossFee(foil, totalQuantity, perSheetCount);
-  const embossFee = getFoilEmbossFee(embossing, totalQuantity, perSheetCount);
+  const foilFee = getFoilFee(foil, totalQuantity, perSheetCount);
+  const embossFee = getEmbossFee(embossing, totalQuantity, perSheetCount);
   const bondingFee = getBondingFee(bottomStyle, totalQuantity);
 
-  // 총 견적
   const estimate =
     unitPrice * totalQuantity +
     diecutFee +
