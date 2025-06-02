@@ -304,6 +304,8 @@ function App() {
               quantity={quantity === '그 이상' ? customQuantity : quantity}
               paperPrices={paperPrices}
               coatingType={coating || '없음'}
+              foil={foil}           
+              embossing={embossing}
             />
 
             <iframe
