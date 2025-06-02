@@ -292,21 +292,20 @@ function App() {
             )}
 
             {/* 견적가 계산 컴포넌트 */}
-            <EstimatePrice
-              width={width}
-              length={length}
-              height={height}
-              bottomStyle={bottomStyle}
-              paperFeel={paperFeel}
-              paperType={material}
-              paperWeight={weight}
-              color={color}
-              quantity={quantity === '그 이상' ? customQuantity : quantity}
-              paperPrices={paperPrices}
-              coatingType={coating || '없음'}
-              foil={foil}           
-              embossing={embossing}
-            />
+              <EstimatePrice
+                width={width}
+                length={length}
+                height={height}
+                bottomStyle={bottomStyle}
+                paperFeel={paperFeel}
+                paperType={material}
+                paperWeight={weight}
+                color={color}
+                quantity={quantity === '그 이상' ? customQuantity : quantity}
+                coatingType={coating || '없음'}
+                foil={foil}
+                embossing={embossing}
+              />
 
             <iframe
               src="https://mtdl.co.kr/fileupload"
