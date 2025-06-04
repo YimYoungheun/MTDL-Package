@@ -368,3 +368,23 @@ function App() {
               title="파일 업로드"
             />
             <button
+              style={{
+                background: 'black',
+                color: 'white',
+                padding: '0.5rem 1rem',
+                borderRadius: '6px',
+                border: 'none',
+                cursor: 'pointer'
+              }}
+              onClick={() => alert('기재해주신 연락처로 담당자가 연락할 수 있습니다.')}
+            >
+              확인
+            </button>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default App;
