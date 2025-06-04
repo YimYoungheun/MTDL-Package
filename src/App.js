@@ -91,6 +91,8 @@ function App() {
   const [foil, setFoil] = useState([]);
   const [quantity, setQuantity] = useState('');
   const [customQuantity, setCustomQuantity] = useState('');
+  const [printingColors, setPrintingColors] = useState([]);
+
 
   // 스타일
   const inputStyle = { width: '360px', padding: '0.5rem' };
@@ -229,6 +231,26 @@ function App() {
             )}
           </>
         )}
+
+          {/* 인쇄 */}
+          <div style={{ marginBottom: '1rem' }}>
+            <label>인쇄 선택 (중복 선택 가능)</label>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+              {['1도', '2도', '3도', '4도', '별색 1도', '별색 2도', '별색 3도', '별색 4도'].map(type => (
+                <button
+                  key={type}
+                  className={`option-button ${printingColors.includes(type) ? 'selected' : ''}`}
+                  onClick={() => {
+                    setPrintingColors(prev =>
+                      prev.includes(type)
+                        ? prev.filter(t => t !== type)
+                        : [...prev, type]
+                    );
+                  }}
+                >{type}</button>
+              ))}
+            </div>
+          </div>
 
         {/* 후가공 및 수량 */}
         {weight && (
