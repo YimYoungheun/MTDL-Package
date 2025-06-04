@@ -96,23 +96,15 @@ function getPrintFee(mainPrintColor, spotPrintColor, totalQty, perSheetCount, pr
   const sheetCount = Math.ceil(totalQty / perSheetCount);
   // 1도~4도 그룹
   if (mainPrintColor) {
-    const n = parseInt(mainPrintColor[0], 10); // '1도' → 1, '2도' → 2
+    const n = parseInt(mainPrintColor[0], 10);
     plateFee += n * 25000;
-    if (sheetCount <= 250) {
-      printFee += n * 20000;
-    } else {
-      printFee += n * (Math.ceil(sheetCount / 250) * 20000);
-    }
+    printFee += n * (sheetCount <= 250 ? 20000 : Math.ceil(sheetCount / 250) * 20000);
   }
   // 별색 1도~4도 그룹
   if (spotPrintColor) {
     const n = parseInt(spotPrintColor.replace('별색 ', '').replace('도', ''), 10);
     plateFee += n * 25000;
-    if (sheetCount <= 250) {
-      printFee += n * 25000;
-    } else {
-      printFee += n * (Math.ceil(sheetCount / 250) * 25000);
-    }
+    printFee += n * (sheetCount <= 250 ? 25000 : Math.ceil(sheetCount / 250) * 25000);
   }
   return { plate: plateFee, print: printFee };
 }
@@ -241,7 +233,7 @@ const EstimatePrice = ({
   }
 
   const { plate: printPlateFee, print: printRunFee } =
-    getPrintFee(mainPrintColor, spotPrintColor, totalQuantity, perSheetCount, printNone);
+  getPrintFee(mainPrintColor, spotPrintColor, totalQuantity, perSheetCount, printNone);
 
   const diecutFee = 180000;
   const coatingFee = getCoatingFee(coatingType, totalQuantity, perSheetCount);
@@ -253,8 +245,8 @@ const EstimatePrice = ({
   const estimate =
     unitPrice * totalQuantity +
     diecutFee +
-    printPlateFee +
-    printRunFee +
+    printPlateFee +   // 반드시 인쇄판비가 포함!
+    printRunFee +     // 반드시 인쇄비가 포함!
     coatingFee +
     thomsonFee +
     foilFee +
