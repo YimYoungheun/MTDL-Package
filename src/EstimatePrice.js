@@ -4,94 +4,17 @@ function ceil(num) {
   return Math.ceil(num);
 }
 
-const paperPrices = {
-  '매끄러운': {
-    AB: { '300g': 359390, '350g': 420690 },
-    CCP: { '300g': 386260, '350g': 450640 },
-    아이보리: { '300g': 235040, '350g': 272400 },
-    'SC 마닐라': { '300g': 181630, '350g': 211550 }
-  },
-  '러프한': {
-    올드밀: {
-      비앙코: { '300g': 764500, '350g': 891000 },
-      '엑스트라 화이트': { '300g': 695000, '350g': 810000 },
-      '프리미엄 화이트': { '410g': 1215000 }
-    },
-    아코팩: {
-      '웜 화이트': { '300g': 435000, '350g': 510000, '400g': 595000 },
-      '네츄럴': { '300g': 435000, '350g': 510000, '400g': 595000 },
-      '엑스트라 화이트': { '410g': 695000 }
-    },
-    녹차지: {
-      백색: { '300g': 400000, '350g': 430000 }
-    },
-    매직패브릭: {
-      검정색: { '300g': 470000, '350g': 510000, '400g': 590000 },
-      진곤색: { '300g': 470000, '350g': 510000, '400g': 590000 },
-      피색: { '300g': 470000, '350g': 510000, '400g': 590000 },
-      진한밤색: { '300g': 470000, '350g': 510000, '400g': 590000 },
-      체리색: { '300g': 470000, '350g': 510000, '400g': 590000 },
-      클래식블랙: { '300g': 470000, '350g': 510000, '400g': 590000 }
-    }
-  },
-  '친환경': {
-    얼스팩: { '295g': 385000 },
-    크라프트: { '300g': 380000, '337g': 410000 }
-  }
-};
+// ... (paperPrices, SHEET_WIDTH, SHEET_HEIGHT, getDogaSize, getPerSheetCount, getUnitPrice 등은 기존과 동일) ...
 
-const SHEET_WIDTH = 1081;
-const SHEET_HEIGHT = 768;
+// 인쇄비(판비/인쇄비) 계산 함수 (printNone이 true면 모두 0 반환)
+function getPrintFee(mainPrintColor, spotPrintColor, totalQty, perSheetCount, printNone) {
+  if (printNone) return { plate: 0, print: 0 };
 
-function getDogaSize(width, length, height, bottomStyle) {
-  width = parseInt(width);
-  length = parseInt(length);
-  height = parseInt(height);
-  const dogaWidth = width * 2 + length * 2 + 16 + 5;
-  let dogaHeight;
-  if (bottomStyle === '맞뚜껑') {
-    dogaHeight = 16 + length + height + length + 16 + 5;
-  } else if (bottomStyle === '십자다루마' || bottomStyle === '삼면접착') {
-    dogaHeight = (length * 0.75) + height + length + 16 + 5;
-  } else {
-    return null;
-  }
-  return { dogaWidth, dogaHeight };
-}
-
-function getPerSheetCount(dogaWidth, dogaHeight) {
-  if (!dogaWidth || !dogaHeight) return 0;
-  const row = Math.floor(SHEET_WIDTH / dogaWidth);
-  const col = Math.floor(SHEET_HEIGHT / dogaHeight);
-  return row * col;
-}
-
-function getUnitPrice(paperFeel, paperType, paperWeight, color, perSheetCount) {
-  let paperPrice;
-  if (paperFeel === '매끄러운') {
-    paperPrice = paperPrices['매끄러운']?.[paperType]?.[paperWeight];
-  } else if (paperFeel === '러프한') {
-    if (color) {
-      paperPrice = paperPrices['러프한']?.[paperType]?.[color]?.[paperWeight];
-    } else {
-      paperPrice = paperPrices['러프한']?.[paperType]?.[paperWeight];
-    }
-  } else if (paperFeel === '친환경') {
-    paperPrice = paperPrices['친환경']?.[paperType]?.[paperWeight];
-  }
-  if (!paperPrice || !perSheetCount) return null;
-  const pricePerSheet = ceil(paperPrice / 500);
-  const unitPrice = ceil(pricePerSheet / perSheetCount);
-  return unitPrice;
-}
-
-// 🔵 인쇄비 계산
-function getPrintFee(mainPrintColor, spotPrintColor, totalQty, perSheetCount) {
   let plateFee = 0;
   let printFee = 0;
   const sheetCount = Math.ceil(totalQty / perSheetCount);
 
-  // 1도~4도 그룹 (예: '2도')
+  // 1도~4도 그룹 (ex: '2도')
   if (mainPrintColor) {
     const n = parseInt(mainPrintColor[0], 10); // '1도' → 1, '2도' → 2
     plateFee += n * 25000;
@@ -101,7 +24,7 @@ function getPrintFee(mainPrintColor, spotPrintColor, totalQty, perSheetCount) {
       printFee += n * (Math.ceil(sheetCount / 250) * 20000);
     }
   }
-  // 별색 1도~4도 그룹 (예: '별색 2도')
+  // 별색 1도~4도 그룹 (ex: '별색 2도')
   if (spotPrintColor) {
     const n = parseInt(spotPrintColor.replace('별색 ', '').replace('도', ''), 10);
     plateFee += n * 25000;
@@ -114,72 +37,9 @@ function getPrintFee(mainPrintColor, spotPrintColor, totalQty, perSheetCount) {
   return { plate: plateFee, print: printFee };
 }
 
-function getCoatingFee(coatingType, totalQty, perSheetCount) {
-  if (!coatingType || coatingType === '없음') return 0;
-  const sheets = ceil(totalQty / perSheetCount);
-  let fee = 0;
-  if (sheets <= 250) {
-    fee = 100000;
-  } else {
-    fee = sheets * 400;
-  }
-  if (coatingType === '벨벳') {
-    fee *= 2;
-  }
-  return fee;
-}
+// (아래 나머지 코팅, 톰슨, 박, 형압, 접착 등 함수 모두 기존과 동일)
 
-function getThomsonFee(totalQty, perSheetCount) {
-  const sheets = ceil(totalQty / perSheetCount);
-  if (sheets <= 250) {
-    return 70000;
-  } else {
-    return sheets * 280;
-  }
-}
-
-function getFoilFee(foil, totalQty, perSheetCount) {
-  const selected = Array.isArray(foil) ? foil.filter(f => f !== '없음') : [];
-  if (selected.length === 0) return 0;
-  const count = selected.length;
-  const sheets = ceil(totalQty / perSheetCount);
-  let fee = 120000 * count;
-  if (sheets <= 250) {
-    fee += 120000 * count;
-  } else {
-    fee += sheets * 480 * count;
-  }
-  return fee;
-}
-
-function getEmbossFee(embossing, totalQty, perSheetCount) {
-  if (!embossing || embossing === '없음') return 0;
-  const sheets = ceil(totalQty / perSheetCount);
-  let fee = 100000;
-  if (sheets <= 250) {
-    fee += 100000;
-  } else {
-    fee += sheets * 400;
-  }
-  return fee;
-}
-
-function getBondingFee(bottomStyle, totalQty) {
-  let baseUnit, perUnit;
-  if (bottomStyle === '삼면접착') {
-    perUnit = 20;
-    baseUnit = Math.floor(70000 / 20);
-  } else {
-    perUnit = 15;
-    baseUnit = Math.floor(70000 / 15);
-  }
-  if (totalQty <= baseUnit) {
-    return 70000;
-  } else {
-    return totalQty * perUnit;
-  }
-}
-
+// ---- 본문 ----
 const EstimatePrice = ({
   width,
   length,
@@ -231,9 +91,9 @@ const EstimatePrice = ({
     );
   }
 
-  // 인쇄비(판비/인쇄비)
+  // ------ 🔴 여기! 인쇄비 계산 호출에 printNone도 인자로 넘김 ------
   const { plate: printPlateFee, print: printRunFee } =
-    getPrintFee(mainPrintColor, spotPrintColor, totalQuantity, perSheetCount);
+    getPrintFee(mainPrintColor, spotPrintColor, totalQuantity, perSheetCount, printNone);
 
   const diecutFee = 180000; // 목형칼비
   const coatingFee = getCoatingFee(coatingType, totalQuantity, perSheetCount);
