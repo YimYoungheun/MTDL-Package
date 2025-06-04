@@ -1,4 +1,3 @@
-// App.js
 import React, { useState } from 'react';
 import EstimatePrice from './EstimatePrice';
 import './App.css';
@@ -91,12 +90,10 @@ function App() {
   const [foil, setFoil] = useState([]);
   const [quantity, setQuantity] = useState('');
   const [customQuantity, setCustomQuantity] = useState('');
-  const [printingColors, setPrintingColors] = useState([]);
-
-
-  // 스타일
-  const inputStyle = { width: '360px', padding: '0.5rem' };
-  const shortInputStyle = { width: '90px', padding: '0.5rem' };
+  // 인쇄 선택
+  const [printNone, setPrintNone] = useState(true); // "인쇄 없음"이 기본 선택
+  const [mainPrintColor, setMainPrintColor] = useState(''); // 1~4도 그룹 단일선택
+  const [spotPrintColor, setSpotPrintColor] = useState(''); // 별색 1도~4도 그룹 단일선택
 
   // 옵션 함수
   const getColorOptions = () => paperFeel === '러프한' ? colorMap[material] || [] : [];
@@ -124,6 +121,24 @@ function App() {
     setFoil([]);
     setQuantity('');
     setCustomQuantity('');
+    setPrintNone(true);
+    setMainPrintColor('');
+    setSpotPrintColor('');
+  };
+
+  // 인쇄 옵션 핸들러
+  const handlePrintNone = () => {
+    setPrintNone(true);
+    setMainPrintColor('');
+    setSpotPrintColor('');
+  };
+  const handleMainPrintColor = (type) => {
+    setPrintNone(false);
+    setMainPrintColor(type);
+  };
+  const handleSpotPrintColor = (type) => {
+    setPrintNone(false);
+    setSpotPrintColor(type);
   };
 
   // 렌더링
@@ -232,25 +247,36 @@ function App() {
           </>
         )}
 
-          {/* 인쇄 */}
+        {/* 인쇄 선택 */}
+        {weight && (
           <div style={{ marginBottom: '1rem' }}>
-            <label>인쇄 선택 (중복 선택 가능)</label>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-              {['1도', '2도', '3도', '4도', '별색 1도', '별색 2도', '별색 3도', '별색 4도'].map(type => (
+            <label>인쇄 선택</label>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.3rem' }}>
+              <button
+                className={`option-button ${printNone ? 'selected' : ''}`}
+                onClick={handlePrintNone}
+              >
+                인쇄 없음
+              </button>
+              {['1도', '2도', '3도', '4도'].map(type => (
                 <button
                   key={type}
-                  className={`option-button ${printingColors.includes(type) ? 'selected' : ''}`}
-                  onClick={() => {
-                    setPrintingColors(prev =>
-                      prev.includes(type)
-                        ? prev.filter(t => t !== type)
-                        : [...prev, type]
-                    );
-                  }}
+                  className={`option-button ${mainPrintColor === type && !printNone ? 'selected' : ''}`}
+                  onClick={() => handleMainPrintColor(type)}
+                  disabled={printNone}
+                >{type}</button>
+              ))}
+              {['별색 1도', '별색 2도', '별색 3도', '별색 4도'].map(type => (
+                <button
+                  key={type}
+                  className={`option-button ${spotPrintColor === type && !printNone ? 'selected' : ''}`}
+                  onClick={() => handleSpotPrintColor(type)}
+                  disabled={printNone}
                 >{type}</button>
               ))}
             </div>
           </div>
+        )}
 
         {/* 후가공 및 수량 */}
         {weight && (
@@ -327,6 +353,9 @@ function App() {
                 coatingType={coating || '없음'}
                 foil={foil}
                 embossing={embossing}
+                mainPrintColor={printNone ? '' : mainPrintColor}
+                spotPrintColor={printNone ? '' : spotPrintColor}
+                printNone={printNone}
               />
 
             <iframe
