@@ -73,6 +73,10 @@ function App() {
     }
   };
 
+  // 스타일 변수 선언 (오류 방지)
+  const inputStyle = { width: '360px', padding: '0.5rem' };
+  const shortInputStyle = { width: '90px', padding: '0.5rem' };
+
   // 상태값
   const [company, setCompany] = useState('');
   const [phone, setPhone] = useState('');
@@ -90,10 +94,11 @@ function App() {
   const [foil, setFoil] = useState([]);
   const [quantity, setQuantity] = useState('');
   const [customQuantity, setCustomQuantity] = useState('');
-  // 인쇄 선택
-  const [printNone, setPrintNone] = useState(true); // "인쇄 없음"이 기본 선택
-  const [mainPrintColor, setMainPrintColor] = useState(''); // 1~4도 그룹 단일선택
-  const [spotPrintColor, setSpotPrintColor] = useState(''); // 별색 1도~4도 그룹 단일선택
+
+  // 인쇄 상태값
+  const [printNone, setPrintNone] = useState(true); // 인쇄 없음 기본
+  const [mainPrintColor, setMainPrintColor] = useState('');
+  const [spotPrintColor, setSpotPrintColor] = useState('');
 
   // 옵션 함수
   const getColorOptions = () => paperFeel === '러프한' ? colorMap[material] || [] : [];
@@ -247,44 +252,43 @@ function App() {
           </>
         )}
 
-        {/* 인쇄 선택 */}
-          {weight && (
-            <div style={{ marginBottom: '1rem' }}>
-              <label>인쇄 선택</label>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.3rem' }}>
-                {/* 인쇄 없음 버튼 */}
-                <button
-                  className={`option-button ${printNone ? 'selected' : ''}`}
-                  onClick={handlePrintNone}
-                >
-                  인쇄 없음
-                </button>
-              </div>
-              {/* 1도~4도: 한 줄 */}
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.3rem' }}>
-                {['1도', '2도', '3도', '4도'].map(type => (
-                  <button
-                    key={type}
-                    className={`option-button ${mainPrintColor === type && !printNone ? 'selected' : ''}`}
-                    onClick={() => handleMainPrintColor(type)}
-                    disabled={printNone}
-                  >{type}</button>
-                ))}
-              </div>
-              {/* 별색 1도~4도: 아래 줄 */}
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-                {['별색 1도', '별색 2도', '별색 3도', '별색 4도'].map(type => (
-                  <button
-                    key={type}
-                    className={`option-button ${spotPrintColor === type && !printNone ? 'selected' : ''}`}
-                    onClick={() => handleSpotPrintColor(type)}
-                    disabled={printNone}
-                  >{type}</button>
-                ))}
-              </div>
+        {/* 인쇄 선택 (무게까지 골라야 노출) */}
+        {weight && (
+          <div style={{ marginBottom: '1rem' }}>
+            <label>인쇄 선택</label>
+            {/* 인쇄 없음 버튼 */}
+            <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.3rem' }}>
+              <button
+                className={`option-button ${printNone ? 'selected' : ''}`}
+                onClick={handlePrintNone}
+              >
+                인쇄 없음
+              </button>
             </div>
-          )}
-
+            {/* 1도~4도 한 줄 */}
+            <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.3rem' }}>
+              {['1도', '2도', '3도', '4도'].map(type => (
+                <button
+                  key={type}
+                  className={`option-button ${mainPrintColor === type && !printNone ? 'selected' : ''}`}
+                  onClick={() => handleMainPrintColor(type)}
+                  disabled={printNone}
+                >{type}</button>
+              ))}
+            </div>
+            {/* 별색 1도~4도 한 줄 */}
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              {['별색 1도', '별색 2도', '별색 3도', '별색 4도'].map(type => (
+                <button
+                  key={type}
+                  className={`option-button ${spotPrintColor === type && !printNone ? 'selected' : ''}`}
+                  onClick={() => handleSpotPrintColor(type)}
+                  disabled={printNone}
+                >{type}</button>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* 후가공 및 수량 */}
         {weight && (
