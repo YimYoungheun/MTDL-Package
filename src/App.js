@@ -248,35 +248,43 @@ function App() {
         )}
 
         {/* 인쇄 선택 */}
-        {weight && (
-          <div style={{ marginBottom: '1rem' }}>
-            <label>인쇄 선택</label>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.3rem' }}>
-              <button
-                className={`option-button ${printNone ? 'selected' : ''}`}
-                onClick={handlePrintNone}
-              >
-                인쇄 없음
-              </button>
-              {['1도', '2도', '3도', '4도'].map(type => (
+          {weight && (
+            <div style={{ marginBottom: '1rem' }}>
+              <label>인쇄 선택</label>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.3rem' }}>
+                {/* 인쇄 없음 버튼 */}
                 <button
-                  key={type}
-                  className={`option-button ${mainPrintColor === type && !printNone ? 'selected' : ''}`}
-                  onClick={() => handleMainPrintColor(type)}
-                  disabled={printNone}
-                >{type}</button>
-              ))}
-              {['별색 1도', '별색 2도', '별색 3도', '별색 4도'].map(type => (
-                <button
-                  key={type}
-                  className={`option-button ${spotPrintColor === type && !printNone ? 'selected' : ''}`}
-                  onClick={() => handleSpotPrintColor(type)}
-                  disabled={printNone}
-                >{type}</button>
-              ))}
+                  className={`option-button ${printNone ? 'selected' : ''}`}
+                  onClick={handlePrintNone}
+                >
+                  인쇄 없음
+                </button>
+              </div>
+              {/* 1도~4도: 한 줄 */}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.3rem' }}>
+                {['1도', '2도', '3도', '4도'].map(type => (
+                  <button
+                    key={type}
+                    className={`option-button ${mainPrintColor === type && !printNone ? 'selected' : ''}`}
+                    onClick={() => handleMainPrintColor(type)}
+                    disabled={printNone}
+                  >{type}</button>
+                ))}
+              </div>
+              {/* 별색 1도~4도: 아래 줄 */}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                {['별색 1도', '별색 2도', '별색 3도', '별색 4도'].map(type => (
+                  <button
+                    key={type}
+                    className={`option-button ${spotPrintColor === type && !printNone ? 'selected' : ''}`}
+                    onClick={() => handleSpotPrintColor(type)}
+                    disabled={printNone}
+                  >{type}</button>
+                ))}
+              </div>
             </div>
-          </div>
-        )}
+          )}
+
 
         {/* 후가공 및 수량 */}
         {weight && (
