@@ -256,34 +256,39 @@ function App() {
         {weight && (
           <div style={{ marginBottom: '1rem' }}>
             <label>인쇄 선택</label>
-            {/* 인쇄 없음 버튼 */}
             <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.3rem' }}>
               <button
-                className={`option-button ${printNone ? 'selected' : ''}`}
-                onClick={handlePrintNone}
+                className={`option-button ${(!mainPrintColor && !spotPrintColor) ? 'selected' : ''}`}
+                onClick={() => {
+                  setMainPrintColor('');
+                  setSpotPrintColor('');
+                }}
               >
                 인쇄 없음
               </button>
             </div>
-            {/* 1도~4도 한 줄 */}
+            {/* 1도~4도: 한 줄, 그룹 단일 선택 */}
             <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.3rem' }}>
               {['1도', '2도', '3도', '4도'].map(type => (
                 <button
                   key={type}
-                  className={`option-button ${mainPrintColor === type && !printNone ? 'selected' : ''}`}
-                  onClick={() => handleMainPrintColor(type)}
-                  disabled={printNone}
+                  className={`option-button ${mainPrintColor === type ? 'selected' : ''}`}
+                  onClick={() => {
+                    // 이미 선택된 값 클릭 시 해제 (토글), 아니면 단일 선택
+                    setMainPrintColor(prev => prev === type ? '' : type);
+                  }}
                 >{type}</button>
               ))}
             </div>
-            {/* 별색 1도~4도 한 줄 */}
+            {/* 별색 1도~4도: 한 줄, 그룹 단일 선택 */}
             <div style={{ display: 'flex', gap: '0.5rem' }}>
               {['별색 1도', '별색 2도', '별색 3도', '별색 4도'].map(type => (
                 <button
                   key={type}
-                  className={`option-button ${spotPrintColor === type && !printNone ? 'selected' : ''}`}
-                  onClick={() => handleSpotPrintColor(type)}
-                  disabled={printNone}
+                  className={`option-button ${spotPrintColor === type ? 'selected' : ''}`}
+                  onClick={() => {
+                    setSpotPrintColor(prev => prev === type ? '' : type);
+                  }}
                 >{type}</button>
               ))}
             </div>
