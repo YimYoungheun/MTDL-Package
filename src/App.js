@@ -3,7 +3,7 @@ import EstimatePrice from './EstimatePrice';
 import './App.css';
 
 function App() {
-  // 가격 데이터 및 옵션 맵
+  // 옵션/데이터
   const paperPrices = {
     '매끄러운': {
       AB: { '300g': 359390, '350g': 420690 },
@@ -15,11 +15,12 @@ function App() {
       올드밀: {
         비앙코: { '300g': 764500, '350g': 891000 },
         '엑스트라 화이트': { '300g': 695000, '350g': 810000 },
-        '프리미엄 화이트': { '300g': 695000, '350g': 810000 }
+        '프리미엄 화이트': { '410g': 1215000 }
       },
       아코팩: {
         '웜 화이트': { '300g': 435000, '350g': 510000, '400g': 595000 },
-        '네츄럴': { '300g': 435000, '350g': 510000 }
+        '네츄럴': { '300g': 435000, '350g': 510000 },
+        '엑스트라 화이트': ['410g']
       },
       녹차지: {
         백색: { '300g': 400000, '350g': 430000 }
@@ -73,7 +74,7 @@ function App() {
     }
   };
 
-  // 스타일 변수 선언 (오류 방지)
+  // 스타일
   const inputStyle = { width: '360px', padding: '0.5rem' };
   const shortInputStyle = { width: '90px', padding: '0.5rem' };
 
@@ -95,7 +96,7 @@ function App() {
   const [quantity, setQuantity] = useState('');
   const [customQuantity, setCustomQuantity] = useState('');
 
-  // 인쇄 상태값
+  // 인쇄
   const [printNone, setPrintNone] = useState(true); // 인쇄 없음 기본
   const [mainPrintColor, setMainPrintColor] = useState('');
   const [spotPrintColor, setSpotPrintColor] = useState('');
@@ -108,7 +109,7 @@ function App() {
     return [];
   };
 
-  // 전체 리셋
+  // 리셋
   const handleReset = () => {
     setCompany('');
     setPhone('');
@@ -131,7 +132,7 @@ function App() {
     setSpotPrintColor('');
   };
 
-  // 인쇄 옵션 핸들러
+  // 인쇄 핸들러
   const handlePrintNone = () => {
     setPrintNone(true);
     setMainPrintColor('');
@@ -139,17 +140,17 @@ function App() {
   };
   const handleMainPrintColor = (type) => {
     setPrintNone(false);
-    setMainPrintColor(type);
+    setMainPrintColor(prev => prev === type ? '' : type);
   };
   const handleSpotPrintColor = (type) => {
     setPrintNone(false);
-    setSpotPrintColor(type);
+    setSpotPrintColor(prev => prev === type ? '' : type);
   };
 
   // 렌더링
   return (
     <div style={{ display: 'flex', boxSizing: 'border-box' }}>
-      {/* 왼쪽 이미지 영역 */}
+      {/* 왼쪽 이미지 */}
       <div style={{ width: '700px', height: '100vh', position: 'sticky', top: 0, flexShrink: 0 }}>
         <img
           src="/img/b_style_box.png"
@@ -157,8 +158,7 @@ function App() {
           style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '12px' }}
         />
       </div>
-
-      {/* 오른쪽 입력 영역 */}
+      {/* 오른쪽 입력 */}
       <div style={{ flex: 1, padding: '2rem', overflowY: 'auto', height: '100vh' }}>
         <button
           onClick={handleReset}
@@ -171,7 +171,6 @@ function App() {
             cursor: 'pointer'
           }}
         >다시 선택하기</button>
-
         {/* 회사, 연락처, 이메일 */}
         {[{ label: '회사명 또는 성함', value: company, setter: setCompany },
           { label: '연락처', value: phone, setter: setPhone },
@@ -181,7 +180,6 @@ function App() {
             <input value={f.value} onChange={e => f.setter(e.target.value)} style={inputStyle} />
           </div>
         ))}
-
         {/* 내경 입력 */}
         <div style={{ marginBottom: '1rem' }}>
           <label>내경 (mm)</label>
@@ -191,8 +189,7 @@ function App() {
             <input placeholder="높이" value={height} onChange={e => setHeight(e.target.value)} style={shortInputStyle} />
           </div>
         </div>
-
-        {/* 하단 모양 선택 */}
+        {/* 하단 모양 */}
         {width && length && height && (
           <div style={{ marginBottom: '1rem' }}>
             <label>하단 모양</label>
@@ -207,8 +204,7 @@ function App() {
             </div>
           </div>
         )}
-
-        {/* 종이 느낌, 재질, 색상, 무게 */}
+        {/* 종이/재질/색상/무게 */}
         {width && length && height && bottomStyle && (
           <>
             <div style={{ marginBottom: '1rem' }}>
@@ -251,51 +247,41 @@ function App() {
             )}
           </>
         )}
-
-        {/* 인쇄 선택 (무게까지 골라야 노출) */}
+        {/* 인쇄 선택 */}
         {weight && (
           <div style={{ marginBottom: '1rem' }}>
             <label>인쇄 선택</label>
             <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.3rem' }}>
               <button
-                className={`option-button ${(!mainPrintColor && !spotPrintColor) ? 'selected' : ''}`}
-                onClick={() => {
-                  setMainPrintColor('');
-                  setSpotPrintColor('');
-                }}
-              >
-                인쇄 없음
-              </button>
+                className={`option-button ${printNone ? 'selected' : ''}`}
+                onClick={handlePrintNone}
+              >인쇄 없음</button>
             </div>
-            {/* 1도~4도: 한 줄, 그룹 단일 선택 */}
+            {/* 1도~4도 */}
             <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.3rem' }}>
               {['1도', '2도', '3도', '4도'].map(type => (
                 <button
                   key={type}
-                  className={`option-button ${mainPrintColor === type ? 'selected' : ''}`}
-                  onClick={() => {
-                    // 이미 선택된 값 클릭 시 해제 (토글), 아니면 단일 선택
-                    setMainPrintColor(prev => prev === type ? '' : type);
-                  }}
+                  className={`option-button ${mainPrintColor === type && !printNone ? 'selected' : ''}`}
+                  onClick={() => handleMainPrintColor(type)}
+                  disabled={printNone}
                 >{type}</button>
               ))}
             </div>
-            {/* 별색 1도~4도: 한 줄, 그룹 단일 선택 */}
+            {/* 별색 */}
             <div style={{ display: 'flex', gap: '0.5rem' }}>
               {['별색 1도', '별색 2도', '별색 3도', '별색 4도'].map(type => (
                 <button
                   key={type}
-                  className={`option-button ${spotPrintColor === type ? 'selected' : ''}`}
-                  onClick={() => {
-                    setSpotPrintColor(prev => prev === type ? '' : type);
-                  }}
+                  className={`option-button ${spotPrintColor === type && !printNone ? 'selected' : ''}`}
+                  onClick={() => handleSpotPrintColor(type)}
+                  disabled={printNone}
                 >{type}</button>
               ))}
             </div>
           </div>
         )}
-
-        {/* 후가공 및 수량 */}
+        {/* 후가공/수량 */}
         {weight && (
           <>
             <div style={{ marginBottom: '1rem' }}>
@@ -355,25 +341,24 @@ function App() {
                 />
               </div>
             )}
-
-            {/* 견적가 계산 컴포넌트 */}
-              <EstimatePrice
-                width={width}
-                length={length}
-                height={height}
-                bottomStyle={bottomStyle}
-                paperFeel={paperFeel}
-                paperType={material}
-                paperWeight={weight}
-                color={color}
-                quantity={quantity === '그 이상' ? customQuantity : quantity}
-                coatingType={coating || '없음'}
-                foil={foil}
-                embossing={embossing}
-                mainPrintColor={printNone ? '' : mainPrintColor}
-                spotPrintColor={printNone ? '' : spotPrintColor}
-                printNone={printNone}
-              />
+            {/* 견적가 계산 */}
+            <EstimatePrice
+              width={width}
+              length={length}
+              height={height}
+              bottomStyle={bottomStyle}
+              paperFeel={paperFeel}
+              paperType={material}
+              paperWeight={weight}
+              color={color}
+              quantity={quantity === '그 이상' ? customQuantity : quantity}
+              coatingType={coating || '없음'}
+              foil={foil}
+              embossing={embossing}
+              mainPrintColor={mainPrintColor}
+              spotPrintColor={spotPrintColor}
+              printNone={printNone}
+            />
 
             <iframe
               src="https://mtdl.co.kr/fileupload"
@@ -383,16 +368,3 @@ function App() {
               title="파일 업로드"
             />
             <button
-              style={{ background: 'black', color: 'white', padding: '0.5rem 1rem', borderRadius: '6px', border: 'none', cursor: 'pointer' }}
-              onClick={() => alert('기재해주신 연락처로 담당자가 연락할 수 있습니다.')}
-            >
-              확인
-            </button>
-          </>
-        )}
-      </div>
-    </div>
-  );
-}
-
-export default App;
