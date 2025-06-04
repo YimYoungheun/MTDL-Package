@@ -2,83 +2,58 @@ import React, { useState } from 'react';
 import EstimatePrice from './EstimatePrice';
 import './App.css';
 
+const materialMap = {
+  '매끄러운': ['AB', 'CCP', '아이보리', 'SC 마닐라'],
+  '러프한': ['올드밀', '아코팩', '매직패브릭', '녹차지'],
+  '친환경': ['얼스팩', '크라프트']
+};
+const colorMap = {
+  아코팩: ['웜 화이트', '네츄럴', '엑스트라 화이트'],
+  올드밀: ['비앙코', '엑스트라 화이트', '프리미엄 화이트'],
+  녹차지: ['백색'],
+  매직패브릭: ['검정색', '진곤색', '피색', '진한밤색', '체리색', '클래식블랙']
+};
+const weightMap = {
+  '매끄러운': {
+    AB: ['300g', '350g'],
+    CCP: ['300g', '350g'],
+    'SC 마닐라': ['300g', '350g'],
+    아이보리: ['300g', '350g']
+  },
+  '친환경': {
+    얼스팩: ['295g'],
+    크라프트: ['300g', '337g']
+  },
+  '러프한': {
+    아코팩: {
+      '웜 화이트': ['300g', '350g', '400g'],
+      '네츄럴': ['300g', '350g', '400g'],
+      '엑스트라 화이트': ['410g'] // 단일옵션
+    },
+    올드밀: {
+      '비앙코': ['300g', '350g'],
+      '엑스트라 화이트': ['300g', '350g'],
+      '프리미엄 화이트': ['410g']
+    },
+    녹차지: {
+      '백색': ['300g', '350g']
+    },
+    매직패브릭: {
+      '검정색': ['300g', '350g', '400g'],
+      '진곤색': ['300g', '350g', '400g'],
+      '피색': ['300g', '350g', '400g'],
+      '진한밤색': ['300g', '350g', '400g'],
+      '체리색': ['300g', '350g', '400g'],
+      '클래식블랙': ['300g', '350g', '400g']
+    }
+  }
+};
+
+const shortInputStyle = { width: '90px', padding: '0.5rem' };
+const inputStyle = { width: '360px', padding: '0.5rem' };
+
 function App() {
-  // 옵션/데이터
-  const paperPrices = {
-    '매끄러운': {
-      AB: { '300g': 359390, '350g': 420690 },
-      CCP: { '300g': 386260, '350g': 450640 },
-      아이보리: { '300g': 235040, '350g': 272400 },
-      'SC 마닐라': { '300g': 181630, '350g': 211550 }
-    },
-    '러프한': {
-      올드밀: {
-        비앙코: { '300g': 764500, '350g': 891000 },
-        '엑스트라 화이트': { '300g': 695000, '350g': 810000 },
-        '프리미엄 화이트': { '410g': 1215000 }
-      },
-      아코팩: {
-        '웜 화이트': { '300g': 435000, '350g': 510000, '400g': 595000 },
-        '네츄럴': { '300g': 435000, '350g': 510000 },
-        '엑스트라 화이트': ['410g']
-      },
-      녹차지: {
-        백색: { '300g': 400000, '350g': 430000 }
-      }
-    }
-  };
-  const materialMap = {
-    '매끄러운': ['AB', 'CCP', '아이보리', 'SC 마닐라'],
-    '러프한': ['올드밀', '아코팩', '매직패브릭', '녹차지'],
-    '친환경': ['얼스팩', '크라프트']
-  };
-  const colorMap = {
-    아코팩: ['웜 화이트', '네츄럴', '엑스트라 화이트'],
-    올드밀: ['비앙코', '엑스트라 화이트', '프리미엄 화이트'],
-    녹차지: ['백색'],
-    매직패브릭: ['검정색', '진곤색', '피색', '진한밤색', '체리색', '클래식블랙']
-  };
-  const weightMap = {
-    '매끄러운': {
-      AB: ['300g', '350g'],
-      CCP: ['300g', '350g'],
-      'SC 마닐라': ['300g', '350g'],
-      아이보리: ['300g', '350g']
-    },
-    '친환경': {
-      얼스팩: ['295g'],
-      크라프트: ['300g', '337g']
-    },
-    '러프한': {
-      아코팩: {
-        '웜 화이트': ['300g', '350g', '400g'],
-        '네츄럴': ['300g', '350g', '400g'],
-        '엑스트라 화이트': ['410g']
-      },
-      올드밀: {
-        '비앙코': ['300g', '350g'],
-        '엑스트라 화이트': ['300g', '350g'],
-        '프리미엄 화이트': ['410g']
-      },
-      녹차지: {
-        백색: ['300g', '350g']
-      },
-      매직패브릭: {
-        검정색: ['300g', '350g', '400g'],
-        진곤색: ['300g', '350g', '400g'],
-        피색: ['300g', '350g', '400g'],
-        진한밤색: ['300g', '350g', '400g'],
-        체리색: ['300g', '350g', '400g'],
-        클래식블랙: ['300g', '350g', '400g']
-      }
-    }
-  };
-
-  // 스타일
-  const inputStyle = { width: '360px', padding: '0.5rem' };
-  const shortInputStyle = { width: '90px', padding: '0.5rem' };
-
-  // 상태값
+  // 입력 상태값
   const [company, setCompany] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
@@ -90,22 +65,29 @@ function App() {
   const [material, setMaterial] = useState('');
   const [color, setColor] = useState('');
   const [weight, setWeight] = useState('');
-  const [coating, setCoating] = useState(null);
-  const [embossing, setEmbossing] = useState(null);
+  const [coating, setCoating] = useState('');
+  const [embossing, setEmbossing] = useState('');
   const [foil, setFoil] = useState([]);
   const [quantity, setQuantity] = useState('');
   const [customQuantity, setCustomQuantity] = useState('');
 
   // 인쇄
-  const [printNone, setPrintNone] = useState(true); // 인쇄 없음 기본
+  const [printNone, setPrintNone] = useState(true);
   const [mainPrintColor, setMainPrintColor] = useState('');
   const [spotPrintColor, setSpotPrintColor] = useState('');
 
-  // 옵션 함수
-  const getColorOptions = () => paperFeel === '러프한' ? colorMap[material] || [] : [];
+  // 옵션 선택 함수
+  const getColorOptions = () =>
+    paperFeel === '러프한' && material && colorMap[material]
+      ? colorMap[material]
+      : [];
+
   const getWeightOptions = () => {
-    if (paperFeel === '매끄러운' || paperFeel === '친환경') return weightMap[paperFeel]?.[material] || [];
-    if (paperFeel === '러프한' && color) return weightMap['러프한']?.[material]?.[color] || [];
+    if (!material) return [];
+    if (paperFeel === '매끄러운' || paperFeel === '친환경')
+      return weightMap[paperFeel]?.[material] || [];
+    if (paperFeel === '러프한' && color)
+      return weightMap['러프한']?.[material]?.[color] || [];
     return [];
   };
 
@@ -122,8 +104,8 @@ function App() {
     setMaterial('');
     setColor('');
     setWeight('');
-    setCoating(null);
-    setEmbossing(null);
+    setCoating('');
+    setEmbossing('');
     setFoil([]);
     setQuantity('');
     setCustomQuantity('');
@@ -147,10 +129,9 @@ function App() {
     setSpotPrintColor(prev => prev === type ? '' : type);
   };
 
-  // 렌더링
   return (
     <div style={{ display: 'flex', boxSizing: 'border-box' }}>
-      {/* 왼쪽 이미지 */}
+      {/* 왼쪽 대표이미지 */}
       <div style={{ width: '700px', height: '100vh', position: 'sticky', top: 0, flexShrink: 0 }}>
         <img
           src="/img/b_style_box.png"
@@ -158,7 +139,7 @@ function App() {
           style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '12px' }}
         />
       </div>
-      {/* 오른쪽 입력 */}
+      {/* 오른쪽 UI */}
       <div style={{ flex: 1, padding: '2rem', overflowY: 'auto', height: '100vh' }}>
         <button
           onClick={handleReset}
@@ -171,7 +152,8 @@ function App() {
             cursor: 'pointer'
           }}
         >다시 선택하기</button>
-        {/* 회사, 연락처, 이메일 */}
+
+        {/* 회사/연락처/이메일 */}
         {[{ label: '회사명 또는 성함', value: company, setter: setCompany },
           { label: '연락처', value: phone, setter: setPhone },
           { label: '이메일 주소', value: email, setter: setEmail }].map((f, i) => (
@@ -180,6 +162,7 @@ function App() {
             <input value={f.value} onChange={e => f.setter(e.target.value)} style={inputStyle} />
           </div>
         ))}
+
         {/* 내경 입력 */}
         <div style={{ marginBottom: '1rem' }}>
           <label>내경 (mm)</label>
@@ -204,6 +187,7 @@ function App() {
             </div>
           </div>
         )}
+
         {/* 종이/재질/색상/무게 */}
         {width && length && height && bottomStyle && (
           <>
@@ -235,7 +219,7 @@ function App() {
                 </div>
               </div>
             )}
-            {material && getWeightOptions().length > 0 && (
+            {material && (paperFeel !== '러프한' || color) && getWeightOptions().length > 0 && (
               <div style={{ marginBottom: '1rem' }}>
                 <label>무게</label>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
@@ -247,6 +231,7 @@ function App() {
             )}
           </>
         )}
+
         {/* 인쇄 선택 */}
         {weight && (
           <div style={{ marginBottom: '1rem' }}>
@@ -257,7 +242,6 @@ function App() {
                 onClick={handlePrintNone}
               >인쇄 없음</button>
             </div>
-            {/* 1도~4도 */}
             <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.3rem' }}>
               {['1도', '2도', '3도', '4도'].map(type => (
                 <button
@@ -268,7 +252,6 @@ function App() {
                 >{type}</button>
               ))}
             </div>
-            {/* 별색 */}
             <div style={{ display: 'flex', gap: '0.5rem' }}>
               {['별색 1도', '별색 2도', '별색 3도', '별색 4도'].map(type => (
                 <button
@@ -281,6 +264,7 @@ function App() {
             </div>
           </div>
         )}
+
         {/* 후가공/수량 */}
         {weight && (
           <>
@@ -288,48 +272,51 @@ function App() {
               <label>코팅</label>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                 {['없음', '무광', '유광', '벨벳'].map(type => (
-                  <button key={type} className={`option-button ${(type === '없음' ? coating === '' : coating === type) ? 'selected' : ''}`} onClick={() => setCoating(type === '없음' ? '' : type)}>{type}</button>
+                  <button key={type} className={`option-button ${coating === type ? 'selected' : ''}`} onClick={() => setCoating(type)}>{type}</button>
                 ))}
               </div>
             </div>
-            {coating !== null && (
+            {coating && (
               <div style={{ marginBottom: '1rem' }}>
                 <label>형압</label>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                   {['없음', '음각', '양각'].map(type => (
-                    <button key={type} className={`option-button ${(type === '없음' ? embossing === '' : embossing === type) ? 'selected' : ''}`} onClick={() => setEmbossing(type === '없음' ? '' : type)}>{type}</button>
+                    <button key={type} className={`option-button ${embossing === type ? 'selected' : ''}`} onClick={() => setEmbossing(type)}>{type}</button>
                   ))}
                 </div>
               </div>
             )}
-            {embossing !== null && (
+            {embossing && (
               <div style={{ marginBottom: '1rem' }}>
                 <label>박 (복수 선택 가능)</label>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-                  {['없음', '금박', '은박', '먹박', '적박', '홀로그램박', '투명홀로그램박'].map(type => (
+                  {['금박', '은박', '먹박', '적박', '홀로그램박', '투명홀로그램박'].map(type => (
                     <button
                       key={type}
-                      className={`option-button ${(type === '없음' && foil.length === 0) || foil.includes(type) ? 'selected' : ''}`}
-                      onClick={() => {
-                        if (type === '없음') setFoil([]);
-                        else setFoil(prev => prev.includes(type) ? prev.filter(t => t !== type) : [...prev, type]);
-                      }}
+                      className={`option-button ${foil.includes(type) ? 'selected' : ''}`}
+                      onClick={() => setFoil(prev =>
+                        prev.includes(type)
+                          ? prev.filter(t => t !== type)
+                          : [...prev, type]
+                      )}
                     >{type}</button>
                   ))}
+                  <button
+                    className={`option-button ${foil.length === 0 ? 'selected' : ''}`}
+                    onClick={() => setFoil([])}
+                  >없음</button>
                 </div>
               </div>
             )}
-            {embossing !== null && (
-              <div style={{ marginBottom: '1rem' }}>
-                <label>수량 선택</label>
-                <select value={quantity} onChange={e => setQuantity(e.target.value)} style={inputStyle}>
-                  <option value="">수량을 선택하세요</option>
-                  {[500, 1000, 2000, 3000, 5000, 10000, 20000, 30000, 50000, 100000, '그 이상'].map(qty => (
-                    <option key={qty} value={String(qty)}>{qty === '그 이상' ? '그 이상' : Number(qty).toLocaleString()}</option>
-                  ))}
-                </select>
-              </div>
-            )}
+            <div style={{ marginBottom: '1rem' }}>
+              <label>수량 선택</label>
+              <select value={quantity} onChange={e => setQuantity(e.target.value)} style={inputStyle}>
+                <option value="">수량을 선택하세요</option>
+                {[500, 1000, 2000, 3000, 5000, 10000, 20000, 30000, 50000, 100000, '그 이상'].map(qty => (
+                  <option key={qty} value={String(qty)}>{qty === '그 이상' ? '그 이상' : Number(qty).toLocaleString()}</option>
+                ))}
+              </select>
+            </div>
             {quantity === '그 이상' && (
               <div style={{ marginBottom: '1rem' }}>
                 <label>희망 수량 입력</label>
@@ -341,6 +328,7 @@ function App() {
                 />
               </div>
             )}
+
             {/* 견적가 계산 */}
             <EstimatePrice
               width={width}
@@ -360,6 +348,7 @@ function App() {
               printNone={printNone}
             />
 
+            {/* 파일업로드 */}
             <iframe
               src="https://mtdl.co.kr/fileupload"
               width="100%"
