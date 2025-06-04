@@ -1,39 +1,149 @@
 import React from 'react';
 
-function ceil(num) {
-  return Math.ceil(num);
+// --- 종이 가격표 (직접 사용하신 paperPrices를 사용/추가하세요!) ---
+const paperPrices = {
+  '매끄러운': {
+    AB: { '300g': 359390, '350g': 420690 },
+    CCP: { '300g': 386260, '350g': 450640 },
+    아이보리: { '300g': 235040, '350g': 272400 },
+    'SC 마닐라': { '300g': 181630, '350g': 211550 }
+  },
+  '러프한': {
+    올드밀: {
+      비앙코: { '300g': 764500, '350g': 891000 },
+      '엑스트라 화이트': { '300g': 695000, '350g': 810000 },
+      '프리미엄 화이트': { '410g': 1215000 }
+    },
+    아코팩: {
+      '웜 화이트': { '300g': 435000, '350g': 510000, '400g': 595000 },
+      '네츄럴': { '300g': 435000, '350g': 510000 },
+      '엑스트라 화이트': { '410g': 0 } // 수정 필요
+    },
+    녹차지: {
+      백색: { '300g': 400000, '350g': 430000 }
+    }
+  }
+  // ... 필요시 추가
+};
+
+// --- 도면 사이즈 계산 (+30, +20 여백) ---
+function getDogaSize(width, length, height, bottomStyle) {
+  const dogaWidth = Number(width) + Number(height) + 30;
+  const dogaHeight = Number(length) + Number(height) + 20;
+  return { dogaWidth, dogaHeight };
 }
 
-// ... [생략: paperPrices 등 기존 정의 동일]
+// --- 전지 1장 내 효율 ---
+function getPerSheetCount(dogaWidth, dogaHeight) {
+  const SHEET_W = 1091, SHEET_H = 788;
+  const countW = Math.floor(SHEET_W / dogaWidth);
+  const countH = Math.floor(SHEET_H / dogaHeight);
+  return countW > 0 && countH > 0 ? countW * countH : 0;
+}
 
+// --- 종이 1장 단가 계산 ---
+function getUnitPrice(paperFeel, paperType, paperWeight, color, perSheetCount) {
+  // 매끄러운(3depth)
+  if (paperFeel === '매끄러운') {
+    if (paperPrices['매끄러운'][paperType] && paperPrices['매끄러운'][paperType][paperWeight]) {
+      const totalPrice = paperPrices['매끄러운'][paperType][paperWeight];
+      return Math.ceil(totalPrice / 500 / perSheetCount);
+    }
+  }
+  // 러프한(4depth)
+  if (paperFeel === '러프한') {
+    if (
+      paperPrices['러프한'][paperType] &&
+      paperPrices['러프한'][paperType][color] &&
+      paperPrices['러프한'][paperType][color][paperWeight]
+    ) {
+      const totalPrice = paperPrices['러프한'][paperType][color][paperWeight];
+      return Math.ceil(totalPrice / 500 / perSheetCount);
+    }
+  }
+  // 없으면 0원
+  return 0;
+}
+
+// --- 인쇄비/판비 ---
 function getPrintFee(mainPrintColor, spotPrintColor, totalQty, perSheetCount, printNone) {
   if (printNone) return { plate: 0, print: 0 };
   let plateFee = 0;
   let printFee = 0;
+  const colorNum = mainPrintColor ? parseInt(mainPrintColor[0], 10) || 0 : 0;
+  const spotNum = spotPrintColor ? parseInt(spotPrintColor.replace('별색 ', '').replace('도', ''), 10) || 0 : 0;
+  const totalColor = colorNum + spotNum;
+
+  // 전지수량
   const sheetCount = Math.ceil(totalQty / perSheetCount);
 
-  // 1도~4도 그룹
-  if (mainPrintColor) {
-    const n = parseInt(mainPrintColor[0], 10); // '1도' → 1, '2도' → 2 등
-    if (!isNaN(n)) {
-      plateFee += n * 25000;
-      printFee += n * (sheetCount <= 250 ? 20000 : Math.ceil(sheetCount / 250) * 20000);
-    }
-  }
-  // 별색 1도~4도 그룹
-  if (spotPrintColor) {
-    const n = parseInt(spotPrintColor.replace('별색 ', '').replace('도', ''), 10);
-    if (!isNaN(n)) {
-      plateFee += n * 25000;
-      printFee += n * (sheetCount <= 250 ? 25000 : Math.ceil(sheetCount / 250) * 25000);
+  // 판비: 도수 x 25,000원
+  plateFee = totalColor * 25000;
+
+  // 인쇄비(1도당)
+  if (totalColor > 0) {
+    if (sheetCount <= 250) {
+      printFee = totalColor * 80000;
+    } else {
+      printFee = totalColor * (Math.ceil(sheetCount / 250) * 80000);
     }
   }
   return { plate: plateFee, print: printFee };
 }
 
-// ... [코팅, 톰슨, 박, 형압, 접착 등 동일]
+// --- 코팅 ---
+function getCoatingFee(coatingType, totalQty, perSheetCount) {
+  if (!coatingType || coatingType === '없음') return 0;
+  const sheetCount = Math.ceil(totalQty / perSheetCount);
+  if (coatingType === '벨벳') {
+    if (sheetCount <= 250) return 200000; // 10만원x2
+    return sheetCount * 800; // 400x2
+  }
+  // 무광/유광
+  if (sheetCount <= 250) return 100000;
+  return sheetCount * 400;
+}
 
-// 본문
+// --- 톰슨 ---
+function getThomsonFee(totalQty, perSheetCount) {
+  const sheetCount = Math.ceil(totalQty / perSheetCount);
+  if (sheetCount <= 250) return 70000;
+  return sheetCount * 280;
+}
+
+// --- 박(개수별로 모두 적용) ---
+function getFoilFee(foil, totalQty, perSheetCount) {
+  if (!foil || foil.length === 0) return 0;
+  const sheetCount = Math.ceil(totalQty / perSheetCount);
+  let fee = 0;
+  foil.forEach(() => {
+    if (sheetCount <= 250) fee += 120000;
+    else fee += sheetCount * 480;
+  });
+  return fee;
+}
+
+// --- 형압 ---
+function getEmbossFee(embossing, totalQty, perSheetCount) {
+  if (!embossing || embossing === '없음') return 0;
+  const sheetCount = Math.ceil(totalQty / perSheetCount);
+  if (sheetCount <= 250) return 100000;
+  return sheetCount * 400;
+}
+
+// --- 접착 ---
+function getBondingFee(bottomStyle, totalQty) {
+  if (!bottomStyle) return 0;
+  if (bottomStyle === '삼면접착') {
+    if (totalQty <= 3500) return 70000;
+    return totalQty * 20;
+  } else {
+    if (totalQty <= 4666) return 70000;
+    return totalQty * 15;
+  }
+}
+
+// --- 본문 ---
 const EstimatePrice = ({
   width,
   length,
@@ -68,7 +178,6 @@ const EstimatePrice = ({
   }
 
   const totalQuantity = parseInt(quantity);
-
   if (totalQuantity < 500) {
     return (
       <div style={{ margin: '1rem 0' }}>
@@ -85,37 +194,39 @@ const EstimatePrice = ({
     );
   }
 
-  // 🔥 여기서 printNone이 정확하게 전달되어야 함
+  // 인쇄비·판비
   const { plate: printPlateFee, print: printRunFee } =
     getPrintFee(mainPrintColor, spotPrintColor, totalQuantity, perSheetCount, printNone);
 
-  const diecutFee = 180000;
+  // 후가공/접착비용
   const coatingFee = getCoatingFee(coatingType, totalQuantity, perSheetCount);
   const thomsonFee = getThomsonFee(totalQuantity, perSheetCount);
   const foilFee = getFoilFee(foil, totalQuantity, perSheetCount);
   const embossFee = getEmbossFee(embossing, totalQuantity, perSheetCount);
   const bondingFee = getBondingFee(bottomStyle, totalQuantity);
 
+  // 종이 단가 합산
+  const paperTotal = unitPrice * totalQuantity;
+
+  // 견적 합계 (도무송은 고정)
   const estimate =
-    unitPrice * totalQuantity +
-    diecutFee +
-    printPlateFee +   // 반드시 인쇄판비가 포함!
-    printRunFee +     // 반드시 인쇄비가 포함!
+    paperTotal +
+    printPlateFee +
+    printRunFee +
     coatingFee +
     thomsonFee +
     foilFee +
     embossFee +
     bondingFee;
 
+  // 마진 1.15배 반영
   const estimateWithMargin = Math.ceil(estimate * 1.15);
-  const estimateExceptDiecut = estimate - diecutFee;
-  const estimateExceptDiecutWithMargin = Math.ceil(estimateExceptDiecut * 1.15);
-  const unitPriceWithMargin = Math.ceil(estimateExceptDiecutWithMargin / totalQuantity);
+  const unitPriceWithMargin = Math.ceil(estimateWithMargin / totalQuantity);
 
   return (
     <div style={{ margin: '1rem 0' }}>
       <span style={{
-        color: '#338cd9',
+        color: '#e72a2a',
         fontWeight: 'bold',
         fontSize: '1.3rem'
       }}>
