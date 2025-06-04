@@ -85,6 +85,37 @@ function getUnitPrice(paperFeel, paperType, paperWeight, color, perSheetCount) {
   return unitPrice;
 }
 
+// 🔵 인쇄비 계산
+function getPrintFee(mainPrintColor, spotPrintColor, totalQty, perSheetCount, printNone) {
+  if (printNone) return { plate: 0, print: 0 };
+
+  // '1도', '별색 2도' 등에서 숫자 추출
+  const getDoNum = str =>
+    str && str.match(/\d+/) ? parseInt(str.match(/\d+/)[0], 10) : 0;
+
+  const normalDo = getDoNum(mainPrintColor);    // 1~4
+  const spotDo = getDoNum(spotPrintColor);      // 1~4
+  const plateFee = (normalDo + spotDo) * 25000;
+  const sheetCount = Math.ceil(totalQty / perSheetCount);
+
+  // 일반 인쇄비
+  let normalPrintFee = 0;
+  if (normalDo) {
+    const printUnit = 20000 * normalDo; // 1도: 20000, 2도: 40000, ...
+    normalPrintFee = Math.ceil(sheetCount / 250) * printUnit;
+  }
+  // 별색 인쇄비
+  let spotPrintFee = 0;
+  if (spotDo) {
+    spotPrintFee = spotDo * Math.ceil(sheetCount / 250) * 25000;
+  }
+
+  return {
+    plate: plateFee,
+    print: normalPrintFee + spotPrintFee
+  };
+}
+
 function getCoatingFee(coatingType, totalQty, perSheetCount) {
   if (!coatingType || coatingType === '없음') return 0;
   const sheets = ceil(totalQty / perSheetCount);
@@ -166,7 +197,10 @@ const EstimatePrice = ({
   quantity,
   coatingType = '없음',
   foil = [],
-  embossing = ''
+  embossing = '',
+  mainPrintColor = '',
+  spotPrintColor = '',
+  printNone = false,
 }) => {
   if (!width || !length || !height || !bottomStyle || !quantity) {
     return <div style={{ color: 'gray', margin: '1rem 0' }}>모든 정보를 입력하면 예상 견적이 나옵니다.</div>;
@@ -185,10 +219,12 @@ const EstimatePrice = ({
   }
 
   const totalQuantity = parseInt(quantity);
-  const diecutFee = 180000;
-  const plateFee = 100000;
-  const sheetCount = ceil(totalQuantity / perSheetCount);
-  const printFee = ceil(sheetCount / 250) * 80000;
+
+  // 인쇄비(판비/인쇄비)
+  const { plate: printPlateFee, print: printRunFee } =
+    getPrintFee(mainPrintColor, spotPrintColor, totalQuantity, perSheetCount, printNone);
+
+  const diecutFee = 180000; // 목형칼비
   const coatingFee = getCoatingFee(coatingType, totalQuantity, perSheetCount);
   const thomsonFee = getThomsonFee(totalQuantity, perSheetCount);
   const foilFee = getFoilFee(foil, totalQuantity, perSheetCount);
@@ -198,8 +234,8 @@ const EstimatePrice = ({
   const estimate =
     unitPrice * totalQuantity +
     diecutFee +
-    plateFee +
-    printFee +
+    printPlateFee +
+    printRunFee +
     coatingFee +
     thomsonFee +
     foilFee +
@@ -215,41 +251,41 @@ const EstimatePrice = ({
   // 개당금액 (원 단위, 올림)
   const unitPriceWithMargin = Math.ceil(estimateExceptDiecutWithMargin / totalQuantity);
 
-    return (
-      <div style={{ margin: '1rem 0' }}>
-        {totalQuantity < 500 ? (
+  return (
+    <div style={{ margin: '1rem 0' }}>
+      {totalQuantity < 500 ? (
+        <span style={{
+          color: 'crimson',
+          fontSize: '0.9rem',
+          fontWeight: 'normal',
+          display: 'block',
+          marginTop: '0.3rem'
+        }}>
+          최소 수량은 500개 이상입니다
+        </span>
+      ) : (
+        <>
           <span style={{
-            color: 'crimson',
-            fontSize: '0.9rem',
-            fontWeight: 'normal',
-            display: 'block',
-            marginTop: '0.3rem'
+            color: '#338cd9',
+            fontWeight: 'bold',
+            fontSize: '1.3rem'
           }}>
-            최소 수량은 500개 이상입니다
+            예상 견적: {estimateWithMargin.toLocaleString()}원
           </span>
-        ) : (
-          <>
-            <span style={{
-              color: '#338cd9',
-              fontWeight: 'bold',
-              fontSize: '1.3rem'
-            }}>
-              예상 견적: {estimateWithMargin.toLocaleString()}원
-            </span>
-            <br />
-            <span style={{
-              color: 'black',
-              fontWeight: 'normal',
-              fontSize: '1rem',
-              display: 'block',
-              marginTop: '0.5rem'
-            }}>
-              개당 금액: {unitPriceWithMargin.toLocaleString()}원
-            </span>
-          </>
-        )}
-      </div>
-    );
-  };
+          <br />
+          <span style={{
+            color: 'black',
+            fontWeight: 'normal',
+            fontSize: '1rem',
+            display: 'block',
+            marginTop: '0.5rem'
+          }}>
+            개당 금액: {unitPriceWithMargin.toLocaleString()}원
+          </span>
+        </>
+      )}
+    </div>
+  );
+};
 
 export default EstimatePrice;
