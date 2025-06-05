@@ -1,27 +1,44 @@
-/* App.css */
-.option-button {
-  padding: 0.5rem 0.8rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  background: #f0f0f0;
-  color: black;
-  cursor: pointer;
-}
+{/* 긴 입력란 */}
+<input
+  className="custom-input long"
+  value={company}
+  onChange={e => setCompany(e.target.value)}
+/>
+<input
+  className="custom-input long"
+  value={phone}
+  onChange={e => setPhone(e.target.value)}
+/>
+<input
+  className="custom-input long"
+  value={email}
+  onChange={e => setEmail(e.target.value)}
+/>
 
-.option-button.selected {
-  background: black;
-  color: white;
-}
+{/* 내경 입력란: 3개 모두 짧게 */}
+<div className="flex-row">
+  <input className="custom-input short" placeholder="가로" value={width} onChange={e => setWidth(e.target.value)} />
+  <input className="custom-input short" placeholder="세로" value={length} onChange={e => setLength(e.target.value)} />
+  <input className="custom-input short" placeholder="높이" value={height} onChange={e => setHeight(e.target.value)} />
+</div>
 
-.fade-in {
-  opacity: 1;
-  pointer-events: auto;
-  transition: opacity 0.3s ease-in-out;
-}
+{/* 수량 입력란: "그 이상"에서만 */}
+<input
+  className="custom-input qty"
+  type="number"
+  value={customQuantity}
+  onChange={e => setCustomQuantity(e.target.value)}
+/>
 
-.fade-out {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease-in-out;
-}
+{/* 셀렉트 */}
+<select
+  className="custom-select"
+  value={quantity}
+  onChange={e => setQuantity(e.target.value)}
+>
+  {/* ... */}
+</select>
+
+{/* 버튼 */}
+<button className="primary-button">확인</button>
+<button className="secondary-button" onClick={handleReset}>다시 선택하기</button>
