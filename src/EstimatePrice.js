@@ -226,7 +226,7 @@ const EstimatePrice = ({
   return (
     <div style={{ margin: '1rem 0' }}>
       <span style={{
-        color: '#e72a2a',
+        color: '#368AFF',
         fontWeight: 'bold',
         fontSize: '1.3rem'
       }}>
