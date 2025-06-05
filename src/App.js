@@ -127,11 +127,11 @@ function App() {
   return (
     <div style={{ display: 'flex', boxSizing: 'border-box' }}>
       {/* 왼쪽 이미지 영역 */}
-      <div style={{ width: '1080px', height: '100vh', position: 'sticky', top: 0, flexShrink: 0 }}>
+      <div style={{ width: '100vw', height: '800px', position: 'sticky', top: 0, flexShrink: 0 }}>
         <img
           src="/img/Designers.png"
           alt="B형 상자"
-          style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '12px' }}
+          style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '12px' }}
         />
       </div>
       {/* 오른쪽 입력 영역 */}
