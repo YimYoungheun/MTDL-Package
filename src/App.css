@@ -1,38 +1,44 @@
-/* ---- 버튼 그룹 컨테이너 ---- */
+/* ==============================
+   옵션 버튼 그룹 (탭 스타일)
+   ============================== */
+/* 여러 옵션을 한 줄로 그룹(탭)처럼 묶을 때 */
 .button-group {
   display: flex;
-  border: 1.5px solid #90caf9;   /* 파란 테두리 */
-  border-radius: 16px;
-  background: #f7fafd;           /* 아주 옅은 파랑 */
-  overflow: hidden;              /* 라운드 유지 */
+  border: 1.5px solid #90caf9;       /* 파란 테두리 */
+  border-radius: 16px;               /* 그룹 전체 라운드 */
+  background: #f7fafd;               /* 아주 옅은 파랑 */
+  overflow: hidden;                  /* 좌우 라운드 자연스럽게 */
   width: fit-content;
   margin-bottom: 0.7rem;
 }
 
-/* ---- 그룹 안 옵션 버튼 ---- */
+/* 그룹 내 각 버튼(탭) 스타일 */
 .button-group .option-button {
-  border: none;                 /* 그룹 안은 테두리 없앰 */
-  border-radius: 0;             /* 기본은 각진 버튼 */
-  background: #fff;             /* 선택 안됨: 흰색 */
-  color: #1565c0;
+  border: none;                      /* 그룹 안 테두리 없음 */
+  border-radius: 0;                  /* 각짐(라운드X, 좌우만 따로 줌) */
+  background: #fff;                  /* 미선택시 흰색 */
+  color: #1565c0;                    /* 파란 계열 글씨 */
   flex: 1 1 0;
   min-width: 80px;
   box-shadow: none;
   font-weight: 500;
   transition: background 0.16s, color 0.15s;
+  padding: 0.6rem 1.4rem;
 }
 
+/* 선택된 탭(버튼) */
 .button-group .option-button.selected {
-  background: #1976d2;          /* 파란 배경 */
-  color: #fff;                  /* 흰색 글씨 */
+  background: #1976d2;               /* 진한 파란 배경 */
+  color: #fff;                       /* 흰색 글씨 */
 }
 
+/* 미선택 탭 hover */
 .button-group .option-button:not(.selected):hover {
-  background: #f0f6ff;          /* 연파랑 배경 */
-  color: #1976d2;
+  background: #f0f6ff;               /* 연파랑 */
+  color: #1976d2;                    /* 더 진한 파란 글씨 */
 }
 
-/* 그룹 좌우 첫/마지막 버튼만 라운드 */
+/* 그룹 좌우 라운드만 */
 .button-group .option-button:first-child {
   border-radius: 14px 0 0 14px;
 }
@@ -40,19 +46,20 @@
   border-radius: 0 14px 14px 0;
 }
 
-/* 버튼 사이 경계선 */
+/* 버튼 사이 경계선(구분) */
 .button-group .option-button:not(:last-child) {
   border-right: 1px solid #e3f2fd;
 }
 
-/* ---- 기존 옵션 버튼(개별 버튼, 그룹 외 사용 시) ---- */
+/* ==============================
+   개별 옵션 버튼(그룹 외 단일)
+   ============================== */
 .option-button {
-  /* 기존 스타일, 혹은 그룹 외 단독 버튼용 */
   padding: 0.6rem 1.6rem;
   font-size: 1rem;
   border: 1.5px solid #90caf9;
   border-radius: 18px;
-  background: #e3f2fd;
+  background: #e3f2fd;               /* 연한 파랑 */
   color: #1565c0;
   cursor: pointer;
   margin-bottom: 2px;
@@ -71,4 +78,147 @@
   border-color: #64b5f6;
 }
 
-/* ---- (이하 기존 입력란/버튼/셀렉트 등 그대로) ---- */
+/* ==============================
+   입력란 스타일 (길이별)
+   ============================== */
+/* 모든 입력란 기본값 */
+.custom-input {
+  border-radius: 8px;
+  border: 1.2px solid #90caf9;       /* 파란 테두리 */
+  background: #f3fafe;               /* 아주 연한 파랑 */
+  font-size: 1rem;
+  color: #1565c0;
+  padding: 0.5rem;
+  margin-top: 0.3rem;
+  box-sizing: border-box;
+  transition: border 0.2s, background 0.15s;
+}
+/* 긴 입력란 (회사명/연락처/이메일 등) */
+.custom-input.long {
+  width: 360px;
+  max-width: 100%;
+}
+/* 짧은 입력란 (내경) */
+.custom-input.short {
+  width: 90px;
+}
+/* 중간 입력란 (기타 별도 입력) */
+.custom-input.medium {
+  width: 200px;
+}
+/* 수량 입력란 (기타 수량, "그 이상" 입력 등) */
+.custom-input.qty {
+  width: 160px;
+}
+/* 입력란 포커스 시 */
+.custom-input:focus {
+  border-color: #1976d2;
+  background: #e3f2fd;
+  outline: none;
+}
+
+/* ==============================
+   셀렉트 박스 (수량 등)
+   ============================== */
+.custom-select {
+  border-radius: 8px;
+  border: 1.2px solid #90caf9;
+  background: #f3fafe;
+  font-size: 1rem;
+  color: #1565c0;
+  padding: 0.5rem;
+  margin-top: 0.3rem;
+  width: 360px;
+  box-sizing: border-box;
+  transition: border 0.2s, background 0.15s;
+}
+.custom-select:focus {
+  border-color: #1976d2;
+  background: #e3f2fd;
+  outline: none;
+}
+
+/* ==============================
+   견적/안내 박스
+   ============================== */
+.estimate-box {
+  background: #e3f2fd;
+  border-radius: 18px;
+  border: 1.5px solid #90caf9;
+  padding: 1.5rem 1rem;
+  margin-top: 1.5rem;
+  text-align: left;
+}
+
+/* ==============================
+   버튼(확인/리셋 등)
+   ============================== */
+/* 주요 버튼(확인/제출 등) */
+.primary-button {
+  background: #1976d2;
+  color: #fff;
+  padding: 0.5rem 1.3rem;
+  border-radius: 9px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  transition: background 0.18s, color 0.15s, opacity 0.18s;
+}
+.primary-button:hover {
+  background: #1565c0;
+}
+/* 리셋, 취소 등 서브 버튼 */
+.secondary-button {
+  background: #bbdefb;
+  color: #1976d2;
+  padding: 0.5rem 1.3rem;
+  border-radius: 9px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  transition: background 0.14s, color 0.14s;
+}
+.secondary-button:hover {
+  background: #90caf9;
+  color: #0d47a1;
+}
+
+/* ==============================
+   애니메이션 (페이드 인/아웃)
+   ============================== */
+.fade-in {
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.3s;
+}
+.fade-out {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+/* ==============================
+   파일 업로드 iframe
+   ============================== */
+.file-upload-frame {
+  border-radius: 12px;
+  border: 1.5px solid #90caf9;
+  margin-bottom: 1rem;
+}
+
+/* ==============================
+   기타 레이아웃
+   ============================== */
+.flex-row {
+  display: flex;
+  gap: 0.5rem;
+}
+.flex-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
