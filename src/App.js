@@ -126,7 +126,7 @@ function App() {
 
 return (
   <div style={{ display: 'flex', boxSizing: 'border-box', width: '100vw', height: '100vh' }}>
-    {/* 왼쪽 이미지 영역: 2/3 */}
+    {/* 왼쪽 이미지: 2/3 */}
     <div style={{ flex: 2, minWidth: 0, height: '100vh' }}>
       <img
         src="/img/b_style_box.png"
@@ -139,7 +139,8 @@ return (
         }}
       />
     </div>
-    {/* 오른쪽 입력 영역: 1/3 */}
+
+    {/* 오른쪽 입력란: 1/3 */}
     <div style={{
       flex: 1,
       minWidth: 0,
@@ -148,61 +149,54 @@ return (
       height: '100vh'
     }}>
       <button
+        className="secondary-button"
         onClick={handleReset}
         style={{
-          marginBottom: '1.5rem',
-          backgroundColor: '#ddd',
-          border: 'none',
-          padding: '0.5rem 1rem',
-          borderRadius: '6px',
-          cursor: 'pointer'
+          marginBottom: '1.5rem'
         }}
-      >다시 선택하기</button>
-      {/* 입력란 등... */}
-    </div>
-  </div>
-);
+      >
+        다시 선택하기
+      </button>
 
-        {/* 회사, 연락처, 이메일 */}
-        {[{ label: '회사명 또는 성함', value: company, setter: setCompany },
-          { label: '연락처', value: phone, setter: setPhone },
-          { label: '이메일 주소', value: email, setter: setEmail }].map((f, i) => (
-          <div key={i} style={{ marginBottom: '1rem' }}>
-            <label>{f.label}</label><br />
-            <input
-              className="custom-input long"
-              value={f.value}
-              onChange={e => f.setter(e.target.value)}
-            />
-          </div>
-        ))}
+      {/* 회사, 연락처, 이메일 */}
+      {[{ label: '회사명 또는 성함', value: company, setter: setCompany },
+        { label: '연락처', value: phone, setter: setPhone },
+        { label: '이메일 주소', value: email, setter: setEmail }].map((f, i) => (
+        <div key={i} style={{ marginBottom: '1rem' }}>
+          <label>{f.label}</label><br />
+          <input
+            className="custom-input long"
+            value={f.value}
+            onChange={e => f.setter(e.target.value)}
+          />
+        </div>
+      ))}
 
-        {/* 내경 입력 */}
+      {/* 내경 입력 */}
+      <div style={{ marginBottom: '1rem' }}>
+        <label>내경 (mm)</label>
+        <div className="flex-row" style={{ marginTop: '0.3rem' }}>
+          <input className="custom-input short" placeholder="가로" value={width} onChange={e => setWidth(e.target.value)} />
+          <input className="custom-input short" placeholder="세로" value={length} onChange={e => setLength(e.target.value)} />
+          <input className="custom-input short" placeholder="높이" value={height} onChange={e => setHeight(e.target.value)} />
+        </div>
+      </div>
+
+      {/* 하단 모양 선택 */}
+      {width && length && height && (
         <div style={{ marginBottom: '1rem' }}>
-          <label>내경 (mm)</label>
-          <div className="flex-row" style={{ marginTop: '0.3rem' }}>
-            <input className="custom-input short" placeholder="가로" value={width} onChange={e => setWidth(e.target.value)} />
-            <input className="custom-input short" placeholder="세로" value={length} onChange={e => setLength(e.target.value)} />
-            <input className="custom-input short" placeholder="높이" value={height} onChange={e => setHeight(e.target.value)} />
+          <label>하단 모양</label>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+            {['맞뚜껑', '십자다루마', '삼면접착'].map(opt => (
+              <button
+                key={opt}
+                className={`option-button ${bottomStyle === opt ? 'selected' : ''}`}
+                onClick={() => setBottomStyle(opt)}
+              >{opt}</button>
+            ))}
           </div>
         </div>
-
-        {/* 하단 모양 선택 */}
-        {width && length && height && (
-          <div style={{ marginBottom: '1rem' }}>
-            <label>하단 모양</label>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-              {['맞뚜껑', '십자다루마', '삼면접착'].map(opt => (
-                <button
-                  key={opt}
-                  className={`option-button ${bottomStyle === opt ? 'selected' : ''}`}
-                  onClick={() => setBottomStyle(opt)}
-                >{opt}</button>
-              ))}
-            </div>
-          </div>
-        )}
-
+      )}
         {/* 종이 느낌, 재질, 색상, 무게 */}
         {width && length && height && bottomStyle && (
           <>
