@@ -124,34 +124,44 @@ function App() {
     setSpotPrintColor('');
   };
 
-  return (
-          <div style={{ display: 'flex', width: '100vw', height: '100vh' }}>
-            {/* 왼쪽 이미지: 3/5 */}
-            <div style={{ flex: 3, minWidth: 0, height: '100vh' }}>
-              <img
-                src="/img/Designers.png"
-                alt="B형 상자"
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',   // "꽉" 채움 (잘릴 수도 있음)
-                  borderRadius: '0 0 0 0' // 필요시 모서리 둥글게
-                }}
-              />
-            </div>
-            {/* 오른쪽 입력란: 2/5 */}
-            <div style={{
-              flex: 2,
-              minWidth: 0,
-              padding: '2rem',
-              background: '#fff',
-              height: '100vh',
-              overflowY: 'auto'
-            }}>
-              {/* 입력란 폼 내용 */}
-            </div>
-          </div>
-        >다시 선택하기</button>
+return (
+  <div style={{ display: 'flex', boxSizing: 'border-box', width: '100vw', height: '100vh' }}>
+    {/* 왼쪽 이미지 영역: 2/3 */}
+    <div style={{ flex: 2, minWidth: 0, height: '100vh' }}>
+      <img
+        src="/img/b_style_box.png"
+        alt="B형 상자"
+        style={{
+          width: '100%',
+          height: '100%',
+          objectFit: 'contain',
+          borderRadius: '12px'
+        }}
+      />
+    </div>
+    {/* 오른쪽 입력 영역: 1/3 */}
+    <div style={{
+      flex: 1,
+      minWidth: 0,
+      padding: '2rem',
+      overflowY: 'auto',
+      height: '100vh'
+    }}>
+      <button
+        onClick={handleReset}
+        style={{
+          marginBottom: '1.5rem',
+          backgroundColor: '#ddd',
+          border: 'none',
+          padding: '0.5rem 1rem',
+          borderRadius: '6px',
+          cursor: 'pointer'
+        }}
+      >다시 선택하기</button>
+      {/* 입력란 등... */}
+    </div>
+  </div>
+);
 
         {/* 회사, 연락처, 이메일 */}
         {[{ label: '회사명 또는 성함', value: company, setter: setCompany },
