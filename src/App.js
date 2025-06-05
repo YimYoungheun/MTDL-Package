@@ -142,10 +142,10 @@ return (
       padding: 0            // 안쪽 여백 없음
     }}>
       <img
-        src="/img/b_style_box.png"
+        src="/img/Designers.png"
         alt="B형 상자"
         style={{
-          width: '100%',
+          width: '70vw',
           height: '100%',
           objectFit: 'cover', // 꽉 채움 (잘릴 수도 있음)
           display: 'block',   // img의 기본 inline 속성을 block으로
