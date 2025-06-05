@@ -16,7 +16,7 @@
 label {
   color: #5D5D5D;         /* 옅은 회색 */
   font-weight: 400;       /* 살짝 두껍게 (선택) */
-  font-size: 0.7rem;         /* 글씨 크기 */
+  font-size: 0.9rem;         /* 글씨 크기 */
   letter-spacing: 0.01em; /* (선택) */
 }
 
