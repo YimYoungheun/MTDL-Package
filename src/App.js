@@ -73,10 +73,6 @@ function App() {
     }
   };
 
-  // 스타일 변수 선언
-  const inputStyle = { width: '360px', padding: '0.5rem' };
-  const shortInputStyle = { width: '90px', padding: '0.5rem' };
-
   // 상태값
   const [company, setCompany] = useState('');
   const [phone, setPhone] = useState('');
@@ -141,15 +137,8 @@ function App() {
       {/* 오른쪽 입력 영역 */}
       <div style={{ flex: 1, padding: '2rem', overflowY: 'auto', height: '100vh' }}>
         <button
+          className="secondary-button"
           onClick={handleReset}
-          style={{
-            marginBottom: '1.5rem',
-            backgroundColor: '#ddd',
-            border: 'none',
-            padding: '0.5rem 1rem',
-            borderRadius: '6px',
-            cursor: 'pointer'
-          }}
         >다시 선택하기</button>
 
         {/* 회사, 연락처, 이메일 */}
@@ -158,17 +147,21 @@ function App() {
           { label: '이메일 주소', value: email, setter: setEmail }].map((f, i) => (
           <div key={i} style={{ marginBottom: '1rem' }}>
             <label>{f.label}</label><br />
-            <input value={f.value} onChange={e => f.setter(e.target.value)} style={inputStyle} />
+            <input
+              className="custom-input long"
+              value={f.value}
+              onChange={e => f.setter(e.target.value)}
+            />
           </div>
         ))}
 
         {/* 내경 입력 */}
         <div style={{ marginBottom: '1rem' }}>
           <label>내경 (mm)</label>
-          <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.3rem' }}>
-            <input placeholder="가로" value={width} onChange={e => setWidth(e.target.value)} style={shortInputStyle} />
-            <input placeholder="세로" value={length} onChange={e => setLength(e.target.value)} style={shortInputStyle} />
-            <input placeholder="높이" value={height} onChange={e => setHeight(e.target.value)} style={shortInputStyle} />
+          <div className="flex-row" style={{ marginTop: '0.3rem' }}>
+            <input className="custom-input short" placeholder="가로" value={width} onChange={e => setWidth(e.target.value)} />
+            <input className="custom-input short" placeholder="세로" value={length} onChange={e => setLength(e.target.value)} />
+            <input className="custom-input short" placeholder="높이" value={height} onChange={e => setHeight(e.target.value)} />
           </div>
         </div>
 
@@ -311,7 +304,7 @@ function App() {
             {embossing !== null && (
               <div style={{ marginBottom: '1rem' }}>
                 <label>수량 선택</label>
-                <select value={quantity} onChange={e => setQuantity(e.target.value)} style={inputStyle}>
+                <select className="custom-select" value={quantity} onChange={e => setQuantity(e.target.value)}>
                   <option value="">수량을 선택하세요</option>
                   {[500, 1000, 2000, 3000, 5000, 10000, 20000, 30000, 50000, 100000, '그 이상'].map(qty => (
                     <option key={qty} value={String(qty)}>{qty === '그 이상' ? '그 이상' : Number(qty).toLocaleString()}</option>
@@ -323,10 +316,10 @@ function App() {
               <div style={{ marginBottom: '1rem' }}>
                 <label>희망 수량 입력</label>
                 <input
+                  className="custom-input qty"
                   type="number"
                   value={customQuantity}
                   onChange={e => setCustomQuantity(e.target.value)}
-                  style={inputStyle}
                 />
               </div>
             )}
@@ -351,14 +344,14 @@ function App() {
             />
 
             <iframe
+              className="file-upload-frame"
               src="https://mtdl.co.kr/fileupload"
               width="100%"
               height="170"
-              style={{ border: '1px solid #ccc', borderRadius: '12px', marginBottom: '1rem' }}
               title="파일 업로드"
             />
             <button
-              style={{ background: 'black', color: 'white', padding: '0.5rem 1rem', borderRadius: '6px', border: 'none', cursor: 'pointer' }}
+              className="primary-button"
               onClick={() => alert('기재해주신 연락처로 담당자가 연락할 수 있습니다.')}
             >
               확인
