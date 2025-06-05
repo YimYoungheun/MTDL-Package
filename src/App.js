@@ -125,20 +125,32 @@ function App() {
   };
 
   return (
-    <div style={{ display: 'flex', boxSizing: 'border-box' }}>
-      {/* 왼쪽 이미지 영역 */}
-      <div style={{ width: '1920px', height: '700px', position: 'sticky', top: 0, flexShrink: 0 }}>
-        <img
-          src="/img/Designers.png"
-          alt="B형 상자"
-          style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '12px' }}
-        />
-      </div>
-      {/* 오른쪽 입력 영역 */}
-      <div style={{ flex: 1, padding: '2rem', overflowY: 'auto', height: '100vh' }}>
-        <button
-          className="secondary-button"
-          onClick={handleReset}
+          <div style={{ display: 'flex', width: '100vw', height: '100vh' }}>
+            {/* 왼쪽 이미지: 3/5 */}
+            <div style={{ flex: 3, minWidth: 0, height: '100vh' }}>
+              <img
+                src="/img/Designers.png"
+                alt="B형 상자"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',   // "꽉" 채움 (잘릴 수도 있음)
+                  borderRadius: '0 0 0 0' // 필요시 모서리 둥글게
+                }}
+              />
+            </div>
+            {/* 오른쪽 입력란: 2/5 */}
+            <div style={{
+              flex: 2,
+              minWidth: 0,
+              padding: '2rem',
+              background: '#fff',
+              height: '100vh',
+              overflowY: 'auto'
+            }}>
+              {/* 입력란 폼 내용 */}
+            </div>
+          </div>
         >다시 선택하기</button>
 
         {/* 회사, 연락처, 이메일 */}
