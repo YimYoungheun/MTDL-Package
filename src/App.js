@@ -125,36 +125,43 @@ function App() {
   };
 
 return (
-  <div style={{ display: 'flex', boxSizing: 'border-box', width: '100vw', height: '100vh' }}>
+  <div style={{
+    display: 'flex',
+    width: '100vw',         // 화면 전체 너비
+    height: '100vh',        // 화면 전체 높이
+    margin: 0,              // 바깥 여백 없음
+    padding: 0,             // 안쪽 여백 없음
+    boxSizing: 'border-box'
+  }}>
     {/* 왼쪽 이미지: 2/3 */}
-    <div style={{ flex: 2, minWidth: 0, height: '100vh' }}>
+    <div style={{
+      flex: 2,
+      minWidth: 0,
+      height: '100vh',
+      margin: 0,            // 바깥쪽 여백 없음
+      padding: 0            // 안쪽 여백 없음
+    }}>
       <img
         src="/img/b_style_box.png"
         alt="B형 상자"
         style={{
           width: '100%',
           height: '100%',
-          objectFit: 'contain',
-          borderRadius: '12px'
+          objectFit: 'cover', // 꽉 채움 (잘릴 수도 있음)
+          display: 'block',   // img의 기본 inline 속성을 block으로
+          borderRadius: '0'   // 모서리도 네모로 (필요시 조절)
         }}
       />
     </div>
-
     {/* 오른쪽 입력란: 1/3 */}
     <div style={{
       flex: 1,
       minWidth: 0,
       padding: '2rem',
-      overflowY: 'auto',
-      height: '100vh'
+      background: '#fff',
+      height: '100vh',
+      overflowY: 'auto'
     }}>
-      <button
-        className="secondary-button"
-        onClick={handleReset}
-        style={{
-          marginBottom: '1.5rem'
-        }}
-      >
         다시 선택하기
       </button>
 
