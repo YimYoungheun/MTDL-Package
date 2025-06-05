@@ -40,7 +40,7 @@ label {
   box-shadow: none;
   font-weight: 400;
   transition: background 0.16s, color 0.15s;
-  padding: 0.5rem 1.4rem;
+  padding: 0.6rem 1.6rem;
 }
 
 /* 선택된 탭(버튼) */
@@ -75,12 +75,12 @@ label {
   padding: 0.6rem 1.6rem;
   font-size: 1rem;
   border: 1.5px solid #90caf9;
-  border-radius: 18px;
+  border-radius: 14px;
   background: #e3f2fd;               /* 연한 파랑 */
   color: #1565c0;
   cursor: pointer;
-  margin-bottom: 2px;
-  margin-right: 2px;
+  margin-bottom: 1px;
+  margin-right: 1px;
   transition: background 0.16s, color 0.15s, border 0.18s;
   outline: none;
 }
