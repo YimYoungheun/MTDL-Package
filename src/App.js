@@ -127,7 +127,7 @@ function App() {
   return (
     <div style={{ display: 'flex', boxSizing: 'border-box' }}>
       {/* 왼쪽 이미지 영역 */}
-      <div style={{ width: '100vw', height: '800px', position: 'sticky', top: 0, flexShrink: 0 }}>
+      <div style={{ width: '1080px', height: '800px', position: 'sticky', top: 0, flexShrink: 0 }}>
         <img
           src="/img/Designers.png"
           alt="B형 상자"
