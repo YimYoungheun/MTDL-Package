@@ -34,7 +34,7 @@ label {
   border: none;                      /* 그룹 안 테두리 없음 */
   border-radius: 0;                  /* 각짐(라운드X, 좌우만 따로 줌) */
   background: #fff;                  /* 미선택시 흰색 */
-  color: #000000;                    /* 검정 글씨 */
+  color: #5A5A5A;                    /* 검정 글씨 */
   flex: 1 1 0;
   min-width: 70px;
   box-shadow: none;
