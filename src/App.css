@@ -39,10 +39,9 @@ label {
    개별 옵션 버튼(그룹 외 단일)
    ============================== */
 .option-button {
-  flex: 1 1 0;
-  min-width: 10 px;
-  height: 10px;
-  padding: 0;
+  min-width: 90 px;
+  height: 40px;
+  padding: 0 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -69,6 +68,7 @@ label {
   color: #000000;
   border-color: #747474;
 }
+
 
 /* ==============================
    입력란 스타일 (길이별)
