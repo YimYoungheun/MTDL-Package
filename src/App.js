@@ -6,7 +6,7 @@ import './App.css';
 import { weightMap } from './data/weightMap';
 import { colorMap } from './data/colorMap';
 import { materialMap } from './data/materialMap';
-import { paperPrices } from './data/PaperPrices';
+import { paperPrices } from './data/paperPrices';
 
 function App() {
   // 상태값
