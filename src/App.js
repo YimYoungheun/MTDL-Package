@@ -381,7 +381,7 @@ return (
               className="primary-button"
               onClick={() => alert('기재해주신 연락처로 담당자가 연락할 수 있습니다.')}
             >
-              확인
+              바로 주문하기
             </button>
           </>
         )}
