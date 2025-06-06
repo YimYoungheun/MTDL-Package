@@ -3,7 +3,7 @@ import EstimatePrice from './EstimatePrice';
 import './App.css';
 
 function App() {
-  // 가격 데이터 및 옵션 맵
+  // 가격 데이터 및 옵션 맵 (생략 부분 동일)
   const paperPrices = {
     '매끄러운': {
       AB: { '300g': 359390, '350g': 420690 },
@@ -124,44 +124,44 @@ function App() {
     setSpotPrintColor('');
   };
 
-return (
-  <div style={{
-    display: 'flex',
-    width: '100vw',         // 화면 전체 너비
-    height: '100vh',        // 화면 전체 높이
-    margin: 0,              // 바깥 여백 없음
-    padding: 0,             // 안쪽 여백 없음
-    boxSizing: 'border-box'
-  }}>
-    {/* 왼쪽 이미지 */}
+  return (
     <div style={{
-      flex: 3.6,
-      minWidth: 0,
+      display: 'flex',
+      width: '100vw',
       height: '100vh',
-      margin: 0,            // 바깥쪽 여백 없음
-      padding: 0            // 안쪽 여백 없음
+      margin: 0,
+      padding: 0,
+      boxSizing: 'border-box'
     }}>
-      <img
-        src="/img/Designers.png"
-        alt="B형 상자"
-        style={{
-          width: '73vw',
-          height: '100%',
-          objectFit: 'cover', // 꽉 채움 (잘릴 수도 있음)
-          display: 'block',   // img의 기본 inline 속성을 block으로
-          borderRadius: '0'   // 모서리도 네모로 (필요시 조절)
-        }}
-      />
-    </div>
-    {/* 오른쪽 입력란: 1/3 */}
-    <div style={{
-      flex: 1,
-      minWidth: 0,
-      padding: '2rem',
-      background: '#fff',
-      height: '100vh',
-      overflowY: 'auto'
-    }}>
+      {/* 왼쪽 이미지 */}
+      <div style={{
+        flex: 3.6,
+        minWidth: 0,
+        height: '100vh',
+        margin: 0,
+        padding: 0
+      }}>
+        <img
+          src="/img/Designers.png"
+          alt="B형 상자"
+          style={{
+            width: '73vw',
+            height: '100%',
+            objectFit: 'cover',
+            display: 'block',
+            borderRadius: '0'
+          }}
+        />
+      </div>
+      {/* 오른쪽 입력란: 1/3 */}
+      <div style={{
+        flex: 1,
+        minWidth: 0,
+        padding: '2rem',
+        background: '#fff',
+        height: '100vh',
+        overflowY: 'auto'
+      }}>
         <button
           className="secondary-button"
           onClick={handleReset}
@@ -169,95 +169,96 @@ return (
           처음부터 입력 다시하기
         </button>
 
-      {/* 회사, 연락처, 이메일 */}
-      {[{ label: '회사명 또는 성함', value: company, setter: setCompany },
-        { label: '연락처', value: phone, setter: setPhone },
-        { label: '이메일 주소', value: email, setter: setEmail }].map((f, i) => (
-        <div key={i} style={{ marginBottom: '1rem' }}>
-          <label>{f.label}</label><br />
-          <input
-            className="custom-input long"
-            value={f.value}
-            onChange={e => f.setter(e.target.value)}
-          />
-        </div>
-      ))}
+        {/* 회사, 연락처, 이메일 */}
+        {[{ label: '회사명 또는 성함', value: company, setter: setCompany },
+          { label: '연락처', value: phone, setter: setPhone },
+          { label: '이메일 주소', value: email, setter: setEmail }].map((f, i) => (
+          <div key={i} style={{ marginBottom: '1rem' }}>
+            <label>{f.label}</label><br />
+            <input
+              className="custom-input long"
+              value={f.value}
+              onChange={e => f.setter(e.target.value)}
+            />
+          </div>
+        ))}
 
-      {/* 내경 입력 */}
-      <div style={{ marginBottom: '1rem' }}>
-        <label>내경 (mm)</label>
-        <div className="flex-row" style={{ marginTop: '0.3rem' }}>
-          <input className="custom-input short" placeholder="가로" value={width} onChange={e => setWidth(e.target.value)} />
-          <input className="custom-input short" placeholder="세로" value={length} onChange={e => setLength(e.target.value)} />
-          <input className="custom-input short" placeholder="높이" value={height} onChange={e => setHeight(e.target.value)} />
-        </div>
-      </div>
-
-      {/* 하단 모양 선택 */}
-      {width && length && height && (
+        {/* 내경 입력 */}
         <div style={{ marginBottom: '1rem' }}>
-          <label>하단 모양</label>
-          <div className="button-group">
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-            {['맞뚜껑', '십자다루마', '삼면접착'].map(opt => (
-              <button
-                key={opt}
-                className={`option-button ${bottomStyle === opt ? 'selected' : ''}`}
-                onClick={() => setBottomStyle(opt)}
-              >{opt}</button>
-            ))}
+          <label>내경 (mm)</label>
+          <div className="flex-row" style={{ marginTop: '0.3rem' }}>
+            <input className="custom-input short" placeholder="가로" value={width} onChange={e => setWidth(e.target.value)} />
+            <input className="custom-input short" placeholder="세로" value={length} onChange={e => setLength(e.target.value)} />
+            <input className="custom-input short" placeholder="높이" value={height} onChange={e => setHeight(e.target.value)} />
           </div>
         </div>
-      </div>
-      )}
+
+        {/* 하단 모양 선택 */}
+        {width && length && height && (
+          <div style={{ marginBottom: '1rem' }}>
+            <label>하단 모양</label>
+            <div className="button-group">
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                {['맞뚜껑', '십자다루마', '삼면접착'].map(opt => (
+                  <button
+                    key={opt}
+                    className={`option-button ${bottomStyle === opt ? 'selected' : ''}`}
+                    onClick={() => setBottomStyle(opt)}
+                  >{opt}</button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* 종이 느낌, 재질, 색상, 무게 */}
         {width && length && height && bottomStyle && (
           <>
             <div style={{ marginBottom: '1rem' }}>
               <label>종이 느낌</label>
               <div className="button-group">
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-                {Object.keys(materialMap).map(feel => (
-                  <button key={feel} className={`option-button ${paperFeel === feel ? 'selected' : ''}`} onClick={() => { setPaperFeel(feel); setMaterial(''); setColor(''); setWeight(''); }}>{feel}</button>
-                ))}
-              </div>
-            </div>
-          </div>
-            {paperFeel && (
-              <div style={{ marginBottom: '1rem' }}>
-                <label>재질</label>
-                <div className="button-group">
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-                  {materialMap[paperFeel].map(mat => (
-                    <button key={mat} className={`option-button ${material === mat ? 'selected' : ''}`} onClick={() => { setMaterial(mat); setColor(''); setWeight(''); }}>{mat}</button>
+                  {Object.keys(materialMap).map(feel => (
+                    <button key={feel} className={`option-button ${paperFeel === feel ? 'selected' : ''}`} onClick={() => { setPaperFeel(feel); setMaterial(''); setColor(''); setWeight(''); }}>{feel}</button>
                   ))}
                 </div>
               </div>
             </div>
+            {paperFeel && (
+              <div style={{ marginBottom: '1rem' }}>
+                <label>재질</label>
+                <div className="button-group">
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                    {materialMap[paperFeel].map(mat => (
+                      <button key={mat} className={`option-button ${material === mat ? 'selected' : ''}`} onClick={() => { setMaterial(mat); setColor(''); setWeight(''); }}>{mat}</button>
+                    ))}
+                  </div>
+                </div>
+              </div>
             )}
             {paperFeel === '러프한' && material && getColorOptions().length > 0 && (
               <div style={{ marginBottom: '1rem' }}>
                 <label>색상</label>
                 <div className="button-group">
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-                  {getColorOptions().map(c => (
-                    <button key={c} className={`option-button ${color === c ? 'selected' : ''}`} onClick={() => { setColor(c); setWeight(''); }}>{c}</button>
-                  ))}
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                    {getColorOptions().map(c => (
+                      <button key={c} className={`option-button ${color === c ? 'selected' : ''}`} onClick={() => { setColor(c); setWeight(''); }}>{c}</button>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
             )}
             {material && getWeightOptions().length > 0 && (
               <div style={{ marginBottom: '1rem' }}>
                 <label>무게</label>
                 <div className="button-group">
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-                  {getWeightOptions().map(w => (
-                    <button key={w} className={`option-button ${weight === w ? 'selected' : ''}`} onClick={() => setWeight(w)}>{w}</button>
-                  ))}
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                    {getWeightOptions().map(w => (
+                      <button key={w} className={`option-button ${weight === w ? 'selected' : ''}`} onClick={() => setWeight(w)}>{w}</button>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
             )}
           </>
         )}
@@ -267,20 +268,20 @@ return (
           <div style={{ marginBottom: '1rem' }}>
             <label>인쇄 선택</label>
             <div className="button-group">
-            <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.3rem' }}>
-              <button
-                className={`option-button ${(!mainPrintColor && !spotPrintColor) ? 'selected' : ''}`}
-                onClick={() => {
-                  setMainPrintColor('');
-                  setSpotPrintColor('');
-                }}
-              >
-                인쇄 없음
-              </button>
+              <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.3rem' }}>
+                <button
+                  className={`option-button ${(!mainPrintColor && !spotPrintColor) ? 'selected' : ''}`}
+                  onClick={() => {
+                    setMainPrintColor('');
+                    setSpotPrintColor('');
+                  }}
+                >
+                  인쇄 없음
+                </button>
+              </div>
             </div>
-          </div>
             {/* 1도~4도: 한 줄, 그룹 단일 선택 */}
-            <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.3rem' }}>
+            <div className="button-group">
               {['1도', '2도', '3도', '4도'].map(type => (
                 <button
                   key={type}
@@ -290,7 +291,7 @@ return (
               ))}
             </div>
             {/* 별색 1도~4도: 한 줄, 그룹 단일 선택 */}
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
+            <div className="button-group">
               {['별색 1도', '별색 2도', '별색 3도', '별색 4도'].map(type => (
                 <button
                   key={type}
@@ -308,10 +309,10 @@ return (
             <div style={{ marginBottom: '1rem' }}>
               <label>코팅</label>
               <div className="button-group">
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-                {['없음', '무광', '유광', '벨벳'].map(type => (
-                  <button key={type} className={`option-button ${(type === '없음' ? coating === '' : coating === type) ? 'selected' : ''}`} onClick={() => setCoating(type === '없음' ? '' : type)}>{type}</button>
-                ))}
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                  {['없음', '무광', '유광', '벨벳'].map(type => (
+                    <button key={type} className={`option-button ${(type === '없음' ? coating === '' : coating === type) ? 'selected' : ''}`} onClick={() => setCoating(type === '없음' ? '' : type)}>{type}</button>
+                  ))}
                 </div>
               </div>
             </div>
@@ -319,45 +320,45 @@ return (
               <div style={{ marginBottom: '1rem' }}>
                 <label>형압</label>
                 <div className="button-group">
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-                  {['없음', '음각', '양각'].map(type => (
-                    <button key={type} className={`option-button ${(type === '없음' ? embossing === '' : embossing === type) ? 'selected' : ''}`} onClick={() => setEmbossing(type === '없음' ? '' : type)}>{type}</button>
-                  ))}
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                    {['없음', '음각', '양각'].map(type => (
+                      <button key={type} className={`option-button ${(type === '없음' ? embossing === '' : embossing === type) ? 'selected' : ''}`} onClick={() => setEmbossing(type === '없음' ? '' : type)}>{type}</button>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
             )}
             {embossing !== null && (
               <div style={{ marginBottom: '1rem' }}>
                 <label>박 (복수 선택 가능)</label>
                 <div className="button-group">
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-                  {['없음', '금박', '은박', '먹박', '적박', '홀로그램박', '투명홀로그램박'].map(type => (
-                    <button
-                      key={type}
-                      className={`option-button ${(type === '없음' && foil.length === 0) || foil.includes(type) ? 'selected' : ''}`}
-                      onClick={() => {
-                        if (type === '없음') setFoil([]);
-                        else setFoil(prev => prev.includes(type) ? prev.filter(t => t !== type) : [...prev, type]);
-                      }}
-                    >{type}</button>
-                  ))}
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                    {['없음', '금박', '은박', '먹박', '적박', '홀로그램박', '투명홀로그램박'].map(type => (
+                      <button
+                        key={type}
+                        className={`option-button ${(type === '없음' && foil.length === 0) || foil.includes(type) ? 'selected' : ''}`}
+                        onClick={() => {
+                          if (type === '없음') setFoil([]);
+                          else setFoil(prev => prev.includes(type) ? prev.filter(t => t !== type) : [...prev, type]);
+                        }}
+                      >{type}</button>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
             )}
             {embossing !== null && (
               <div style={{ marginBottom: '1rem' }}>
                 <label>수량 선택</label>
                 <div className="button-group">
-                <select className="custom-select" value={quantity} onChange={e => setQuantity(e.target.value)}>
-                  <option value="">수량을 선택하세요</option>
-                  {[500, 1000, 2000, 3000, 5000, 10000, 20000, 30000, 50000, 100000, '그 이상'].map(qty => (
-                    <option key={qty} value={String(qty)}>{qty === '그 이상' ? '그 이상' : Number(qty).toLocaleString()}</option>
-                  ))}
-                </select>
+                  <select className="custom-select" value={quantity} onChange={e => setQuantity(e.target.value)}>
+                    <option value="">수량을 선택하세요</option>
+                    {[500, 1000, 2000, 3000, 5000, 10000, 20000, 30000, 50000, 100000, '그 이상'].map(qty => (
+                      <option key={qty} value={String(qty)}>{qty === '그 이상' ? '그 이상' : Number(qty).toLocaleString()}</option>
+                    ))}
+                  </select>
+                </div>
               </div>
-            </div>
             )}
             {quantity === '그 이상' && (
               <div style={{ marginBottom: '1rem' }}>
@@ -369,7 +370,6 @@ return (
                   onChange={e => setCustomQuantity(e.target.value)}
                 />
               </div>
-            </div>
             )}
 
             {/* 견적가 계산 컴포넌트 */}
@@ -388,27 +388,4 @@ return (
               embossing={embossing}
               mainPrintColor={mainPrintColor}
               spotPrintColor={spotPrintColor}
-              printNone={!mainPrintColor && !spotPrintColor}
-            />
-
-            <iframe
-              className="file-upload-frame"
-              src="https://mtdl.co.kr/fileupload"
-              width="100%"
-              height="170"
-              title="파일 업로드"
-            />
-            <button
-              className="primary-button"
-              onClick={() => alert('기재해주신 연락처로 담당자가 연락할 수 있습니다.')}
-            >
-              바로 주문하기
-            </button>
-          </>
-        )}
-      </div>
-    </div>
-  );
-}
-
-export default App;
+              printNone={!mainPrint
