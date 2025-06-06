@@ -208,7 +208,7 @@ label {
   outline: none;
 }
 .secondary-button:hover {
-  background: #0054FF;
+  background: #ffffff;
   font-weight: 500;          /* 폰트 굵기 */
   color: #000000;            /* 텍스트 색상 */
 }
