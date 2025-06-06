@@ -75,7 +75,7 @@ label {
   padding: 0.6rem 0.9rem;
   font-size: 1rem;
   border: 1.5px solid #90caf9;
-  border-radius: 1px;
+  border-radius: 3px;
   background: #e3f2fd;               /* 연한 파랑 */
   color: #000000;
   cursor: pointer;
@@ -130,7 +130,7 @@ label {
 }
 /* 입력란 포커스 시 */
 .custom-input:focus {
-  border-bottom: 2.5px solid #0d47a1;     /* 포커스시 진하게 */
+  border-bottom: 1.5px solid #000000;     /* 포커스시 진하게 */
   outline: none;
 }
 
