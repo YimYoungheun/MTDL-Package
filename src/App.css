@@ -33,19 +33,6 @@ label {
   color: #1976d2;                    /* 더 진한 파란 글씨 */
 }
 
-/* 그룹 좌우 라운드만 */
-.button-group .option-button:first-child {
-  border-radius: 14px 0 0 14px;
-}
-.button-group .option-button:last-child {
-  border-radius: 0 14px 14px 0;
-}
-
-/* 버튼 사이 경계선(구분) */
-.button-group .option-button:not(:last-child) {
-  border-right: 1px solid #e3f2fd;
-}
-
 /* ==============================
    개별 옵션 버튼(그룹 외 단일)
    ============================== */
