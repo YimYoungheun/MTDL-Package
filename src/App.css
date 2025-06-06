@@ -29,8 +29,8 @@ label {
 /* 미선택 탭 hover */
 .button-group .option-button:not(.selected):hover {
   background: #000000;               /* 폰트 색상 */
-  font-weight: 500;                  /* 폰트 굵기 */ 
-  color: #1976d2;                    /* 더 진한 파란 글씨 */
+  font-weight: 600;                  /* 폰트 굵기 */ 
+  color: #ffffff;                    /* 더 진한 파란 글씨 */
 }
 
 /* ==============================
