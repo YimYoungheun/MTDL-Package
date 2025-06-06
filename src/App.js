@@ -166,7 +166,7 @@ return (
           className="secondary-button"
           onClick={handleReset}
         >
-          입력 처음부터 다시하기
+          처음부터 입력 다시하기
         </button>
 
       {/* 회사, 연락처, 이메일 */}
