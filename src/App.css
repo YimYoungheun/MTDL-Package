@@ -140,8 +140,8 @@ label {
 .estimate-box {
   background: #ffffff;               /* 배경 색상 */
   border-radius: 3px;
-  border: 1.5px solid #000000;
-  padding: 1.5rem 1rem;
+  border: 1.5px solid #ffffff;
+  padding: 0.5rem 0.5rem;
   margin-top: 1.5rem;
   text-align: left;
 }
