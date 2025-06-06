@@ -162,9 +162,12 @@ return (
       height: '100vh',
       overflowY: 'auto'
     }}>
-      <button>
-        다시 선택하기
-      </button>
+        <button
+          className="secondary-button"
+          onClick={handleReset}
+        >
+          다시 선택하기
+        </button>
 
       {/* 회사, 연락처, 이메일 */}
       {[{ label: '회사명 또는 성함', value: company, setter: setCompany },
