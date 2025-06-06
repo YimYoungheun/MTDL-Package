@@ -9,7 +9,7 @@
   background: #ffffff;               /* 하얀색 */
   overflow: hidden;                  /* 좌우 라운드 자연스럽게 */
   width: fit-content;
-  margin-bottom: 0.7rem;
+  margin-bottom: 1.5rem;
 }
 
 /* 모든 <label> 태그 색상 */
@@ -81,7 +81,7 @@ label {
   background: #ffffff;               /* 배경 색상 */
   color: #747474;                    /* 폰트 색상 */
   cursor: pointer;
-  margin-bottom: 1px;
+  margin-bottom: 1.5px;
   margin-right: 1px;
   transition: background 0.16s, color 0.15s, border 0.18s;
   outline: none;
@@ -111,7 +111,7 @@ label {
   font-size: 1rem;
   color: #000000;
   padding: 0.5rem;
-  margin-top: 0.3rem;
+  margin-top: 1.5rem;
   box-sizing: border-box;
   transition: border 0.2s, background 0.15s;
 }
@@ -148,7 +148,7 @@ label {
   font-size: 1rem;
   color: #000000;
   padding: 0.5rem;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   width: 360px;
   box-sizing: border-box;
   transition: border 0.2s, background 0.15s;
@@ -185,8 +185,8 @@ label {
   cursor: pointer;
   font-size: 1rem;
   font-weight: 500;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
   transition: background 0.18s, color 0.15s, opacity 0.18s;
 }
 .primary-button:hover {
@@ -202,7 +202,7 @@ label {
   background: #ffffff;               /* 배경 색상 */
   color: #747474;                    /* 폰트 색상 */
   cursor: pointer;
-  margin-bottom: 1px;
+  margin-bottom: 1.5px;
   margin-right: 1px;
   transition: background 0.16s, color 0.15s, border 0.18s;
   outline: none;
