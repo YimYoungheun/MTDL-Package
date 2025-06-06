@@ -372,20 +372,44 @@ function App() {
               </div>
             )}
 
-            {/* 견적가 계산 컴포넌트 */}
-            <EstimatePrice
-              width={width}
-              length={length}
-              height={height}
-              bottomStyle={bottomStyle}
-              paperFeel={paperFeel}
-              paperType={material}
-              paperWeight={weight}
-              color={color}
-              quantity={quantity === '그 이상' ? customQuantity : quantity}
-              coatingType={coating || '없음'}
-              foil={foil}
-              embossing={embossing}
-              mainPrintColor={mainPrintColor}
-              spotPrintColor={spotPrintColor}
-              printNone={!mainPrint
+              {/* 견적가 계산 컴포넌트 */}
+              <EstimatePrice
+                width={width}
+                length={length}
+                height={height}
+                bottomStyle={bottomStyle}
+                paperFeel={paperFeel}
+                paperType={material}
+                paperWeight={weight}
+                color={color}
+                quantity={quantity === '그 이상' ? customQuantity : quantity}
+                coatingType={coating || '없음'}
+                foil={foil}
+                embossing={embossing}
+                mainPrintColor={mainPrintColor}
+                spotPrintColor={spotPrintColor}
+                printNone={!mainPrintColor && !spotPrintColor}
+              />
+
+              <iframe
+                className="file-upload-frame"
+                src="https://mtdl.co.kr/fileupload"
+                width="100%"
+                height="170"
+                title="파일 업로드"
+              />
+              <button
+                className="primary-button"
+                onClick={() => alert('기재해주신 연락처로 담당자가 연락할 수 있습니다.')}
+              >
+                바로 주문하기
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default App;
