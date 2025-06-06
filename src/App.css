@@ -72,7 +72,7 @@ label {
    개별 옵션 버튼(그룹 외 단일)
    ============================== */
 .option-button {
-  padding: 0.6rem 0.9rem;
+  padding: 0.6rem 0.7rem;
   font-size: 1rem;
   border: 1.5px solid #90caf9;
   border-radius: 3px;
