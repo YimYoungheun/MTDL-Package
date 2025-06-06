@@ -190,7 +190,7 @@ label {
   transition: background 0.18s, color 0.15s, opacity 0.18s;
 }
 .primary-button:hover {
-  font-weight: 650;
+  font-weight: 500;
   background: #0054FF;
 }
 /* 리셋, 취소 등 서브 버튼 */
