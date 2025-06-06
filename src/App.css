@@ -1,16 +1,6 @@
 /* ==============================
    옵션 버튼 그룹 (탭 스타일)
    ============================== */
-/* 여러 옵션을 한 줄로 그룹(탭)처럼 묶을 때 */
-.button-group {
-  display: flex;
-  border: 0.4px solid #90caf9;       /* 파란 테두리 */
-  border-radius: 16px;               /* 그룹 전체 라운드 */
-  background: #ffffff;               /* 하얀색 */
-  overflow: hidden;                  /* 좌우 라운드 자연스럽게 */
-  width: fit-content;
-  margin-bottom: 0.7rem;
-}
 
 /* 모든 <label> 태그 색상 */
 label {
