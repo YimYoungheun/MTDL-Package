@@ -135,7 +135,7 @@ return (
   }}>
     {/* 왼쪽 이미지 */}
     <div style={{
-      flex: 2.5,
+      flex: 3.5,
       minWidth: 0,
       height: '100vh',
       margin: 0,            // 바깥쪽 여백 없음
