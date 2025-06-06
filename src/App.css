@@ -40,7 +40,7 @@ label {
   box-shadow: none;
   font-weight: 400;
   transition: background 0.16s, color 0.15s;
-  padding: 0.6rem 1.6rem;
+  padding: 0.6rem 1.2rem;
 }
 
 /* 선택된 탭(버튼) */
