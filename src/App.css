@@ -102,7 +102,7 @@ label {
 .custom-input {
   border-radius: 0px;
   border: none;
-  border-bottom: 2px solid #000000;  /* 밑줄(언더라인)만 표시 */
+  border-bottom: 1px solid #000000;  /* 밑줄(언더라인)만 표시 */
   background: transparent;               /* 아주 연한 파랑 */
   font-size: 1rem;
   color: #1565c0;
