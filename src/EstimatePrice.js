@@ -112,10 +112,15 @@ const EstimatePrice = ({
   const totalQuantity = parseInt(quantity);
   if (totalQuantity < 500) {
     return (
-      <div className="estimate-box">
-        <span className="estimate-unit" style={{color: 'crimson', fontSize: '0.9rem', marginTop: '0.3rem'}}>최소 수량은 500개 이상입니다</span>
-      </div>
-    );
+    <div className="estimate-box">
+      <p className="main-estimate">
+        {estimateWithMargin.toLocaleString()}원부터~
+      </p>
+      <p className="estimate-unit">
+        개당 금액: {unitPriceWithMargin.toLocaleString()}원
+      </p>
+    </div>
+  );
   }
   const { plate: printPlateFee, print: printRunFee } =
     getPrintFee(mainPrintColor, spotPrintColor, totalQuantity, perSheetCount, printNone);
