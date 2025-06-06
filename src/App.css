@@ -139,11 +139,17 @@ label {
    ============================== */
 .estimate-box {
   background: #ffffff;               /* 배경 색상 */
-  border-radius: 18px;
+  border-radius: 3px;
   border: 1.5px solid #000000;
   padding: 1.5rem 1rem;
   margin-top: 1.5rem;
   text-align: left;
+}
+
+.estimate-box .main-estimate {
+  font-size: 1.6rem;
+  color: #3736FF; /* 푸른색 */
+  font-weight: bold;
 }
 
 /* ==============================
