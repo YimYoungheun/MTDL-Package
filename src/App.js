@@ -8,6 +8,7 @@ import { colorMap } from './data/colorMap';
 import { materialMap } from './data/materialMap';
 import { paperPrices } from './data/PaperPrices';
 
+function App() {
   // 상태값
   const [company, setCompany] = useState('');
   const [phone, setPhone] = useState('');
