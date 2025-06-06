@@ -146,13 +146,12 @@ const EstimatePrice = ({
 
   return (
     <div className="estimate-box">
-      <span className="estimate-price">
-        예상 견적: {estimateWithMargin.toLocaleString()}원
-      </span>
-      <br />
-      <span className="estimate-unit">
+      <p className="main-estimate">
+        {estimateWithMargin.toLocaleString()}원
+      </p>
+      <p className="estimate-unit">
         개당 금액: {unitPriceWithMargin.toLocaleString()}원
-      </span>
+      </p>
     </div>
   );
 };
