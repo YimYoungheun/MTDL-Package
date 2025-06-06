@@ -45,13 +45,15 @@ label {
 
 /* 선택된 탭(버튼) */
 .button-group .option-button.selected {
-  background: #ffffff;               /* 진한 파란 배경 */
-  color: #fff;                       /* 흰색 글씨 */
+  background: #ffffff;
+  color: #000000;
+  font-weight: 500;      /* 폰트 굵기 */
 }
 
 /* 미선택 탭 hover */
 .button-group .option-button:not(.selected):hover {
-  background: #ffffff;               /* 연파랑 */
+  background: #000000;               /* 폰트 색상 */
+  font-weight: 500;                  /* 폰트 굵기 */ 
   color: #1976d2;                    /* 더 진한 파란 글씨 */
 }
 
@@ -77,7 +79,7 @@ label {
   border: 1.5px solid #90caf9;
   border-radius: 3px;
   background: #ffffff;               /* 배경 색상 */
-  color: #000000;
+  color: #000000;                    /* 폰트 색상 */
   cursor: pointer;
   margin-bottom: 1px;
   margin-right: 1px;
@@ -86,13 +88,15 @@ label {
 }
 .option-button.selected {
   background: #ffffff;               /* 배경 색상 */
-  color: #fff;
-  border-color: #1976d2;
+  color: #000000;
+  font-weight: 500;      /* 폰트 굵기 */ 
+  border-color: #000000;
 }
 .option-button:hover:not(.selected) {
   background: #ffffff;               /* 배경 색상 */
-  color: #0d47a1;
-  border-color: #64b5f6;
+  font-weight: 500;                  /* 폰트 굵기 */
+  color: #000000;
+  border-color: #000000;
 }
 
 /* ==============================
