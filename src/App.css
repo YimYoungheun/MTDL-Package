@@ -89,13 +89,13 @@ label {
 .option-button.selected {
   background: #ffffff;               /* 배경 색상 */
   color: #000000;
-  font-weight: 600;                  /* 폰트 굵기 */ 
+  font-weight: 500;                  /* 폰트 굵기 */ 
   border-color: #000000;
 }
 .option-button:hover:not(.selected) {
   background: #ffffff;               /* 배경 색상 */
-  font-weight: 600;                  /* 폰트 굵기 */
-  color: #747474;
+  font-weight: 500;                  /* 폰트 굵기 */
+  color: #000000;
   border-color: #747474;
 }
 
@@ -206,7 +206,7 @@ label {
 }
 .secondary-button:hover {
   background: #ffffff;
-  font-weight: 600;          /* 폰트 굵기 */
+  font-weight: 500;          /* 폰트 굵기 */
   color: #000000;            /* 텍스트 색상 */
 }
 
