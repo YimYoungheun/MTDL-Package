@@ -135,7 +135,7 @@ return (
   }}>
     {/* 왼쪽 이미지 */}
     <div style={{
-      flex: 3.8,
+      flex: 3.6,
       minWidth: 0,
       height: '100vh',
       margin: 0,            // 바깥쪽 여백 없음
@@ -145,7 +145,7 @@ return (
         src="/img/Designers.png"
         alt="B형 상자"
         style={{
-          width: '75vw',
+          width: '73vw',
           height: '100%',
           objectFit: 'cover', // 꽉 채움 (잘릴 수도 있음)
           display: 'block',   // img의 기본 inline 속성을 block으로
