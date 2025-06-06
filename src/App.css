@@ -37,15 +37,15 @@ label {
    개별 옵션 버튼(그룹 외 단일)
    ============================== */
 .option-button {
-  padding: 0.6rem 0.7rem;
+  padding: 0.5rem 0.7rem;
   font-size: 1rem;
   border: 1.5px solid #747474;
   border-radius: 3px;
   background: #ffffff;               /* 배경 색상 */
   color: #747474;                    /* 폰트 색상 */
   cursor: pointer;
-  margin-bottom: 1.5px;
-  margin-right: 1.5px;
+  margin-bottom: 2px;
+  margin-right: 2px;
   transition: background 0.16s, color 0.15s, border 0.18s;
   outline: none;
 }
