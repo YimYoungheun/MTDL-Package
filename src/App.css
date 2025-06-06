@@ -76,7 +76,7 @@ label {
 .option-button {
   padding: 0.6rem 0.7rem;
   font-size: 1rem;
-  border: 1.5px solid #90caf9;
+  border: 1.5px solid #000000;
   border-radius: 3px;
   background: #ffffff;               /* 배경 색상 */
   color: #000000;                    /* 폰트 색상 */
@@ -143,10 +143,10 @@ label {
    ============================== */
 .custom-select {
   border-radius: 8px;
-  border: 1.2px solid #90caf9;
+  border: 1.2px solid #000000;
   background: #ffffff;               /* 배경 색상 */
   font-size: 1rem;
-  color: #1565c0;
+  color: #000000;
   padding: 0.5rem;
   margin-top: 0.3rem;
   width: 360px;
@@ -154,8 +154,8 @@ label {
   transition: border 0.2s, background 0.15s;
 }
 .custom-select:focus {
-  border-color: #1976d2;
-  background: #e3f2fd;
+  border-color: #000000;
+  background: #ffffff;
   outline: none;
 }
 
@@ -205,6 +205,7 @@ label {
 }
 .secondary-button:hover {
   background: #ffffff;
+  font-weight: 500;          /* 폰트 굵기 */
   color: #000000;            /* 텍스트 색상 */
 }
 
@@ -226,7 +227,7 @@ label {
    파일 업로드 iframe
    ============================== */
 .file-upload-frame {
-  border-radius: 12px;
+  border-radius: 3px;
   border: 1.5px solid #90caf9;
   margin-bottom: 1rem;
 }
