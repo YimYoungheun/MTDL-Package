@@ -138,7 +138,7 @@ label {
    견적/안내 박스
    ============================== */
 .estimate-box {
-  background: #ffffff;               /* 견적 박스 배경 색상 (흰색) */
+  background: #ffffff;              /* 견적 박스 배경 색상 (흰색) */
   border-radius: 3px;               /* 모서리 둥글게 */
   border: 1.5px solid #ffffff;      /* 외곽선 (흰색, 사실상 없음) */
   padding: 0.5rem 0.5rem;           /* 내부 여백 */
@@ -151,6 +151,7 @@ label {
   line-height: 1.4;                 /* 줄 간격 적당히 */
 }
 
+/* 전체 단가 표시 영역 */
 .estimate-box .main-estimate {
   font-size: 1.6rem;                /* 큰 글씨 */
   color: #3736FF;                   /* 진한 푸른색 강조 */
@@ -158,9 +159,11 @@ label {
   margin-bottom: 0.3rem;            /* 아래쪽 여백 약간 */
 }
 
+/* 개당 단가 표시 영역 */
 .estimate-box .estimate-unit {
   font-size: 0.9rem;                /* 작고 간결한 글씨 */
-  color: #5d5d5d;                   /* 회색 톤으로 부드럽게 */
+  font-weight: bold;                /* 굵은 글씨 */
+  color: #000000;                   /* 검은색 폰트 */
 }
 
 /* ==============================
