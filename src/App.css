@@ -191,7 +191,7 @@ label {
 }
 .primary-button:hover {
   font-weight: 650;
-  background: #ffffff;
+  background: #0054FF;
 }
 /* 리셋, 취소 등 서브 버튼 */
 .secondary-button {
