@@ -105,7 +105,7 @@ label {
   border-bottom: 1px solid #000000;  /* 밑줄(언더라인)만 표시 */
   background: transparent;               /* 아주 연한 파랑 */
   font-size: 1rem;
-  color: #1565c0;
+  color: #000000;
   padding: 0.5rem;
   margin-top: 0.3rem;
   box-sizing: border-box;
