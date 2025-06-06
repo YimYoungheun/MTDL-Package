@@ -100,9 +100,10 @@ label {
    ============================== */
 /* 모든 입력란 기본값 */
 .custom-input {
-  border-radius: 8px;
-  border: 1.2px solid #90caf9;       /* 파란 테두리 */
-  background: #f3fafe;               /* 아주 연한 파랑 */
+  border-radius: 0px;
+  border: none;
+  border-bottom: 2px solid #000000;  /* 밑줄(언더라인)만 표시 */
+  background: transparent;               /* 아주 연한 파랑 */
   font-size: 1rem;
   color: #1565c0;
   padding: 0.5rem;
@@ -129,8 +130,7 @@ label {
 }
 /* 입력란 포커스 시 */
 .custom-input:focus {
-  border-color: #1976d2;
-  background: #e3f2fd;
+  border-bottom: 2.5px solid #0d47a1;     /* 포커스시 진하게 */
   outline: none;
 }
 
