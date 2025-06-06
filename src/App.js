@@ -145,7 +145,7 @@ return (
         src="/img/Designers.png"
         alt="B형 상자"
         style={{
-          width: '70vw',
+          width: '80vw',
           height: '100%',
           objectFit: 'cover', // 꽉 채움 (잘릴 수도 있음)
           display: 'block',   // img의 기본 inline 속성을 block으로
