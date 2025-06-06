@@ -208,6 +208,7 @@ return (
             ))}
           </div>
         </div>
+      </div>
       )}
         {/* 종이 느낌, 재질, 색상, 무게 */}
         {width && length && height && bottomStyle && (
@@ -221,6 +222,7 @@ return (
                 ))}
               </div>
             </div>
+          </div>
             {paperFeel && (
               <div style={{ marginBottom: '1rem' }}>
                 <label>재질</label>
@@ -231,6 +233,7 @@ return (
                   ))}
                 </div>
               </div>
+            </div>
             )}
             {paperFeel === '러프한' && material && getColorOptions().length > 0 && (
               <div style={{ marginBottom: '1rem' }}>
@@ -242,6 +245,7 @@ return (
                   ))}
                 </div>
               </div>
+            </div>
             )}
             {material && getWeightOptions().length > 0 && (
               <div style={{ marginBottom: '1rem' }}>
@@ -253,6 +257,7 @@ return (
                   ))}
                 </div>
               </div>
+            </div>
             )}
           </>
         )}
@@ -273,6 +278,7 @@ return (
                 인쇄 없음
               </button>
             </div>
+          </div>
             {/* 1도~4도: 한 줄, 그룹 단일 선택 */}
             <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.3rem' }}>
               {['1도', '2도', '3도', '4도'].map(type => (
@@ -306,6 +312,7 @@ return (
                 {['없음', '무광', '유광', '벨벳'].map(type => (
                   <button key={type} className={`option-button ${(type === '없음' ? coating === '' : coating === type) ? 'selected' : ''}`} onClick={() => setCoating(type === '없음' ? '' : type)}>{type}</button>
                 ))}
+                </div>
               </div>
             </div>
             {coating !== null && (
@@ -318,6 +325,7 @@ return (
                   ))}
                 </div>
               </div>
+            </div>
             )}
             {embossing !== null && (
               <div style={{ marginBottom: '1rem' }}>
@@ -336,6 +344,7 @@ return (
                   ))}
                 </div>
               </div>
+            </div>
             )}
             {embossing !== null && (
               <div style={{ marginBottom: '1rem' }}>
@@ -348,6 +357,7 @@ return (
                   ))}
                 </select>
               </div>
+            </div>
             )}
             {quantity === '그 이상' && (
               <div style={{ marginBottom: '1rem' }}>
@@ -359,6 +369,7 @@ return (
                   onChange={e => setCustomQuantity(e.target.value)}
                 />
               </div>
+            </div>
             )}
 
             {/* 견적가 계산 컴포넌트 */}
