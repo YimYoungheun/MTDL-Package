@@ -45,13 +45,13 @@ label {
 
 /* 선택된 탭(버튼) */
 .button-group .option-button.selected {
-  background: #1976d2;               /* 진한 파란 배경 */
+  background: #ffffff;               /* 진한 파란 배경 */
   color: #fff;                       /* 흰색 글씨 */
 }
 
 /* 미선택 탭 hover */
 .button-group .option-button:not(.selected):hover {
-  background: #f0f6ff;               /* 연파랑 */
+  background: #ffffff;               /* 연파랑 */
   color: #1976d2;                    /* 더 진한 파란 글씨 */
 }
 
@@ -76,7 +76,7 @@ label {
   font-size: 1rem;
   border: 1.5px solid #90caf9;
   border-radius: 3px;
-  background: #e3f2fd;               /* 연한 파랑 */
+  background: #ffffff;               /* 배경 색상 */
   color: #000000;
   cursor: pointer;
   margin-bottom: 1px;
@@ -85,12 +85,12 @@ label {
   outline: none;
 }
 .option-button.selected {
-  background: #1976d2;
+  background: #ffffff;               /* 배경 색상 */
   color: #fff;
   border-color: #1976d2;
 }
 .option-button:hover:not(.selected) {
-  background: #bbdefb;
+  background: #ffffff;               /* 배경 색상 */
   color: #0d47a1;
   border-color: #64b5f6;
 }
@@ -103,7 +103,7 @@ label {
   border-radius: 0px;
   border: none;
   border-bottom: 1px solid #000000;  /* 밑줄(언더라인)만 표시 */
-  background: transparent;               /* 아주 연한 파랑 */
+  background: transparent;               /* 배경 색상 */
   font-size: 1rem;
   color: #000000;
   padding: 0.5rem;
@@ -140,7 +140,7 @@ label {
 .custom-select {
   border-radius: 8px;
   border: 1.2px solid #90caf9;
-  background: #f3fafe;
+  background: #ffffff;               /* 배경 색상 */
   font-size: 1rem;
   color: #1565c0;
   padding: 0.5rem;
@@ -159,9 +159,9 @@ label {
    견적/안내 박스
    ============================== */
 .estimate-box {
-  background: #e3f2fd;
+  background: #ffffff;               /* 배경 색상 */
   border-radius: 18px;
-  border: 1.5px solid #90caf9;
+  border: 1.5px solid #000000;
   padding: 1.5rem 1rem;
   margin-top: 1.5rem;
   text-align: left;
@@ -172,7 +172,7 @@ label {
    ============================== */
 /* 주요 버튼(확인/제출 등) */
 .primary-button {
-  background: #1976d2;
+  background: #ffffff;
   color: #fff;
   padding: 0.5rem 1.3rem;
   border-radius: 3px;
@@ -185,14 +185,14 @@ label {
   transition: background 0.18s, color 0.15s, opacity 0.18s;
 }
 .primary-button:hover {
-  background: #1565c0;
+  background: #ffffff;
 }
 /* 리셋, 취소 등 서브 버튼 */
 .secondary-button {
-  background: #bbdefb;
+  background: #ffffff;
   color: #000000;            /* 텍스트 색상 */
   padding: 0.5rem 0.6rem;
-  border-radius: 93px;
+  border-radius: 3px;
   border: none;
   cursor: pointer;
   font-size: 1rem;
@@ -200,7 +200,7 @@ label {
   transition: background 0.14s, color 0.14s;
 }
 .secondary-button:hover {
-  background: #90caf9;
+  background: #ffffff;
   color: #000000;            /* 텍스트 색상 */
 }
 
