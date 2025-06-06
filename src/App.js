@@ -197,6 +197,7 @@ return (
       {width && length && height && (
         <div style={{ marginBottom: '1rem' }}>
           <label>하단 모양</label>
+          <div className="button-group">
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
             {['맞뚜껑', '십자다루마', '삼면접착'].map(opt => (
               <button
@@ -213,6 +214,7 @@ return (
           <>
             <div style={{ marginBottom: '1rem' }}>
               <label>종이 느낌</label>
+              <div className="button-group">
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                 {Object.keys(materialMap).map(feel => (
                   <button key={feel} className={`option-button ${paperFeel === feel ? 'selected' : ''}`} onClick={() => { setPaperFeel(feel); setMaterial(''); setColor(''); setWeight(''); }}>{feel}</button>
@@ -222,6 +224,7 @@ return (
             {paperFeel && (
               <div style={{ marginBottom: '1rem' }}>
                 <label>재질</label>
+                <div className="button-group">
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                   {materialMap[paperFeel].map(mat => (
                     <button key={mat} className={`option-button ${material === mat ? 'selected' : ''}`} onClick={() => { setMaterial(mat); setColor(''); setWeight(''); }}>{mat}</button>
@@ -232,6 +235,7 @@ return (
             {paperFeel === '러프한' && material && getColorOptions().length > 0 && (
               <div style={{ marginBottom: '1rem' }}>
                 <label>색상</label>
+                <div className="button-group">
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                   {getColorOptions().map(c => (
                     <button key={c} className={`option-button ${color === c ? 'selected' : ''}`} onClick={() => { setColor(c); setWeight(''); }}>{c}</button>
@@ -242,6 +246,7 @@ return (
             {material && getWeightOptions().length > 0 && (
               <div style={{ marginBottom: '1rem' }}>
                 <label>무게</label>
+                <div className="button-group">
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                   {getWeightOptions().map(w => (
                     <button key={w} className={`option-button ${weight === w ? 'selected' : ''}`} onClick={() => setWeight(w)}>{w}</button>
@@ -256,6 +261,7 @@ return (
         {weight && (
           <div style={{ marginBottom: '1rem' }}>
             <label>인쇄 선택</label>
+            <div className="button-group">
             <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.3rem' }}>
               <button
                 className={`option-button ${(!mainPrintColor && !spotPrintColor) ? 'selected' : ''}`}
@@ -295,6 +301,7 @@ return (
           <>
             <div style={{ marginBottom: '1rem' }}>
               <label>코팅</label>
+              <div className="button-group">
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                 {['없음', '무광', '유광', '벨벳'].map(type => (
                   <button key={type} className={`option-button ${(type === '없음' ? coating === '' : coating === type) ? 'selected' : ''}`} onClick={() => setCoating(type === '없음' ? '' : type)}>{type}</button>
@@ -304,6 +311,7 @@ return (
             {coating !== null && (
               <div style={{ marginBottom: '1rem' }}>
                 <label>형압</label>
+                <div className="button-group">
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                   {['없음', '음각', '양각'].map(type => (
                     <button key={type} className={`option-button ${(type === '없음' ? embossing === '' : embossing === type) ? 'selected' : ''}`} onClick={() => setEmbossing(type === '없음' ? '' : type)}>{type}</button>
@@ -314,6 +322,7 @@ return (
             {embossing !== null && (
               <div style={{ marginBottom: '1rem' }}>
                 <label>박 (복수 선택 가능)</label>
+                <div className="button-group">
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                   {['없음', '금박', '은박', '먹박', '적박', '홀로그램박', '투명홀로그램박'].map(type => (
                     <button
@@ -331,6 +340,7 @@ return (
             {embossing !== null && (
               <div style={{ marginBottom: '1rem' }}>
                 <label>수량 선택</label>
+                <div className="button-group">
                 <select className="custom-select" value={quantity} onChange={e => setQuantity(e.target.value)}>
                   <option value="">수량을 선택하세요</option>
                   {[500, 1000, 2000, 3000, 5000, 10000, 20000, 30000, 50000, 100000, '그 이상'].map(qty => (
