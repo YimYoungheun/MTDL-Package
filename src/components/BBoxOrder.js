@@ -315,8 +315,10 @@ function BBoxOrder() {
         <button className="primary-button" onClick={handleOrderSubmit}>
           바로 주문하기
         </button>
+        </>
+      )} {/* weight && 조건 끝 */}
       </div> {/* 오른쪽 입력란 div 종료 */}
-
+      
       {/* ✅ 오버레이는 오른쪽 입력란 div와 같은 레벨, 전체 flex div의 자식 */}
       {showConfirmation && (
         <div className="confirmation-overlay">
