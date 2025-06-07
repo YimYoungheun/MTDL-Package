@@ -108,7 +108,7 @@ function BBoxOrder() {
         />
       </div>
       {/* 오른쪽 입력란 */}
-      <div style={{ flex: 1, minWidth: 0, padding: '2rem', background: '#fff', height: '100vh', overflowY: 'auto' }}>
+      <div style={{ flex: 1.3, minWidth: 0, padding: '2rem', background: '#fff', height: '100vh', overflowY: 'auto' }}>
         <button className="secondary-button" onClick={handleReset}>
           처음부터 입력 다시하기
         </button>
