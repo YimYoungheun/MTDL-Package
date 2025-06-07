@@ -332,7 +332,7 @@ function BBoxOrder() {
           </div>
         </div>
       )}
-    </div> // ← 바로 여기!! 전체 flex div 닫는 것!!
+    </div>
   );
 }
 export default BBoxOrder;
