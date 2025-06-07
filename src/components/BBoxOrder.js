@@ -305,7 +305,7 @@ function BBoxOrder() {
               spotPrintColor={spotPrintColor}
               printNone={!mainPrintColor && !spotPrintColor}
             />
-             iframe
+              <iframe
               className="file-upload-frame"
               src="https://mtdl.co.kr/fileupload"
               width="100%"
@@ -315,22 +315,23 @@ function BBoxOrder() {
             <button className="primary-button" onClick={handleOrderSubmit}>
               바로 주문하기
             </button>
-            </div> {/* 오른쪽 입력란 div 종료 */}
-            {/* ✅ 오버레이는 여기에! */}
-            {showConfirmation && (
-              <div className="confirmation-overlay">
-                <div className="confirmation-message">
-                  <strong>주문이 접수되었습니다!</strong>
-                  <br />담당자가 곧 연락드립니다.
-                  <br /><br />
-                  <button className="primary-button" onClick={() => setShowConfirmation(false)}>
-                    확인
-                  </button>
-                </div>
+          </div> {/* 오른쪽 입력란 div 종료 */}
+
+          {/* ✅ 오버레이는 오른쪽 입력란 div와 같은 레벨, 전체 flex div의 자식 */}
+          {showConfirmation && (
+            <div className="confirmation-overlay">
+              <div className="confirmation-message">
+                <strong>주문이 접수되었습니다!</strong>
+                <br />담당자가 곧 연락드립니다.
+                <br /><br />
+                <button className="primary-button" onClick={() => setShowConfirmation(false)}>
+                  확인
+                </button>
               </div>
-            )}
-            </div> {/* 전체 flex div 종료 */}
-            );
-            }
-            
-            export default BBoxOrder;
+            </div>
+          )}
+      </div> {/* 전체 flex div 종료 */}
+  );
+}
+
+export default BBoxOrder;
