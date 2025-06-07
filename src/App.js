@@ -1,5 +1,3 @@
-// src/App.js
-
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import BBoxOrder from "./components/BBoxOrder";
 
@@ -8,8 +6,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Navigate to="/box-type-b" />} />
-        {/* 앞으로 다른 제품 추가시 여기에 추가 */}
-        {/* <Route path="/box-type-y" element={<YBoxOrder />} /> */}
+        <Route path="/box-type-b" element={<BBoxOrder />} />  {/* 이 줄이 꼭 필요!! */}
       </Routes>
     </Router>
   );
