@@ -321,7 +321,7 @@ function BBoxOrder() {
             {showConfirmation && (
               <div className="confirmation-message" style={{padding: 24, textAlign: 'center'}}>
                 <strong>주문이 접수되었습니다.</strong>
-                <br />담당자가 곧 연락드립니다!
+                <br />나머지 결제를 진행해주세요
                 <br />
                 <button onClick={() => setShowConfirmation(false)} style={{marginTop: 16}}>확인</button>
               </div>
