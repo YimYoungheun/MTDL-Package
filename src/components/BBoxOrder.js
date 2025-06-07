@@ -336,11 +336,9 @@ function BBoxOrder() {
     </div>
   );
 }
-
       </div>
-    )}
-  </div>
-);
+    </div>
+  );
 }
 
 export default BBoxOrder;
