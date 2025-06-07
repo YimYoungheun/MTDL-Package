@@ -31,7 +31,6 @@ function BBoxOrder() {
   const [mainPrintColor, setMainPrintColor] = useState('');
   const [spotPrintColor, setSpotPrintColor] = useState('');
   const [showConfirmation, setShowConfirmation] = useState(false);
-
   const handleOrderSubmit = () => {
     // 주문 정보 객체 생성
     const order = {
@@ -60,8 +59,9 @@ function BBoxOrder() {
     console.log("📦 주문서 요약:", order);
 
     // 주문 완료 메시지 띄우기
+    handleReset(); // 🟢 폼 초기화
     setShowConfirmation(true);
-  };
+    };
 
 
   // 옵션 로직(그대로 복붙)
@@ -319,11 +319,36 @@ function BBoxOrder() {
               바로 주문하기
             </button>
             {showConfirmation && (
-              <div className="confirmation-message" style={{padding: 24, textAlign: 'center'}}>
-                <strong>주문이 접수되었습니다.</strong>
-                <br />나머지 결제를 진행해주세요
-                <br />
-                <button onClick={() => setShowConfirmation(false)} style={{marginTop: 16}}>확인</button>
+              <div style={{
+                position: "fixed",
+                top: 0, left: 0, width: "100vw", height: "100vh",
+                background: "rgba(0,0,0,0.42)",
+                zIndex: 9999,
+                display: "flex", alignItems: "center", justifyContent: "center"
+              }}>
+                <div className="confirmation-message"
+                  style={{
+                    background: "#fff",
+                    borderRadius: 16,
+                    boxShadow: "0 8px 32px #0002",
+                    padding: 48,
+                    textAlign: 'center',
+                    minWidth: 320,
+                    maxWidth: "90vw",
+                    fontSize: "1.25rem"
+                  }}
+                >
+                  <strong>주문이 접수되었습니다!</strong>
+                  <br />담당자가 곧 연락드립니다.
+                  <br /><br />
+                  <button
+                    className="primary-button"
+                    style={{marginTop: 20, fontSize: "1.1rem", padding: "12px 36px"}}
+                    onClick={() => setShowConfirmation(false)}
+                  >
+                    확인
+                  </button>
+                </div>
               </div>
             )}
           </>
