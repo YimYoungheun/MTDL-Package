@@ -305,17 +305,14 @@ function BBoxOrder() {
               spotPrintColor={spotPrintColor}
               printNone={!mainPrintColor && !spotPrintColor}
             />
-            <iframe
+             <iframe
               className="file-upload-frame"
               src="https://mtdl.co.kr/fileupload"
               width="100%"
               height="170"
               title="파일 업로드"
             />
-            <button
-              className="primary-button"
-              onClick={handleOrderSubmit}
-            >
+            <button className="primary-button" onClick={handleOrderSubmit}>
               바로 주문하기
             </button>
             {showConfirmation && (
@@ -332,10 +329,6 @@ function BBoxOrder() {
             )}
           </>
         )}
-      </div>
-    </div>
-  );
-}
       </div>
     </div>
   );
