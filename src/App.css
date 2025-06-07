@@ -247,30 +247,36 @@ label {
    주문 완료 오버레이 (팝업)
    ============================== */
 .confirmation-overlay {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  background: rgba(0,0,0,0.42);
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: fixed;              /* 화면에 고정 위치로 표시 */
+  top: 0; left: 0;              /* 화면 최상단, 최좌측에 붙임 */
+  width: 100vw; height: 100vh;  /* 화면 전체 너비와 높이 차지 */
+  background: rgba(0,0,0,0.42); /* 반투명 검정색 배경 (투명도 42%) */
+  z-index: 9999;                /* 다른 요소 위에 표시되도록 최상위 설정 */
+  display: flex;                /* 내부 콘텐츠를 flex 컨테이너로 설정 */
+  align-items: center;          /* 세로 중앙 정렬 */
+  justify-content: center;      /* 가로 중앙 정렬 */
 }
 
 .confirmation-message {
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 8px 32px #0002;
-  padding: 48px;
-  text-align: center;
-  min-width: 320px;
-  max-width: 90vw;
-  font-size: 1.25rem;
-  animation: fadeInPop 0.28s;
+  background: #fff;             /* 팝업 배경을 흰색으로 */
+  border-radius: 3px;           /* 모서리를 둥글게 */
+  box-shadow: 0 8px 32px #0002; /* 그림자 효과, 약간 흐린 검정색 */
+  padding: 20px;                /* 내부 여백 */
+  text-align: center;           /* 텍스트 가운데 정렬 */
+  min-width: 90px;              /* 최소 너비 보장 */
+  max-width: 90vw;              /* 최대 너비는 화면 너비의 90%까지 */
+  font-size: 1.25rem;           /* 글자 크기 1.25rem */
+  animation: fadeInPop 0.28s;   /* fadeInPop 애니메이션 0.28초 동안 실행 */
 }
 
 /* 팝업 부드럽게 나타나는 효과 (선택) */
 @keyframes fadeInPop {
-  from { opacity: 0; transform: scale(0.98);}
-  to   { opacity: 1; transform: scale(1);}
+  from { 
+    opacity: 0;                 /* 시작 시 완전 투명 */
+    transform: scale(0.98);     /* 시작 시 약간 축소된 상태 */
+  }
+  to   { 
+    opacity: 1;                 /* 끝에는 완전 불투명 */
+    transform: scale(1);        /* 원래 크기로 확대 */
+  }
 }
