@@ -315,22 +315,22 @@ function BBoxOrder() {
             <button className="primary-button" onClick={handleOrderSubmit}>
               바로 주문하기
             </button>
-          </div>
-                 {/* ✅ 오버레이는 여기에! */}
-    {showConfirmation && (
-      <div className="confirmation-overlay">
-        <div className="confirmation-message">
-          <strong>주문이 접수되었습니다!</strong>
-          <br />담당자가 곧 연락드립니다.
-          <br /><br />
-          <button className="primary-button" onClick={() => setShowConfirmation(false)}>
-            확인
-          </button>
-        </div>
-      </div>
-    )}
-  </div> {/* 전체 flex div 종료 */}
-);
-}
+            </div>
+            {/* ✅ 오버레이는 여기에! */}
+            {showConfirmation && (
+              <div className="confirmation-overlay">
+                <div className="confirmation-message">
+                  <strong>주문이 접수되었습니다!</strong>
+                  <br />담당자가 곧 연락드립니다.
+                  <br /><br />
+                  <button className="primary-button" onClick={() => setShowConfirmation(false)}>
+                    확인
+                  </button>
+                </div>
+              </div>
+            )}
+            </div> {/* 전체 flex div 종료 */}
+            );
+            }
 
 export default BBoxOrder;
