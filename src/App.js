@@ -7,7 +7,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/box-type-b" element={<BBoxOrder />} />
+        <Route path="/" element={<Navigate to="/box-type-b" />} />
         {/* 앞으로 다른 제품 추가시 여기에 추가 */}
         {/* <Route path="/box-type-y" element={<YBoxOrder />} /> */}
       </Routes>
