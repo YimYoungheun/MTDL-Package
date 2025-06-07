@@ -263,7 +263,7 @@ label {
   box-shadow: 0 8px 32px #0002; /* 그림자 효과, 약간 흐린 검정색 */
   padding: 20px;                /* 내부 여백 */
   text-align: center;           /* 텍스트 가운데 정렬 */
-  min-width: 90px;              /* 최소 너비 보장 */
+  min-width: 120px;             /* 최소 너비 보장 */
   max-width: 90vw;              /* 최대 너비는 화면 너비의 90%까지 */
   font-size: 1.25rem;           /* 글자 크기 1.25rem */
   animation: fadeInPop 0.28s;   /* fadeInPop 애니메이션 0.28초 동안 실행 */
