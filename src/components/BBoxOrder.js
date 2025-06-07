@@ -313,19 +313,19 @@ function BBoxOrder() {
               title="파일 업로드"
             />
             <button
-  className="primary-button"
-  onClick={handleOrderSubmit}
->
-  바로 주문하기
-</button>
-{showConfirmation && (
-  <div className="confirmation-message" style={{padding: 24, textAlign: 'center'}}>
-    <strong>주문이 접수되었습니다.</strong>
-    <br />담당자가 곧 연락드립니다!
-    <br />
-    <button onClick={() => setShowConfirmation(false)} style={{marginTop: 16}}>확인</button>
-  </div>
-)}
+              className="primary-button"
+              onClick={handleOrderSubmit}
+            >
+              바로 주문하기
+            </button>
+            {showConfirmation && (
+              <div className="confirmation-message" style={{padding: 24, textAlign: 'center'}}>
+                <strong>주문이 접수되었습니다.</strong>
+                <br />담당자가 곧 연락드립니다!
+                <br />
+                <button onClick={() => setShowConfirmation(false)} style={{marginTop: 16}}>확인</button>
+              </div>
+            )}
           </>
         )}
       </div>
