@@ -1,5 +1,5 @@
 import React from 'react';
-import { paperPrices } from './data/paperPrices';
+import { paperPrices } from '../../data/paperPrices';
 
 function getDogaSize(width, length, height, bottomStyle) {
   const dogaWidth = Number(width) + Number(height) + 30;
