@@ -30,6 +30,39 @@ function BBoxOrder() {
   const [customQuantity, setCustomQuantity] = useState('');
   const [mainPrintColor, setMainPrintColor] = useState('');
   const [spotPrintColor, setSpotPrintColor] = useState('');
+  const [showConfirmation, setShowConfirmation] = useState(false);
+
+  const handleOrderSubmit = () => {
+    // 주문 정보 객체 생성
+    const order = {
+      company,
+      phone,
+      email,
+      width,
+      length,
+      height,
+      bottomStyle,
+      paperFeel,
+      material,
+      color,
+      weight,
+      coating,
+      embossing,
+      foil,
+      quantity: quantity === '그 이상' ? customQuantity : quantity,
+      mainPrintColor,
+      spotPrintColor,
+      orderId: 'ORDER-' + new Date().getTime(),
+      orderedAt: new Date().toISOString(),
+    };
+
+    // 콘솔에 주문 정보 출력
+    console.log("📦 주문서 요약:", order);
+
+    // 주문 완료 메시지 띄우기
+    setShowConfirmation(true);
+  };
+
 
   // 옵션 로직(그대로 복붙)
   const getColorOptions = () =>
@@ -280,11 +313,19 @@ function BBoxOrder() {
               title="파일 업로드"
             />
             <button
-              className="primary-button"
-              onClick={() => alert('기재해주신 연락처로 담당자가 연락할 수 있습니다.')}
-            >
-              바로 주문하기
-            </button>
+  className="primary-button"
+  onClick={handleOrderSubmit}
+>
+  바로 주문하기
+</button>
+{showConfirmation && (
+  <div className="confirmation-message" style={{padding: 24, textAlign: 'center'}}>
+    <strong>주문이 접수되었습니다.</strong>
+    <br />담당자가 곧 연락드립니다!
+    <br />
+    <button onClick={() => setShowConfirmation(false)} style={{marginTop: 16}}>확인</button>
+  </div>
+)}
           </>
         )}
       </div>
