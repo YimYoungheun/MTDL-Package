@@ -33,7 +33,7 @@ label {
 
 /* 미선택 탭 hover */
 .button-group .option-button:not(.selected):hover {
-  background: #fffffff;               /* 배경 색상 */
+  background: #ffffff;               /* 배경 색상 */
   font-weight: 600;                  /* 폰트 굵기 */ 
   color: #000000;                    /* 폰트 색상 */
 }
@@ -42,7 +42,7 @@ label {
    개별 옵션 버튼(그룹 외 단일)
    ============================== */
 .option-button {
-  min-width: 90 px;
+  min-width: 90px;
   height: 40px;
   padding: 0 1rem;
   display: flex;
@@ -241,4 +241,36 @@ label {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+/* ==============================
+   주문 완료 오버레이 (팝업)
+   ============================== */
+.confirmation-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.42);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.confirmation-message {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px #0002;
+  padding: 48px;
+  text-align: center;
+  min-width: 320px;
+  max-width: 90vw;
+  font-size: 1.25rem;
+  animation: fadeInPop 0.28s;
+}
+
+/* 팝업 부드럽게 나타나는 효과 (선택) */
+@keyframes fadeInPop {
+  from { opacity: 0; transform: scale(0.98);}
+  to   { opacity: 1; transform: scale(1);}
 }

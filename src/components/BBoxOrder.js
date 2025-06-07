@@ -98,7 +98,7 @@ function BBoxOrder() {
   };
 
   return (
-    <div style={{ display: 'flex', width: '100vw', height: '100vh', margin: 0, padding: 0, boxSizing: 'border-box' }}>
+      <div style={{ display: 'flex', width: '100vw', height: '100vh', margin: 0, padding: 0, boxSizing: 'border-box' }}>
       {/* 왼쪽 이미지 */}
       <div style={{ flex: 3.6, minWidth: 0, height: '100vh', margin: 0, padding: 0 }}>
         <img
@@ -312,25 +312,25 @@ function BBoxOrder() {
               height="170"
               title="파일 업로드"
             />
-            <button
-  className="primary-button"
-  onClick={handleOrderSubmit}
->
-  바로 주문하기
-</button>
-{showConfirmation && (
-  <div className="confirmation-message" style={{padding: 24, textAlign: 'center'}}>
-    <strong>주문이 접수되었습니다.</strong>
-    <br />담당자가 곧 연락드립니다!
-    <br />
-    <button onClick={() => setShowConfirmation(false)} style={{marginTop: 16}}>확인</button>
-  </div>
-)}
-          </>
-        )}
+                  <button className="primary-button" onClick={handleOrderSubmit}>
+        바로 주문하기
+      </button>
+    </div>   {/* ← 오른쪽 입력란 패널 닫는 div! */}
+
+    {showConfirmation && (
+      <div className="confirmation-overlay">
+        <div className="confirmation-message">
+          <strong>주문이 접수되었습니다!</strong>
+          <br />담당자가 곧 연락드립니다.
+          <br /><br />
+          <button className="primary-button" onClick={() => setShowConfirmation(false)}>
+            확인
+          </button>
+        </div>
       </div>
-    </div>
-  );
+    )}
+  </div>
+);
 }
 
 export default BBoxOrder;
