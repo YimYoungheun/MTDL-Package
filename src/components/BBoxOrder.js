@@ -31,7 +31,6 @@ function BBoxOrder() {
   const [mainPrintColor, setMainPrintColor] = useState('');
   const [spotPrintColor, setSpotPrintColor] = useState('');
   const [showConfirmation, setShowConfirmation] = useState(false);
-
   const handleOrderSubmit = () => {
     // 주문 정보 객체 생성
     const order = {
@@ -60,8 +59,9 @@ function BBoxOrder() {
     console.log("📦 주문서 요약:", order);
 
     // 주문 완료 메시지 띄우기
+    handleReset(); // 🟢 폼 초기화
     setShowConfirmation(true);
-  };
+    };
 
 
   // 옵션 로직(그대로 복붙)
@@ -312,21 +312,31 @@ function BBoxOrder() {
               height="170"
               title="파일 업로드"
             />
-                  <button className="primary-button" onClick={handleOrderSubmit}>
-        바로 주문하기
-      </button>
-    </div>   {/* ← 오른쪽 입력란 패널 닫는 div! */}
+            <button
+              className="primary-button"
+              onClick={handleOrderSubmit}
+            >
+              바로 주문하기
+            </button>
+            {showConfirmation && (
+              <div className="confirmation-overlay">
+                <div className="confirmation-message">
+                  <strong>주문이 접수되었습니다!</strong>
+                  <br />담당자가 곧 연락드립니다.
+                  <br /><br />
+                  <button className="primary-button" onClick={() => setShowConfirmation(false)}>
+                    확인
+                  </button>
+                </div>
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
 
-    {showConfirmation && (
-      <div className="confirmation-overlay">
-        <div className="confirmation-message">
-          <strong>주문이 접수되었습니다!</strong>
-          <br />담당자가 곧 연락드립니다.
-          <br /><br />
-          <button className="primary-button" onClick={() => setShowConfirmation(false)}>
-            확인
-          </button>
-        </div>
       </div>
     )}
   </div>
