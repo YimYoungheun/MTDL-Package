@@ -324,7 +324,7 @@ function BBoxOrder() {
         <div className="confirmation-overlay">
           <div className="confirmation-message">
             <strong>주문이 접수되었습니다!</strong>
-            <br />담당자가 곧 연락드립니다.
+            <br />나머지 결제를 진행해주세요
             <br /><br />
             <button className="primary-button" onClick={() => setShowConfirmation(false)}>
               확인
