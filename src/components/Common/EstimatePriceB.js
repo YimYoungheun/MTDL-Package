@@ -38,35 +38,32 @@ function getUnitPrice(paperFeel, paperType, paperWeight, color) {
 }
 
 function getPrintFee(mainPrintColor, spotPrintColor, totalQty, perSheetCount, printNone, paperFeel) {
-  if (printNone) return { plate: 0, print: 0 };
+  if (printNone) return { plate: 25000, print: 0 }; // 판비 무조건 25,000원
 
   // 도수 파싱
   const colorNum = mainPrintColor ? parseInt(mainPrintColor[0], 10) || 0 : 0; // ex: '4도' => 4
   const spotNum = spotPrintColor ? parseInt(spotPrintColor.replace('별색 ', '').replace('도', ''), 10) || 0 : 0;
   const totalColor = colorNum + spotNum;
 
-  // 인쇄비 도수별 단가
-  let printUnit = 0;
-  // 별색 인쇄만 존재하면 도당 40,000, 매끄러운/러프는 별색 제외하고 본다
-  if (spotNum > 0 && colorNum === 0) {
-    printUnit = 40000;
-  } else if (paperFeel === '매끄러운') {
-    printUnit = 20000;
-  } else {
-    printUnit = 40000;
-  }
-
-  // 인쇄비 계산
+  // 인쇄비 도수별 단가(원색/별색 구분)
   let printFee = 0;
-  if (totalColor === 1) {
-    // 도수 1도만 선택시 2배
-    printFee = printUnit * 2;
-  } else if (totalColor > 1) {
-    printFee = printUnit * totalColor;
+
+  // 원색(=mainPrintColor) 있으면
+  if (colorNum > 0) {
+    const mainPrintUnit = (paperFeel === '매끄러운') ? 20000 : 40000;
+    printFee += mainPrintUnit * colorNum;
+  }
+  // 별색(=spotPrintColor) 있으면
+  if (spotNum > 0) {
+    const spotPrintUnit = (paperFeel === '매끄러운') ? 40000 : 80000;
+    printFee += spotPrintUnit * spotNum;
   }
 
-  // 판비는 이전과 동일하게 계산(도움될 수도 있어서 남김)
-  const plateFee = (colorNum * 25000) + (spotNum * 40000);
+  // 1도만 선택한 경우 2배(원색 또는 별색 하나만)
+  if (totalColor === 1) printFee *= 2;
+
+  // 판비 무조건 25,000원
+  const plateFee = 25000;
 
   return { plate: plateFee, print: printFee };
 }
