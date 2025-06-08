@@ -123,18 +123,7 @@ const EstimatePriceY = ({
     );
   }
 
-  // ✅ 2. 뚜껑 여부 확인
-  if (!['제작', '제작 안함'].includes(cover)) {
-    return (
-      <div className="estimate-box">
-        <span className="estimate-unit" style={{ color: 'crimson' }}>
-          뚜껑 여부를 선택해 주세요.
-        </span>
-      </div>
-    );
-  }
-
-  // 3. 도면 계산
+    // 3. 도면 계산
   const doga = getDogaSize(width, length, height, thickness, cover);
   if (!doga) {
     return (
