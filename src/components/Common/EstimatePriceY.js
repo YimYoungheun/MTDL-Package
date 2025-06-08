@@ -172,7 +172,10 @@ const EstimatePriceY = ({
   }
 
   const actualQty = cover === '제작' ? totalQuantity * 2 : totalQuantity;
-  const sheetCount = Math.ceil(actualQty / perSheetCount);
+  const extraQty = 50;  // 전지 기준 여분
+  const totalPrintQty = actualQty + extraQty;
+  const sheetCount = Math.ceil(totalPrintQty / perSheetCount);
+  const paperTotal = unitPrice * sheetCount;
 
   const { plate: printPlateFee, print: printRunFee } =
   getPrintFee(mainPrintColor, spotPrintColor, actualQty, perSheetCount, printNone, paperFeel);
