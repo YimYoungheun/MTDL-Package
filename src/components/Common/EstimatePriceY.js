@@ -22,7 +22,8 @@ function getDogaSize(width, length, height, thickness, cover) {
 
 
 function getPerSheetCount(dogaWidth, dogaHeight) {
-  const SHEET_W = 1091, SHEET_H = 788;
+  const SHEET_W = 1081;  // 1091 - 10
+  const SHEET_H = 768;  // 788 - 20
   const countW = Math.floor(SHEET_W / dogaWidth);
   const countH = Math.floor(SHEET_H / dogaHeight);
   return countW > 0 && countH > 0 ? countW * countH : 0;
