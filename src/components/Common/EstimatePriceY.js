@@ -184,7 +184,6 @@ const EstimatePriceY = ({
   const { plate: foilPlate, fee: foilFee } = getFoilFee(foil, actualQty);
   const { plate: embossPlate, fee: embossFee } = getEmbossFee(embossing, actualQty);
   const dieCutFee = 150000;
-  const paperTotal = unitPrice * actualQty;
 
   const estimate =
     paperTotal +
