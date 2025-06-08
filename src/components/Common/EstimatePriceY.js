@@ -6,13 +6,13 @@ function getDogaSize(width, length, height, thickness, cover) {
   const l = Number(length);
   const h = Number(height);
   const t = Number(thickness);
-  const margin = 2.5;
-  const extra = 15;
 
-  let dogaWidth = w + (h + t + extra) * 2 + margin;
-  const dogaHeight = l + (h + t + extra) * 2 + margin;
+  const extra = 15 + 2.5;
+  const flap = (h + t + h + extra) * 2;
 
-  // ⬇️ 뚜껑이 있으면 도면이 가로로 2배
+  let dogaWidth = w + flap;
+  const dogaHeight = l + flap;
+
   if (cover === '제작') {
     dogaWidth *= 2;
   }
