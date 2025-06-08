@@ -41,25 +41,13 @@ function getPrintFee(mainPrintColor, spotPrintColor, totalQty, perSheetCount, pr
   const spotNum = spotPrintColor ? parseInt(spotPrintColor.replace('별색 ', '').replace('도', ''), 10) || 0 : 0;
   const totalColor = colorNum + spotNum;
 
-  const sheetCount = Math.ceil(totalQty / perSheetCount);
-
-function getPrintFee(mainPrintColor, spotPrintColor, totalQty, perSheetCount, printNone, paperFeel) {
-  if (printNone) return { plate: 0, print: 0 };
-
-  const colorNum = mainPrintColor ? parseInt(mainPrintColor[0], 10) || 0 : 0;
-  const spotNum = spotPrintColor ? parseInt(spotPrintColor.replace('별색 ', '').replace('도', ''), 10) || 0 : 0;
-  const totalColor = colorNum + spotNum;
-
-  // ✅ 판비: 원색 25,000원 + 별색 40,000원
   const plateFee = (colorNum * 25000) + (spotNum * 40000);
-
   const sheetCount = Math.ceil(totalQty / perSheetCount);
   const printBase = (paperFeel === '매끄러운') ? 80000 : 160000;
 
   let printFee = 0;
   if (totalColor > 0) {
     if (sheetCount <= 250) {
-      // ✅ 1도만 인쇄하면 2배
       printFee = (totalColor === 1) ? printBase * 2 : printBase * totalColor;
     } else {
       const multiplier = Math.ceil(sheetCount / 250);
@@ -71,7 +59,6 @@ function getPrintFee(mainPrintColor, spotPrintColor, totalQty, perSheetCount, pr
 
   return { plate: plateFee, print: printFee };
 }
-
 
 function getCoatingFee(coatingType, totalQty, perSheetCount) {
   if (!coatingType || coatingType === '없음') return 0;
