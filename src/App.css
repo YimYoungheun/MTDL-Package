@@ -31,7 +31,7 @@ label {
   gap: 0.5rem;
   background: #ffffff;
   color: #000000;
-  font-weight: 500;      /* 폰트 굵기 */
+  font-weight: 600;      /* 폰트 굵기 */
 }
 
 /* 미선택 탭 hover */
