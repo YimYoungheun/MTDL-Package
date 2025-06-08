@@ -74,15 +74,15 @@ function getPrintFee(mainPrintColor, spotPrintColor, totalQty, perSheetCount, pr
   return { plate: plateFee, print: printFee };
 }
 
-function getCoatingFee(coatingType, actualQty, perSheetCount) {
+function getCoatingFee(coatingType, totalQty, perSheetCount) {
   if (!coatingType || coatingType === '없음') return 0;
-  const sheetCount = Math.ceil(actualQty / perSheetCount);
+  const sheetCount = Math.ceil(totalQty / perSheetCount);
   if (coatingType === '벨벳') {
     if (sheetCount <= 250) return 200000;
-    return sheetCount * 280;
+    return sheetCount * 400;
   }
-  if (sheetCount <= 250) return 70000;
-  return sheetCount * 140;
+  if (sheetCount <= 250) return 100000;
+  return sheetCount * 200;
 }
 
 function getThomsonFee(actualQty, perSheetCount) {
