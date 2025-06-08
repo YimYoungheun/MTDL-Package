@@ -19,6 +19,7 @@ function YBoxOrder() {
   const [length, setLength] = useState('');
   const [height, setHeight] = useState('');
   const [thickness, setThickness] = useState(0); // 기본값 0mm
+  const [cover, setCover] = useState('제작'); // 기본값 "제작" 또는 ''제작하지 않음"
   const [paperFeel, setPaperFeel] = useState('');
   const [material, setMaterial] = useState('');
   const [color, setColor] = useState('');
@@ -41,6 +42,7 @@ function YBoxOrder() {
       length,
       height,
       thickness,
+      cover,
       paperFeel,
       material,
       color,
@@ -84,6 +86,7 @@ function YBoxOrder() {
     setLength('');
     setHeight('');
     setThickness(0);
+    setCover('제작'); // or ''제작하지 않음"
     setPaperFeel('');
     setMaterial('');
     setColor('');
@@ -125,6 +128,7 @@ function YBoxOrder() {
             />
           </div>
         ))}
+
         {/* 내경 입력 */}
         <div style={{ marginBottom: '1rem' }}>
           <label>내경 (mm)</label>
@@ -134,34 +138,48 @@ function YBoxOrder() {
             <input className="custom-input short" placeholder="높이" value={height} onChange={e => setHeight(e.target.value)} />
           </div>
         </div>
-        {/* 살 두께 */}
-        {width && length && height && (
-         <div style={{ marginBottom: '1rem' }}>
-           <label>살 두께</label>
-             <div className="button-group">
-               {[0, 5, 7].map(val => (
-             <button
-               key={val}
-                type="button"
-                 className={`option-button ${thickness === val ? 'selected' : ''}`}
-                   onClick={() => setThickness(val)}
-                    style={{
-                     marginRight: '0.5rem',
-                     background: thickness === val ? '#1976d2' : '#fff',
-                     color: thickness === val ? '#fff' : '#222',
-                     border: thickness === val ? '1.5px solid #1976d2' : '1px solid #ccc',
-                     minWidth: '52px'
-                     }}
+
+          {/* 살 두께 */}
+          {width && length && height && (
+            <>
+              <div style={{ marginBottom: '1rem' }}>
+                <label>살 두께</label>
+                <div className="button-group">
+                  {[0, 5, 7].map(val => (
+                    <button
+                      key={val}
+                      type="button"
+                      className={`option-button ${thickness === val ? 'selected' : ''}`}
+                      onClick={() => setThickness(val)}
                     >
-                   {val}mm
-                 </button>
-               ))}
-             </div>
-            </div>
-           )}
+                      {val}mm
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* 뚜껑 제작 */}
+              {width && length && height && (typeof thickness === 'number') && (
+              <div style={{ marginBottom: '1rem' }}>
+                <label>뚜껑</label>
+                <div className="button-group">
+                  {['제작', '제작하지 않음'].map(opt => (
+                    <button
+                      key={opt}
+                      type="button"
+                      className={`option-button ${cover === opt ? 'selected' : ''}`}
+                      onClick={() => setCover(opt)}
+                    >
+                      {opt}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
 
         {/* 종이 느낌, 재질, 색상, 무게 */}
-        {width && length && height && (
+        {width && length && height && thickness !== '' && cover && (
           <>
             <div style={{ marginBottom: '1rem' }}>
               <label>종이 느낌</label>
