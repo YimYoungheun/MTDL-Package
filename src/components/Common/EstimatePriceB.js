@@ -150,7 +150,10 @@ const EstimatePrice = ({
   const { plate: embossPlate, fee: embossFee } = getEmbossFee(embossing, totalQuantity);
   const bondingFee = getBondingFee(bottomStyle, totalQuantity);
   const dieCutFee = 150000;
-  const paperTotal = unitPrice * totalQuantity;
+  const extraQty = 50; // 전지 기준 여분
+  const totalPrintQty = totalQuantity + extraQty;
+  const sheetCount = Math.ceil(totalPrintQty / perSheetCount);
+  const paperTotal = unitPrice * sheetCount;
 
   const estimate =
     paperTotal +
