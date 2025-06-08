@@ -226,16 +226,44 @@ const EstimatePriceY = ({
     );
   }
 
-  return (
-    <div className="estimate-box">
-      <p className="main-estimate">
-        {estimateWithMargin.toLocaleString()}원
-      </p>
-      <p className="estimate-unit">
-        개당 금액: {unitPriceWithMargin.toLocaleString()}원
-      </p>
-    </div>
-  );
-};
+  const estimateWithMargin = Math.ceil(estimate * 1.15);
+  const unitPriceWithMargin = Math.ceil(estimateWithMargin / totalQuantity);
+
+  if (totalQuantity < 500) {
+    return (
+      <div className="estimate-box">
+        <p className="main-estimate">
+          {estimateWithMargin.toLocaleString()}원부터~
+        </p>
+        <p className="estimate-unit">
+          개당 금액: {unitPriceWithMargin.toLocaleString()}원
+        </p>
+      </div>
+    );
+  }
+  
+    return (
+      <div className="estimate-box">
+        <p className="main-estimate">
+          {estimateWithMargin.toLocaleString()}원
+        </p>
+        <p className="estimate-unit">
+          개당 금액: {unitPriceWithMargin.toLocaleString()}원
+        </p>
+      </div>
+    );
+  };
+  
+    return (
+      <div className="estimate-box">
+        <p className="main-estimate">
+          {estimateWithMargin.toLocaleString()}원
+        </p>
+        <p className="estimate-unit">
+          개당 금액: {unitPriceWithMargin.toLocaleString()}원
+        </p>
+      </div>
+    );
+  };
 
 export default EstimatePriceY;
