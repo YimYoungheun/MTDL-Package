@@ -1,11 +1,25 @@
 import React from 'react';
 import { paperPrices } from '../../data/paperPrices';
 
-function getDogaSize(width, length, height, bottomStyle) {
-  const dogaWidth = Number(width) + Number(height) + 30;
-  const dogaHeight = Number(length) + Number(height) + 20;
+function getDogaSize(width, length, height, thickness, cover) {
+  const w = Number(width);
+  const l = Number(length);
+  const h = Number(height);
+  const t = Number(thickness);
+  const margin = 2.5;
+  const extra = 15;
+
+  let dogaWidth = w + (h + t + extra) * 2 + margin;
+  const dogaHeight = l + (h + t + extra) * 2 + margin;
+
+  // ⬇️ 뚜껑이 있으면 도면이 가로로 2배
+  if (cover === '제작') {
+    dogaWidth *= 2;
+  }
+
   return { dogaWidth, dogaHeight };
 }
+
 
 function getPerSheetCount(dogaWidth, dogaHeight) {
   const SHEET_W = 1091, SHEET_H = 788;
@@ -34,14 +48,14 @@ function getUnitPrice(paperFeel, paperType, paperWeight, color, perSheetCount) {
   return 0;
 }
 
-function getPrintFee(mainPrintColor, spotPrintColor, totalQty, perSheetCount, printNone, paperFeel) {
+function getPrintFee(mainPrintColor, spotPrintColor, actualQty, perSheetCount, printNone, paperFeel) {
   if (printNone) return { plate: 0, print: 0 };
   let plateFee = 0;
   let printFee = 0;
   const colorNum = mainPrintColor ? parseInt(mainPrintColor[0], 10) || 0 : 0;
   const spotNum = spotPrintColor ? parseInt(spotPrintColor.replace('별색 ', '').replace('도', ''), 10) || 0 : 0;
   const totalColor = colorNum + spotNum;
-  const sheetCount = Math.ceil(totalQty / perSheetCount);
+  const sheetCount = Math.ceil(actualQty / perSheetCount);
   plateFee = totalColor * 25000;
 
   // 기준 인쇄비
@@ -57,9 +71,9 @@ function getPrintFee(mainPrintColor, spotPrintColor, totalQty, perSheetCount, pr
   return { plate: plateFee, print: printFee };
 }
 
-function getCoatingFee(coatingType, totalQty, perSheetCount) {
+function getCoatingFee(coatingType, actualQty, perSheetCount) {
   if (!coatingType || coatingType === '없음') return 0;
-  const sheetCount = Math.ceil(totalQty / perSheetCount);
+  const sheetCount = Math.ceil(actualQty / perSheetCount);
   if (coatingType === '벨벳') {
     if (sheetCount <= 500) return 400000;
     return sheetCount * 800;
@@ -68,50 +82,39 @@ function getCoatingFee(coatingType, totalQty, perSheetCount) {
   return sheetCount * 400;
 }
 
-function getThomsonFee(totalQty, perSheetCount) {
-  const sheetCount = Math.ceil(totalQty / perSheetCount);
+function getThomsonFee(actualQty, perSheetCount) {
+  const sheetCount = Math.ceil(actualQty / perSheetCount);
   if (sheetCount <= 250) return 140000;
   return sheetCount * 140;
 }
 
-function getFoilFee(foil, totalQty) {
+function getFoilFee(foil, actualQty) {
   if (!foil || foil.length === 0) return { plate: 0, fee: 0 };
   const n = foil.length;
   // 동판비: 1개 15만원, 2개 22.5만원, 3개 30만원, 4개 37.5만원 ...
   const plate = 150000 * (1 + (n - 1) * 0.5);
   // 작업비: 수량 * 50원 * 개수
-  const fee = totalQty * 50 * n;
+  const fee = actualQty * 50 * n;
   return { plate, fee };
 }
 
-function getEmbossFee(embossing, totalQty) {
+function getEmbossFee(embossing, actualQty) {
   if (!embossing || embossing === '없음') return { plate: 0, fee: 0 };
   // plate: 동판비/필름값(무조건 한 번만 150,000원)
   const plate = 150000;
-  const fee = totalQty * 50;
+  const fee = actualQty * 50;
   return { plate, fee };
 }
 
-function getBondingFee(bottomStyle, totalQty) {
-  if (!bottomStyle) return 0;
-  if (bottomStyle === '삼면접착') {
-    if (totalQty <= 3500) return 70000;
-    return totalQty * 20;
-  } else {
-    if (totalQty <= 4666) return 70000;
-    return totalQty * 15;
-  }
-}
-
-const EstimatePrice = ({
-  width, length, height, bottomStyle,
+const EstimatePriceY = ({
+  width, length, height, thickness, cover,
   paperFeel = '매끄러운', paperType = 'AB', paperWeight = '300g', color = '',
   quantity, coatingType = '없음', foil = [], embossing = '', mainPrintColor = '', spotPrintColor = '', printNone = false,
 }) => {
-  if (!width || !length || !height || !bottomStyle || !quantity) {
+  if (!width || !length || !height || !thickness || !cover || !quantity) {
     return <div className="estimate-box"><span className="estimate-unit" style={{color: 'gray'}}>모든 정보를 입력하면 예상 견적이 나옵니다.</span></div>;
   }
-  const doga = getDogaSize(width, length, height, bottomStyle);
+  const doga = getDogaSize(width, length, height, thickness, cover);
   if (!doga) return <div className="estimate-box"><span className="estimate-unit" style={{color: 'gray'}}>도면 계산이 불가능합니다.</span></div>;
   const perSheetCount = getPerSheetCount(doga.dogaWidth, doga.dogaHeight);
   if (perSheetCount < 1) {
@@ -122,35 +125,24 @@ const EstimatePrice = ({
     return <div className="estimate-box"><span className="estimate-unit" style={{color: 'crimson'}}>종이 종류/두께를 다시 선택해 주세요.</span></div>;
   }
   const totalQuantity = parseInt(quantity, 10);
-    if (!totalQuantity || isNaN(totalQuantity) || totalQuantity < 1) {
+  const actualQty = cover === '제작' ? totalQuantity * 2 : totalQuantity;
+  const sheetCount = Math.ceil(actualQty / perSheetCount);
+    if (!actualQty || isNaN(actualQty) || actualQty < 1) {
       return (
         <div className="estimate-box">
           <span className="estimate-unit" style={{color: 'crimson'}}>희망 수량을 정확히 입력해 주세요.</span>
         </div>
       );
     }
-    if (totalQuantity < 500) {
-    return (
-    <div className="estimate-box">
-      <p className="main-estimate">
-        {estimateWithMargin.toLocaleString()}원부터~
-      </p>
-      <p className="estimate-unit">
-        개당 금액: {unitPriceWithMargin.toLocaleString()}원
-      </p>
-    </div>
-  );
-  }
 
   const { plate: printPlateFee, print: printRunFee } =
-  getPrintFee(mainPrintColor, spotPrintColor, totalQuantity, perSheetCount, printNone, paperFeel);
-  const coatingFee = getCoatingFee(coatingType, totalQuantity, perSheetCount);
-  const thomsonFee = getThomsonFee(totalQuantity, perSheetCount);
-  const { plate: foilPlate, fee: foilFee } = getFoilFee(foil, totalQuantity);
-  const { plate: embossPlate, fee: embossFee } = getEmbossFee(embossing, totalQuantity);
-  const bondingFee = getBondingFee(bottomStyle, totalQuantity);
+  getPrintFee(mainPrintColor, spotPrintColor, actualQty, perSheetCount, printNone, paperFeel);
+  const coatingFee = getCoatingFee(coatingType, actualQty, perSheetCount);
+  const thomsonFee = getThomsonFee(actualQty, perSheetCount);
+  const { plate: foilPlate, fee: foilFee } = getFoilFee(foil, actualQty);
+  const { plate: embossPlate, fee: embossFee } = getEmbossFee(embossing, actualQty);
   const dieCutFee = 150000;
-  const paperTotal = unitPrice * totalQuantity;
+  const paperTotal = unitPrice * actualQty;
 
   const estimate =
     paperTotal +
@@ -162,11 +154,24 @@ const EstimatePrice = ({
     embossFee +
     foilPlate +      // 박 동판/필름비
     embossPlate +    // 형압 동판/필름비
-    dieCutFee +   // 목형칼
-    bondingFee;
+    dieCutFee;   // 목형칼
+    
 
   const estimateWithMargin = Math.ceil(estimate * 1.2);
-  const unitPriceWithMargin = Math.ceil(estimateWithMargin / totalQuantity);
+  const unitPriceWithMargin = Math.ceil(estimateWithMargin / actualQty);
+
+  if (actualQty < 500) {
+    return (
+      <div className="estimate-box">
+        <p className="main-estimate">
+          {estimateWithMargin.toLocaleString()}원부터~
+        </p>
+        <p className="estimate-unit">
+          개당 금액: {unitPriceWithMargin.toLocaleString()}원
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="estimate-box">
@@ -180,4 +185,4 @@ const EstimatePrice = ({
   );
 };
 
-export default EstimatePrice;
+export default EstimatePriceY;
