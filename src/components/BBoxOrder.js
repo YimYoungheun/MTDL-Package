@@ -282,8 +282,15 @@ function BBoxOrder() {
                 <input
                   className="custom-input qty"
                   type="number"
+                  min="1"
+                  step="1"
                   value={customQuantity}
-                  onChange={e => setCustomQuantity(e.target.value)}
+                  onChange={e => {
+                    const val = e.target.value;
+                    // 숫자만, 빈 값 허용(초기화)
+                    if (/^\d*$/.test(val)) setCustomQuantity(val);
+                  }}
+                  placeholder="예: 10000"
                 />
               </div>
             )}
