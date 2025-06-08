@@ -1,7 +1,7 @@
 // src/components/BBoxOrder.js
 
 import React, { useState } from 'react';
-import EstimatePrice from './Common/EstimatePrice';
+import EstimatePrice from './Common/EstimatePriceB';
 import '../App.css'; // css 경로 주의!
 
 // 필요한 데이터 import
