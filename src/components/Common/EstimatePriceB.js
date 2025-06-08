@@ -152,10 +152,10 @@ const EstimatePrice = ({
   const { plate: embossPlate, fee: embossFee } = getEmbossFee(embossing, totalQuantity);
   const bondingFee = getBondingFee(bottomStyle, totalQuantity);
   const dieCutFee = 150000;
-  const extraQty = 50; // 전지 기준 여분
-  const totalPrintQty = totalQuantity + extraQty;
-  const sheetCount = Math.ceil(totalPrintQty / perSheetCount);
-  const paperTotal = unitPrice * sheetCount;
+  const extraSheets = 50; // 전지 기준 여분 (진짜 종이 50장)
+  const sheetCount = Math.ceil(totalQuantity / perSheetCount); // 실제 필요한 전지 수
+  const totalOrderSheets = sheetCount + extraSheets; // 여분까지 합친 전지 수
+  const paperTotal = unitPrice * totalOrderSheets; // 최종 종이비
 
   const estimate =
     paperTotal +
