@@ -329,6 +329,7 @@ function YBoxOrder() {
               length={length}
               height={height}
               thickness={thickness}
+              cover={cover}
               paperFeel={paperFeel}
               paperType={material}
               paperWeight={weight}
