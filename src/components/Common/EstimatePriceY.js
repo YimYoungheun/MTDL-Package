@@ -75,16 +75,16 @@ function getCoatingFee(coatingType, actualQty, perSheetCount) {
   if (!coatingType || coatingType === '없음') return 0;
   const sheetCount = Math.ceil(actualQty / perSheetCount);
   if (coatingType === '벨벳') {
-    if (sheetCount <= 500) return 400000;
+    if (sheetCount <= 500) return 200000;
     return sheetCount * 800;
   }
-  if (sheetCount <= 200) return 200000;
+  if (sheetCount <= 200) return 70000;
   return sheetCount * 400;
 }
 
 function getThomsonFee(actualQty, perSheetCount) {
   const sheetCount = Math.ceil(actualQty / perSheetCount);
-  if (sheetCount <= 250) return 140000;
+  if (sheetCount <= 250) return 70000;
   return sheetCount * 140;
 }
 
