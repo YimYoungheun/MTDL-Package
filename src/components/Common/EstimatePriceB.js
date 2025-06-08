@@ -154,47 +154,54 @@ const EstimatePrice = ({
   );
   }
 
-  const { plate: printPlateFee, print: printRunFee } =
-  getPrintFee(mainPrintColor, spotPrintColor, totalQuantity, perSheetCount, printNone, paperFeel);
-  const coatingFee = getCoatingFee(coatingType, totalQuantity, perSheetCount);
-  const thomsonFee = getThomsonFee(totalQuantity, perSheetCount);
-  const { plate: foilPlate, fee: foilFee } = getFoilFee(foil, totalQuantity);
-  const { plate: embossPlate, fee: embossFee } = getEmbossFee(embossing, totalQuantity);
-  const bondingFee = getBondingFee(bottomStyle, totalQuantity);
-  const dieCutFee = 150000;
-  const extraSheets = 50; // 전지 기준 여분 (진짜 종이 50장)
-  const sheetCount = Math.ceil(totalQuantity / perSheetCount); // 실제 필요한 전지 수
-  const totalOrderSheets = sheetCount + extraSheets; // 여분까지 합친 전지 수
-  const paperTotal = unitPrice * totalOrderSheets; // 최종 종이비
-
-  const estimate =
-    paperTotal +
-    printPlateFee +
-    printRunFee +
-    coatingFee +
-    thomsonFee +
-    foilFee +
-    embossFee +
-    foilPlate +      // 박 동판/필름비
-    embossPlate +    // 형압 동판/필름비
-    dieCutFee +   // 목형칼
-    bondingFee;
-
-  const estimateWithMargin = Math.ceil(estimate * 1.15);
-  const unitPriceWithMargin = Math.ceil(estimateWithMargin / totalQuantity);
-
-  if (totalQuantity < 500) {
-    return (
-      <div className="estimate-box">
-        <p className="main-estimate">
-          {estimateWithMargin.toLocaleString()}원부터~
-        </p>
-        <p className="estimate-unit">
-          개당 금액: {unitPriceWithMargin.toLocaleString()}원
-        </p>
-      </div>
-    );
-  }
+    const { plate: printPlateFee, print: printRunFee } =
+      getPrintFee(mainPrintColor, spotPrintColor, totalQuantity, perSheetCount, printNone, paperFeel);
+    const coatingFee = getCoatingFee(coatingType, totalQuantity, perSheetCount);
+    const thomsonFee = getThomsonFee(totalQuantity, perSheetCount);
+    const { plate: foilPlate, fee: foilFee } = getFoilFee(foil, totalQuantity);
+    const { plate: embossPlate, fee: embossFee } = getEmbossFee(embossing, totalQuantity);
+    const bondingFee = getBondingFee(bottomStyle, totalQuantity);
+    const dieCutFee = 150000;
+    const extraSheets = 50; // 전지 기준 여분 (진짜 종이 50장)
+    const sheetCount = Math.ceil(totalQuantity / perSheetCount); // 실제 필요한 전지 수
+    const totalOrderSheets = sheetCount + extraSheets; // 여분까지 합친 전지 수
+    const paperTotal = unitPrice * totalOrderSheets; // 최종 종이비
+    
+    const estimate =
+      paperTotal +
+      printPlateFee +
+      printRunFee +
+      coatingFee +
+      thomsonFee +
+      foilFee +
+      embossFee +
+      foilPlate +      // 박 동판/필름비
+      embossPlate +    // 형압 동판/필름비
+      dieCutFee +   // 목형칼
+      bondingFee;
+    
+    const estimateWithMargin = Math.ceil(estimate * 1.2); // ★ 여기 미리 선언
+    const unitPriceWithMargin = Math.ceil(estimateWithMargin / totalQuantity); // ★ 여기 미리 선언
+    
+    if (!totalQuantity || isNaN(totalQuantity) || totalQuantity < 1) {
+      return (
+        <div className="estimate-box">
+          <span className="estimate-unit" style={{color: 'crimson'}}>희망 수량을 정확히 입력해 주세요.</span>
+        </div>
+      );
+    }
+    if (totalQuantity < 500) {
+      return (
+        <div className="estimate-box">
+          <p className="main-estimate">
+            {estimateWithMargin.toLocaleString()}원부터~
+          </p>
+          <p className="estimate-unit">
+            개당 금액: {unitPriceWithMargin.toLocaleString()}원
+          </p>
+        </div>
+      );
+    }
   
     return (
       <div className="estimate-box">
