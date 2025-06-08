@@ -2,14 +2,16 @@ import React from 'react';
 import { paperPrices } from '../../data/paperPrices';
 
 function getDogaSize(width, length, height, bottomStyle) {
-  const dogaWidth = Number(width) * 2 + Number(length) * 2 + 15 + 5;
+  // length = 세로, width = 가로
+  const dogaWidth = Number(width) * 2 + Number(length) * 2 + 16 + 5;
   const dogaHeight = Number(length) * 0.75 + Number(height) + Number(length) + 16 + 5;
   return { dogaWidth, dogaHeight };
 }
 
 function getPerSheetCount(dogaWidth, dogaHeight) {
-  const SHEET_W = 1091 - 10; // 좌우 여백 10mm 확보
-  const SHEET_H = 788 - 20; // 상하 여백 20mm 확보
+  // 도면 가로가 788mm 쪽, 세로가 1091mm 쪽에 배열됨
+  const SHEET_W = 788 - 20;  // 실제 인쇄 전지의 짧은 변
+  const SHEET_H = 1091 - 10; // 실제 인쇄 전지의 긴 변
   const countW = Math.floor(SHEET_W / dogaWidth);
   const countH = Math.floor(SHEET_H / dogaHeight);
   return countW > 0 && countH > 0 ? countW * countH : 0;
