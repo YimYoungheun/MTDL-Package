@@ -8,7 +8,8 @@
 /* 모든 <label> 태그 색상 */
 label {
   display: block;
-  margin-bottom: 0.9rem;		 /* 라벨 ~ 입력란/버튼그룹 간격 */
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;	         	  /* 라벨 ~ 입력란/버튼그룹 간격 */
   color: #5D5D5D;                     /* 옅은 회색 */
   font-weight: 400;                   /* 살짝 두껍게 (선택) */
   font-size: 0.9rem;                  /* 글씨 크기 */
