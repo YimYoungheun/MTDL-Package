@@ -100,7 +100,7 @@ function BBoxOrder() {
    return (
     <div style={{ display: 'flex', width: '100vw', height: '100vh', margin: 0, padding: 0, boxSizing: 'border-box' }}>
       {/* 왼쪽 이미지 */}
-      <div style={{ flex: 3.4, minWidth: 0, height: '100vh', margin: 0, padding: 0 }}>
+      <div style={{ flex: 3.6, minWidth: 0, height: '100vh', margin: 0, padding: 0 }}>
         <img
           src="/img/Designers.png"
           alt="B형 상자"
