@@ -193,6 +193,9 @@ const EstimatePrice = ({
     if (totalQuantity < 500) {
       return (
         <div className="estimate-box">
+          <p style={{ color: "crimson", fontWeight: "bold", marginBottom: "1em" }}>
+            최소 수량은 500개 이상부터입니다.
+          </p>
           <p className="main-estimate">
             {estimateWithMargin.toLocaleString()}원부터~
           </p>
