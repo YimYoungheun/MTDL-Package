@@ -83,7 +83,7 @@ function YBoxOrder() {
     setWidth('');
     setLength('');
     setHeight('');
-    setthickness(0);
+    setThickness(0);
     setPaperFeel('');
     setMaterial('');
     setColor('');
@@ -306,11 +306,11 @@ function YBoxOrder() {
               </div>
             )}
             {/* 견적가 계산 컴포넌트 */}
-            <EstimatePrice
+            <EstimatePriceY
               width={width}
               length={length}
               height={height}
-              bottomStyle={bottomStyle}
+              thickness={thickness}
               paperFeel={paperFeel}
               paperType={material}
               paperWeight={weight}
