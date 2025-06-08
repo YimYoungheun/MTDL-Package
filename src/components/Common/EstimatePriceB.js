@@ -17,11 +17,11 @@ function getPerSheetCount(dogaWidth, dogaHeight) {
   return countW > 0 && countH > 0 ? countW * countH : 0;
 }
 
-function getUnitPrice(paperFeel, paperType, paperWeight, color, perSheetCount) {
+function getUnitPrice(paperFeel, paperType, paperWeight, color) {
   if (paperFeel === '매끄러운') {
     if (paperPrices['매끄러운'][paperType] && paperPrices['매끄러운'][paperType][paperWeight]) {
       const totalPrice = paperPrices['매끄러운'][paperType][paperWeight];
-      return Math.ceil(totalPrice / 500 / perSheetCount);
+      return Math.ceil(totalPrice / 500);  // <--- 도면 수량 나누지 말 것!
     }
   }
   if (paperFeel === '러프한') {
@@ -31,7 +31,7 @@ function getUnitPrice(paperFeel, paperType, paperWeight, color, perSheetCount) {
       paperPrices['러프한'][paperType][color][paperWeight]
     ) {
       const totalPrice = paperPrices['러프한'][paperType][color][paperWeight];
-      return Math.ceil(totalPrice / 500 / perSheetCount);
+      return Math.ceil(totalPrice / 500);
     }
   }
   return 0;
