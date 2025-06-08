@@ -180,7 +180,7 @@ const EstimatePrice = ({
     dieCutFee +   // 목형칼
     bondingFee;
 
-  const estimateWithMargin = Math.ceil(estimate * 1.2);
+  const estimateWithMargin = Math.ceil(estimate * 1.15);
   const unitPriceWithMargin = Math.ceil(estimateWithMargin / totalQuantity);
 
   return (
