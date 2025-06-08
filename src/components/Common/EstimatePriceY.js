@@ -111,29 +111,79 @@ const EstimatePriceY = ({
   paperFeel = '매끄러운', paperType = 'AB', paperWeight = '300g', color = '',
   quantity, coatingType = '없음', foil = [], embossing = '', mainPrintColor = '', spotPrintColor = '', printNone = false,
 }) => {
-  if (!width || !length || !height || !thickness || !cover || !quantity) {
-    return <div className="estimate-box"><span className="estimate-unit" style={{color: 'gray'}}>모든 정보를 입력하면 예상 견적이 나옵니다.</span></div>;
+
+  // 1. 기본 입력값 누락 검사
+  if (!width || !length || !height || !thickness || !quantity) {
+    return (
+      <div className="estimate-box">
+        <span className="estimate-unit" style={{ color: 'gray' }}>
+          모든 정보를 입력하면 예상 견적이 나옵니다.
+        </span>
+      </div>
+    );
   }
+
+  // ✅ 2. 뚜껑 여부 확인
+  if (!['제작', '제작 안함'].includes(cover)) {
+    return (
+      <div className="estimate-box">
+        <span className="estimate-unit" style={{ color: 'crimson' }}>
+          뚜껑 여부를 선택해 주세요.
+        </span>
+      </div>
+    );
+  }
+
+  // 3. 도면 계산
   const doga = getDogaSize(width, length, height, thickness, cover);
-  if (!doga) return <div className="estimate-box"><span className="estimate-unit" style={{color: 'gray'}}>도면 계산이 불가능합니다.</span></div>;
+  if (!doga) {
+    return (
+      <div className="estimate-box">
+        <span className="estimate-unit" style={{ color: 'gray' }}>
+          도면 계산이 불가능합니다.
+        </span>
+      </div>
+    );
+  }
+
+  // 4. 전지당 도면 수 계산
   const perSheetCount = getPerSheetCount(doga.dogaWidth, doga.dogaHeight);
   if (perSheetCount < 1) {
-    return <div className="estimate-box"><span className="estimate-unit" style={{color: 'crimson', fontWeight:'bold'}}>전지(1091×788)로 도면 제작 불가</span></div>;
+    return (
+      <div className="estimate-box">
+        <span className="estimate-unit" style={{ color: 'crimson', fontWeight: 'bold' }}>
+          전지(1091×788)로 도면 제작 불가
+        </span>
+      </div>
+    );
   }
+
+  // 5. 종이 단가 계산
   const unitPrice = getUnitPrice(paperFeel, paperType, paperWeight, color, perSheetCount);
   if (!unitPrice) {
-    return <div className="estimate-box"><span className="estimate-unit" style={{color: 'crimson'}}>종이 종류/두께를 다시 선택해 주세요.</span></div>;
+    return (
+      <div className="estimate-box">
+        <span className="estimate-unit" style={{ color: 'crimson' }}>
+          종이 종류/두께를 다시 선택해 주세요.
+        </span>
+      </div>
+    );
   }
+
+  // 6. 수량 계산
   const totalQuantity = parseInt(quantity, 10);
+  if (!totalQuantity || isNaN(totalQuantity) || totalQuantity < 1) {
+    return (
+      <div className="estimate-box">
+        <span className="estimate-unit" style={{ color: 'crimson' }}>
+          희망 수량을 정확히 입력해 주세요.
+        </span>
+      </div>
+    );
+  }
+
   const actualQty = cover === '제작' ? totalQuantity * 2 : totalQuantity;
   const sheetCount = Math.ceil(actualQty / perSheetCount);
-    if (!actualQty || isNaN(actualQty) || actualQty < 1) {
-      return (
-        <div className="estimate-box">
-          <span className="estimate-unit" style={{color: 'crimson'}}>희망 수량을 정확히 입력해 주세요.</span>
-        </div>
-      );
-    }
 
   const { plate: printPlateFee, print: printRunFee } =
   getPrintFee(mainPrintColor, spotPrintColor, actualQty, perSheetCount, printNone, paperFeel);
