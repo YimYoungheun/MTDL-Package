@@ -201,7 +201,7 @@ const EstimatePriceY = ({
     dieCutFee;   // 목형칼
     
 
-  const estimateWithMargin = Math.ceil(estimate * 1.15);
+  const estimateWithMargin = Math.ceil(estimate * 1.2);
   const unitPriceWithMargin = Math.ceil(estimateWithMargin / actualQty);
 
   if (actualQty < 500) {
