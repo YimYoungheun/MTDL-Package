@@ -121,8 +121,15 @@ const EstimatePrice = ({
   if (!unitPrice) {
     return <div className="estimate-box"><span className="estimate-unit" style={{color: 'crimson'}}>종이 종류/두께를 다시 선택해 주세요.</span></div>;
   }
-  const totalQuantity = parseInt(quantity);
-  if (totalQuantity < 500) {
+  const totalQuantity = parseInt(quantity, 10);
+    if (!totalQuantity || isNaN(totalQuantity) || totalQuantity < 1) {
+      return (
+        <div className="estimate-box">
+          <span className="estimate-unit" style={{color: 'crimson'}}>희망 수량을 정확히 입력해 주세요.</span>
+        </div>
+      );
+    }
+    if (totalQuantity < 500) {
     return (
     <div className="estimate-box">
       <p className="main-estimate">
