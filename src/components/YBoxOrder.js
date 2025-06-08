@@ -18,8 +18,8 @@ function YBoxOrder() {
   const [width, setWidth] = useState('');
   const [length, setLength] = useState('');
   const [height, setHeight] = useState('');
-  const [thickness, setThickness] = useState(0); // 기본값 0mm
-  const [cover, setCover] = useState('제작'); // 기본값 "제작" 또는 ''제작하지 않음"
+  const [thickness, setThickness] = useState(''); // <-- 빈 문자열이 기본값
+  const [cover, setCover] = useState(''); // 빈 문자열이 기본값
   const [paperFeel, setPaperFeel] = useState('');
   const [material, setMaterial] = useState('');
   const [color, setColor] = useState('');
@@ -32,6 +32,7 @@ function YBoxOrder() {
   const [mainPrintColor, setMainPrintColor] = useState('');
   const [spotPrintColor, setSpotPrintColor] = useState('');
   const [showConfirmation, setShowConfirmation] = useState(false);
+
   const handleOrderSubmit = () => {
     // 주문 정보 객체 생성
     const order = {
@@ -63,10 +64,9 @@ function YBoxOrder() {
     // 주문 완료 메시지 띄우기
     handleReset(); // 🟢 폼 초기화
     setShowConfirmation(true);
-    };
+  };
 
-
-  // 옵션 로직(그대로 복붙)
+  // 옵션 로직
   const getColorOptions = () =>
     paperFeel === '러프한' ? colorMap[material] || [] : [];
   const getWeightOptions = () => {
@@ -77,7 +77,7 @@ function YBoxOrder() {
     return [];
   };
 
-  // 리셋 함수(그대로)
+  // 리셋 함수
   const handleReset = () => {
     setCompany('');
     setPhone('');
@@ -85,8 +85,8 @@ function YBoxOrder() {
     setWidth('');
     setLength('');
     setHeight('');
-    setThickness(0);
-    setCover('제작'); // or ''제작하지 않음"
+    setThickness('');
+    setCover('');
     setPaperFeel('');
     setMaterial('');
     setColor('');
@@ -100,7 +100,7 @@ function YBoxOrder() {
     setSpotPrintColor('');
   };
 
-   return (
+  return (
     <div style={{ display: 'flex', width: '100vw', height: '100vh', margin: 0, padding: 0, boxSizing: 'border-box' }}>
       {/* 왼쪽 이미지 */}
       <div style={{ flex: 3.6, minWidth: 0, height: '100vh', margin: 0, padding: 0 }}>
@@ -139,27 +139,25 @@ function YBoxOrder() {
           </div>
         </div>
 
-          {/* 살 두께 */}
-          {width && length && height && (
-            <>
-              <div style={{ marginBottom: '1rem' }}>
-                <label>살 두께</label>
-                <div className="button-group">
-                  {[0, 5, 7].map(val => (
-                    <button
-                      key={val}
-                      type="button"
-                      className={`option-button ${thickness === val ? 'selected' : ''}`}
-                      onClick={() => setThickness(val)}
-                    >
-                      {val}mm
-                    </button>
-                  ))}
-                </div>
+        {/* 살 두께 & 뚜껑 선택 */}
+        {width && length && height && (
+          <>
+            <div style={{ marginBottom: '1rem' }}>
+              <label>살 두께</label>
+              <div className="button-group">
+                {[0, 5, 7].map(val => (
+                  <button
+                    key={val}
+                    type="button"
+                    className={`option-button ${thickness === val ? 'selected' : ''}`}
+                    onClick={() => setThickness(val)}
+                  >
+                    {val}mm
+                  </button>
+                ))}
               </div>
-
-              {/* 뚜껑 제작 */}
-              {width && length && height && (typeof thickness === 'number') && (
+            </div>
+            {thickness !== '' && (
               <div style={{ marginBottom: '1rem' }}>
                 <label>뚜껑</label>
                 <div className="button-group">
@@ -175,8 +173,9 @@ function YBoxOrder() {
                   ))}
                 </div>
               </div>
-            </>
-          )}
+            )}
+          </>
+        )}
 
         {/* 종이 느낌, 재질, 색상, 무게 */}
         {width && length && height && thickness !== '' && cover && (
@@ -221,6 +220,7 @@ function YBoxOrder() {
             )}
           </>
         )}
+
         {/* 인쇄 선택 (무게까지 골라야 노출) */}
         {weight && (
           <>
@@ -341,20 +341,19 @@ function YBoxOrder() {
               spotPrintColor={spotPrintColor}
               printNone={!mainPrintColor && !spotPrintColor}
             />
-              <iframe
-          className="file-upload-frame"
-          src="https://mtdl.co.kr/fileupload"
-          width="100%"
-          height="170"
-          title="파일 업로드"
-        />
-        <button className="primary-button" onClick={handleOrderSubmit}>
-          바로 주문하기
-        </button>
-        </>
-      )} {/* weight && 조건 끝 */}
-      </div> {/* 오른쪽 입력란 div 종료 */}
-      
+            <iframe
+              className="file-upload-frame"
+              src="https://mtdl.co.kr/fileupload"
+              width="100%"
+              height="170"
+              title="파일 업로드"
+            />
+            <button className="primary-button" onClick={handleOrderSubmit}>
+              바로 주문하기
+            </button>
+          </>
+        )}
+      </div>
       {/* ✅ 오버레이는 오른쪽 입력란 div와 같은 레벨, 전체 flex div의 자식 */}
       {showConfirmation && (
         <div className="confirmation-overlay">
