@@ -7,6 +7,8 @@
 
 /* 모든 <label> 태그 색상 */
 label {
+  display: block;
+  margin-bottom: 0.9rem;		 /* 라벨 ~ 입력란/버튼그룹 간격 */
   color: #5D5D5D;                     /* 옅은 회색 */
   font-weight: 400;                   /* 살짝 두껍게 (선택) */
   font-size: 0.9rem;                  /* 글씨 크기 */
@@ -196,7 +198,7 @@ label {
   background: #ffffff;               /* 배경 색상 */
   color: #747474;                    /* 폰트 색상 */
   cursor: pointer;
-  margin-bottom: 1px;
+  margin-bottom: 3px;
   margin-right: 1px;
   transition: background 0.16s, color 0.15s, border 0.18s;
   outline: none;
