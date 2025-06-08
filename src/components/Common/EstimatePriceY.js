@@ -48,26 +48,29 @@ function getUnitPrice(paperFeel, paperType, paperWeight, color, perSheetCount) {
   return 0;
 }
 
-function getPrintFee(mainPrintColor, spotPrintColor, actualQty, perSheetCount, printNone, paperFeel) {
+function getPrintFee(mainPrintColor, spotPrintColor, totalQty, perSheetCount, printNone, paperFeel) {
   if (printNone) return { plate: 0, print: 0 };
-  let plateFee = 0;
-  let printFee = 0;
+
   const colorNum = mainPrintColor ? parseInt(mainPrintColor[0], 10) || 0 : 0;
   const spotNum = spotPrintColor ? parseInt(spotPrintColor.replace('별색 ', '').replace('도', ''), 10) || 0 : 0;
   const totalColor = colorNum + spotNum;
-  const sheetCount = Math.ceil(actualQty / perSheetCount);
-  plateFee = totalColor * 25000;
 
-  // 기준 인쇄비
+  const plateFee = (colorNum * 25000) + (spotNum * 40000);
+  const sheetCount = Math.ceil(totalQty / perSheetCount);
   const printBase = (paperFeel === '매끄러운') ? 80000 : 160000;
 
+  let printFee = 0;
   if (totalColor > 0) {
     if (sheetCount <= 250) {
-      printFee = totalColor * printBase;
+      printFee = (totalColor === 1) ? printBase * 2 : printBase * totalColor;
     } else {
-      printFee = totalColor * (Math.ceil(sheetCount / 250) * printBase);
+      const multiplier = Math.ceil(sheetCount / 250);
+      printFee = (totalColor === 1)
+        ? multiplier * printBase * 2
+        : multiplier * printBase * totalColor;
     }
   }
+
   return { plate: plateFee, print: printFee };
 }
 
