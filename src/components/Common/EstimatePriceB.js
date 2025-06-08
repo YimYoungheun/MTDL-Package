@@ -2,13 +2,14 @@ import React from 'react';
 import { paperPrices } from '../../data/paperPrices';
 
 function getDogaSize(width, length, height, bottomStyle) {
-  const dogaWidth = Number(width) + Number(height) + 30;
-  const dogaHeight = Number(length) + Number(height) + 20;
+  const dogaWidth = Number(width) * 2 + Number(length) * 2 + 15 + 5;
+  const dogaHeight = Number(length) * 0.75 + Number(height) + Number(length) + 16 + 5;
   return { dogaWidth, dogaHeight };
 }
 
 function getPerSheetCount(dogaWidth, dogaHeight) {
-  const SHEET_W = 1091, SHEET_H = 788;
+  const SHEET_W = 1091 - 10; // 좌우 여백 10mm 확보
+  const SHEET_H = 788 - 20; // 상하 여백 20mm 확보
   const countW = Math.floor(SHEET_W / dogaWidth);
   const countH = Math.floor(SHEET_H / dogaHeight);
   return countW > 0 && countH > 0 ? countW * countH : 0;
@@ -47,13 +48,11 @@ function getPrintFee(mainPrintColor, spotPrintColor, totalQty, perSheetCount, pr
 
   let printFee = 0;
   if (totalColor > 0) {
-    if (sheetCount <= 250) {
-      printFee = (totalColor === 1) ? printBase * 2 : printBase * totalColor;
+    const multiplier = Math.ceil(sheetCount / 250);
+    if (totalColor === 1) {
+      printFee = multiplier * printBase * 2;
     } else {
-      const multiplier = Math.ceil(sheetCount / 250);
-      printFee = (totalColor === 1)
-        ? multiplier * printBase * 2
-        : multiplier * printBase * totalColor;
+      printFee = multiplier * printBase * totalColor;
     }
   }
 
