@@ -3,10 +3,10 @@ import '../App.css'; // 스타일시트 주의!
 import { paperPrices } from '../data/paperPrices';
 
 // 필요한 파일 import
-import { NamecardcolorMap } from '../data/NamecardcolorMap';
-import { NamecardmeterialMap } from '../data/NamecardmeterialMap';
-import { NamecardpaperPrice } from '../data/NamecardpaperPrice';
-import { NamecardweightMap } from '../data/NamecardweightMap';
+import { namecardMaterialMap } from '../data/namecardMaterialMap';
+import { namecardColorMap } from '../data/namecardColorMap';
+import { namecardWeightMap } from '../data/namecardWeightMap';
+import { namecardPaperPrice } from '../data/namecardPaperPrice';
 
 //옵션 명칭 선언
 const FEEL_OPTIONS = namecardFeelOptions;
