@@ -48,7 +48,7 @@ function BBoxOrder() {
       coating,
       embossing,
       foil,
-      quantity: quantity === '그 이상' ? customQuantity : quantity,
+      quantity: quantity === '그 외 수량' ? customQuantity : quantity,
       mainPrintColor,
       spotPrintColor,
       orderId: 'ORDER-' + new Date().getTime(),
@@ -269,14 +269,14 @@ function BBoxOrder() {
                 <div className="button-group">
                   <select className="custom-select" value={quantity} onChange={e => setQuantity(e.target.value)}>
                     <option value="">수량을 선택하세요</option>
-                    {[500, 1000, 2000, 3000, 5000, 10000, 20000, 30000, 50000, 100000, '그 이상'].map(qty => (
-                      <option key={qty} value={String(qty)}>{qty === '그 이상' ? '그 이상' : Number(qty).toLocaleString()}</option>
+                    {[500, 1000, 2000, 3000, 5000, 10000, 20000, 30000, 50000, 100000, '그 외 수량'].map(qty => (
+                      <option key={qty} value={String(qty)}>{qty === '그 외 수량' ? '그 외 수량' : Number(qty).toLocaleString()}</option>
                     ))}
                   </select>
                 </div>
               </div>
             )}
-            {quantity === '그 이상' && (
+            {quantity === '그 외 수량' && (
               <div style={{ marginBottom: '1rem' }}>
                 <label>희망 수량 입력</label>
                 <input
@@ -304,7 +304,7 @@ function BBoxOrder() {
               paperType={material}
               paperWeight={weight}
               color={color}
-              quantity={quantity === '그 이상' ? customQuantity : quantity}
+              quantity={quantity === '그 외 수량' ? customQuantity : quantity}
               coatingType={coating || '없음'}
               foil={foil}
               embossing={embossing}
