@@ -3,11 +3,18 @@ import '../App.css'; // 스타일시트 주의!
 import { paperPrices } from '../data/paperPrices';
 
 // 필요한 파일 import
-import { namecardSizeOptions } from '../data/NamecardSizeOptions';
 import { namecardFeelOptions } from '../data/NamecardFeelOptions';
 import { namecardMaterialMap } from '../data/NamecardMaterialMap';
 import { namecardColorMap } from '../data/NamecardColorMap';
 import { namecardWeightMap } from '../data/NamecardWeightMap';
+
+
+// 명함 크기
+const SIZE_OPTIONS = [
+  { label: '90×50', width: 90, height: 50 },
+  { label: '90×55', width: 90, height: 55 },
+  { label: '85×55', width: 85, height: 55 }
+];
 
 // 인쇄 옵션
 const PRINT_OPTIONS = [
