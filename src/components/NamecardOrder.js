@@ -32,6 +32,8 @@ function NamecardOrder() {
   const [weight, setWeight] = useState('');
   const [printType, setPrintType] = useState('');
   const [coating, setCoating] = useState('');
+  const [foil, setFoil] = useState([]);
+  const [embossing, setEmbossing] = useState('없음');
   const [round, setRound] = useState('없음');
   const [quantity, setQuantity] = useState('');   // ⬅️ 반드시 여기!
   const [orderCount, setOrderCount] = useState('1'); // ⬅️ 반드시 여기!
@@ -312,20 +314,21 @@ function NamecardOrder() {
         {/* (예비) 견적가 컴포넌트 자리 (추후 개발) */}
         {selectedSize && weight && printType && coating && quantity && (
           <>
-            {/* <EstimatePriceNamecard
-              size={selectedSize}
-              paperFeel={paperFeel}
-              material={material}
-              color={color}
-              weight={weight}
-              printType={printType}
-              coating={coating}
-              round={round}
-              quantity={quantity}
-            /> */}
-            <div style={{ margin: "1rem 0", color: "#b71c1c", fontWeight: 600 }}>
-              견적가 계산 준비 중
-            </div>
+          <EstimatePriceNamecard
+            width={selectedSize?.width}
+            height={selectedSize?.height}
+            paperFeel={paperFeel}
+            material={material}
+            color={color}
+            weight={weight}
+            printType={printType}
+            coating={coating}
+            round={round}
+            quantity={Number(quantity) * Number(orderCount)}
+            foil={foil}           // 박 옵션 (예: 배열이나 문자열)
+            embossing={embossing} // 형압 옵션 (예: 문자열, 예시: '음각', '양각', '없음' 등)
+          />
+
         
             {/* 파일 업로드 */}
             <iframe
