@@ -19,6 +19,9 @@ const PRINT_OPTIONS = [
 const COATING_OPTIONS = ['없음', '무광', '유광', '벨벳'];
 const ROUND_OPTIONS = ['없음', '1면', '2면', '3면', '4면'];
 
+// 수량 옵션
+const QUANTITY_OPTIONS = [500, 1000, 2000, 3000, 5000, 10000, 20000, 30000, 50000, 100000];
+
 function NamecardOrder() {
   // 입력 상태값
   const [company, setCompany] = useState('');
@@ -256,8 +259,43 @@ function NamecardOrder() {
             </div>
           </div>
         )}
-
-        {/* 주문 및 기타 컴포넌트 자리(추후) */}
+        
+        {/* 수량 선택 */}
+        {selectedSize && weight && printType && coating && (
+          <div style={{ marginBottom: '1.3rem' }}>
+            <label>수량 선택</label>
+            <div className="button-group">
+              <select
+                className="custom-select"
+                value={quantity}
+                onChange={e => setQuantity(e.target.value)}
+              >
+                <option value="">수량을 선택하세요</option>
+                {QUANTITY_OPTIONS.map(qty => (
+                  <option key={qty} value={qty}>
+                    {Number(qty).toLocaleString()}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+        )}
+        
+        {/* 파일 업로드 + 확인(결제) 버튼 (BBoxOrder와 동일하게 추가!) */}
+        {selectedSize && weight && printType && coating && quantity && (
+          <>
+            <iframe
+              className="file-upload-frame"
+              src="https://mtdl.co.kr/fileupload"
+              width="100%"
+              height="170"
+              title="파일 업로드"
+            />
+            <button className="primary-button" onClick={handleOrderSubmit} style={{ marginTop: 18 }}>
+              확인 및 결제하기
+            </button>
+          </>
+        )}
       </div>
     </div>
   );
