@@ -67,6 +67,7 @@ function NamecardOrder() {
     setCoating('');
     setRound('없음');
     setQuantity('');
+    setOrderCount('1');
   };
 
   // 주문 버튼 클릭 처리
