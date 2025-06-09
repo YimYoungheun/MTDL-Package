@@ -296,9 +296,6 @@ function NamecardOrder() {
                   <option key={cnt} value={cnt}>{cnt}건</option>
                 ))}
               </select>
-              <span style={{ marginLeft: '0.7rem', color: '#B71C1C', fontWeight: 500 }}>
-                {quantity ? `총 ${(Number(quantity) * Number(orderCount)).toLocaleString()}장 주문` : ''}
-              </span>
             </div>
           </div>
         )}
