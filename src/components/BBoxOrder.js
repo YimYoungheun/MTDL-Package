@@ -98,9 +98,9 @@ function BBoxOrder() {
   };
 
    return (
-    <div style={{ display: 'flex', width: '100vw', height: 'calc(100vh - 4rem)', margin: 0, padding: 0, boxSizing: 'border-box' }}>
+    <div style={{ display: 'flex', width: '100vw', height: '100vh', boxSizing: 'border-box', overflow: 'hidden' }}>
       {/* 왼쪽 이미지 */}
-      <div style={{ flex: 3.6, minWidth: 0, height: '80vh', margin: 0, padding: 0 }}>
+      <div style={{ flex: 3.6, minWidth: 0, height: '100%', overflow: 'hidden' }}>
         <img
           src="/img/Designers.png"
           alt="B형 상자"
@@ -108,7 +108,7 @@ function BBoxOrder() {
         />
       </div>
       {/* 오른쪽 입력란 */}
-      <div style={{ flex: 1, minWidth: 0, padding: '2rem', background: '#fff', height: '100vh', overflowY: 'auto' }}>
+      <div style={{ flex: 1, minWidth: 0, padding: '2rem', background: '#fff', boxSizing: 'border-box', overflowY: 'auto' }}>
         <button className="secondary-button" onClick={handleReset}>
           처음부터 입력 다시하기
         </button>
