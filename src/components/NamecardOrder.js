@@ -1,47 +1,31 @@
 import React, { useState } from 'react';
-import '../App.css'; // 스타일시트 주의!
+import '../App.css';
 
-// 필요한 파일 import
+// 필요한 데이터 import
 import { NamecardMaterialMap } from '../data/NamecardMaterialMap';
 import { NamecardColorMap } from '../data/NamecardColorMap';
 import { NamecardWeightMap } from '../data/NamecardWeightMap';
-import { NamecardPaperPrice } from '../data/NamecardPaperPrice';
 
-//옵션 명칭 선언
-const MATERIAL_MAP = NamecardMaterialMap;
-const COLOR_MAP = NamecardColorMap;
-const WEIGHT_MAP = NamecardWeightMap;
-
-// 명함 크기
+// 명함 고정 사이즈 옵션
 const SIZE_OPTIONS = [
   { label: '90×50', width: 90, height: 50 },
   { label: '90×55', width: 90, height: 55 },
   { label: '85×55', width: 85, height: 55 }
 ];
-
-// 인쇄 옵션
 const PRINT_OPTIONS = [
   { label: '단면 인쇄', value: '단면' },
   { label: '양면 인쇄', value: '양면' }
 ];
-
-// 코팅 옵션
-const COATING_OPTIONS = [
-  '없음', '무광', '유광', '벨벳'
-];
-
-// 모서리 둥글게 옵션
-const ROUND_OPTIONS = [
-  '없음', '1면', '2면', '3면', '4면'
-];
+const COATING_OPTIONS = ['없음', '무광', '유광', '벨벳'];
+const ROUND_OPTIONS = ['없음', '1면', '2면', '3면', '4면'];
 
 function NamecardOrder() {
-  // 기본정보
+  // 입력 상태값
   const [company, setCompany] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
 
-  // 명함 옵션 상태
+  // 옵션 상태값
   const [selectedSize, setSelectedSize] = useState(null);
   const [paperFeel, setPaperFeel] = useState('');
   const [material, setMaterial] = useState('');
@@ -51,7 +35,23 @@ function NamecardOrder() {
   const [coating, setCoating] = useState('');
   const [round, setRound] = useState('없음');
 
-  // 리셋 함수
+  // 옵션 분기함수(BBoxOrder.js 참고)
+  const getColorOptions = () => {
+    // 러프한 재질에서만 색상 분기
+    return paperFeel === '러프한' ? (NamecardColorMap[material] || []) : [];
+  };
+
+  const getWeightOptions = () => {
+    if (paperFeel === '매끄러운' || paperFeel === '친환경') {
+      return NamecardWeightMap[paperFeel]?.[material] || [];
+    }
+    if (paperFeel === '러프한' && color) {
+      return NamecardWeightMap['러프한']?.[material]?.[color] || [];
+    }
+    return [];
+  };
+
+  // 리셋
   const handleReset = () => {
     setCompany('');
     setPhone('');
@@ -68,7 +68,7 @@ function NamecardOrder() {
 
   return (
     <div style={{ display: 'flex', width: '100vw', height: '100vh', boxSizing: 'border-box' }}>
-      {/* 왼쪽 이미지 (임시) */}
+      {/* 왼쪽 이미지 */}
       <div style={{ flex: 3.6, minWidth: 0, height: '100vh' }}>
         <img
           src="/img/Namecard.jpg"
@@ -81,7 +81,7 @@ function NamecardOrder() {
         <button className="secondary-button" onClick={handleReset} style={{ marginBottom: 16 }}>
           처음부터 입력 다시하기
         </button>
-        {/* 회사명/성함, 연락처, 이메일 */}
+        {/* 기본 입력 */}
         {[{ label: '회사명 또는 성함', value: company, setter: setCompany },
           { label: '연락처', value: phone, setter: setPhone },
           { label: '이메일 주소', value: email, setter: setEmail }].map((f, i) => (
@@ -119,10 +119,10 @@ function NamecardOrder() {
           </div>
         </div>
 
-        {/* 종이 선택 (느낌) */}
+        {/* 종이 느낌 */}
         {selectedSize && (
-          <div style={{ marginBottom: '1.3rem' }}>
-            <label>종이 선택</label>
+          <div style={{ marginBottom: '1rem' }}>
+            <label>종이 느낌</label>
             <div className="button-group">
               {Object.keys(NamecardMaterialMap).map(feel => (
                 <button
@@ -141,10 +141,10 @@ function NamecardOrder() {
             </div>
           </div>
         )}
-        
-        {/* 재질 선택 */}
-        {paperFeel && (
-          <div style={{ marginBottom: '1.3rem' }}>
+
+        {/* 재질 */}
+        {selectedSize && paperFeel && (
+          <div style={{ marginBottom: '1rem' }}>
             <label>재질</label>
             <div className="button-group">
               {NamecardMaterialMap[paperFeel].map(mat => (
@@ -163,13 +163,13 @@ function NamecardOrder() {
             </div>
           </div>
         )}
-        
-        {/* 색상 선택 (러프한 느낌에서만) */}
-        {paperFeel === '러프한' && material && NamecardColorMap[material] && (
-          <div style={{ marginBottom: '1.3rem' }}>
+
+        {/* 색상 */}
+        {selectedSize && paperFeel === '러프한' && material && getColorOptions().length > 0 && (
+          <div style={{ marginBottom: '1rem' }}>
             <label>색상</label>
             <div className="button-group">
-              {NamecardColorMap[material].map(c => (
+              {getColorOptions().map(c => (
                 <button
                   key={c}
                   className={`option-button ${color === c ? 'selected' : ''}`}
@@ -184,37 +184,27 @@ function NamecardOrder() {
             </div>
           </div>
         )}
-        
-        {/* 무게 선택 */}
-        {material && (
-          <div style={{ marginBottom: '1.3rem' }}>
+
+        {/* 무게 */}
+        {selectedSize && material && getWeightOptions().length > 0 && (
+          <div style={{ marginBottom: '1rem' }}>
             <label>무게</label>
             <div className="button-group">
-              {paperFeel === '러프한' && color
-                ? (NamecardWeightMap[material]?.[color] || []).map(w => (
-                    <button
-                      key={w}
-                      className={`option-button ${weight === w ? 'selected' : ''}`}
-                      onClick={() => setWeight(w)}
-                    >
-                      {w}
-                    </button>
-                  ))
-                : (NamecardWeightMap[material] || []).map(w => (
-                    <button
-                      key={w}
-                      className={`option-button ${weight === w ? 'selected' : ''}`}
-                      onClick={() => setWeight(w)}
-                    >
-                      {w}
-                    </button>
-                  ))}
+              {getWeightOptions().map(w => (
+                <button
+                  key={w}
+                  className={`option-button ${weight === w ? 'selected' : ''}`}
+                  onClick={() => setWeight(w)}
+                >
+                  {w}
+                </button>
+              ))}
             </div>
           </div>
         )}
-        
-        {/* 인쇄 선택 */}
-        {weight && (
+
+        {/* 인쇄 */}
+        {selectedSize && weight && (
           <div style={{ marginBottom: '1.3rem' }}>
             <label>인쇄</label>
             <div className="button-group">
@@ -230,9 +220,9 @@ function NamecardOrder() {
             </div>
           </div>
         )}
-        
-        {/* 코팅 선택 */}
-        {printType && (
+
+        {/* 코팅 */}
+        {selectedSize && weight && printType && (
           <div style={{ marginBottom: '1.3rem' }}>
             <label>코팅</label>
             <div className="button-group">
@@ -248,27 +238,29 @@ function NamecardOrder() {
             </div>
           </div>
         )}
-        
-         {/* 모서리 둥글게 선택 */}
-              {coating && (
-                <div style={{ marginBottom: '1.3rem' }}>
-                  <label>모서리 둥글게</label>
-                  <div className="button-group">
-                    {ROUND_OPTIONS.map(opt => (
-                      <button
-                        key={opt}
-                        className={`option-button ${round === opt ? 'selected' : ''}`}
-                        onClick={() => setRound(opt)}
-                      >
-                        {opt}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
+
+        {/* 모서리 둥글게 */}
+        {selectedSize && weight && printType && coating && (
+          <div style={{ marginBottom: '1.3rem' }}>
+            <label>모서리 둥글게</label>
+            <div className="button-group">
+              {ROUND_OPTIONS.map(opt => (
+                <button
+                  key={opt}
+                  className={`option-button ${round === opt ? 'selected' : ''}`}
+                  onClick={() => setRound(opt)}
+                >
+                  {opt}
+                </button>
+              ))}
             </div>
           </div>
-        );
-        }
+        )}
+
+        {/* 주문 및 기타 컴포넌트 자리(추후) */}
+      </div>
+    </div>
+  );
+}
 
 export default NamecardOrder;
