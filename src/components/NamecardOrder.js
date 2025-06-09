@@ -87,7 +87,7 @@ function NamecardOrder() {
   };
 
   return (
-    <div style={{ display: 'flex', width: '100vw', height: '100vh', boxSizing: 'border-box' }}>
+    <div style={{ display: 'flex', width: '100vw', height: '80vh', boxSizing: 'border-box' }}>
       {/* 왼쪽 이미지 */}
       <div style={{ flex: 3.6, minWidth: 0, height: '100vh' }}>
         <img
