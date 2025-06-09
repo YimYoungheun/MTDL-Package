@@ -85,10 +85,33 @@ function NamecardOrder() {
 
   // 주문 버튼 클릭 처리
   const handleOrderSubmit = () => {
-    setShowConfirmation(true);
-    handleReset();
-  };
+    // 주문 정보 객체 생성
+    const order = {
+      company,
+      phone,
+      email,
+      selectedSize,
+      paperFeel,
+      material,
+      color,
+      weight,
+      printType,
+      coating,
+      round,
+      quantity: Number(quantity) * Number(orderCount),
+      foil,
+      embossing,
+      orderId: 'ORDER-' + new Date().getTime(),
+      orderedAt: new Date().toISOString(),
+    };
 
+  // ✅ 콘솔에 주문 정보 출력 (→ 실제 PG사 연동에서 사용할 수 있음)
+  console.log("🪪 명함 주문서 요약:", order);
+
+  // 주문 완료 메시지 띄우기
+  handleReset();
+  setShowConfirmation(true);
+};
   return (
     <div style={{ display: 'flex', width: '100vw', height: '100vh', boxSizing: 'border-box', overflow: 'hidden' }}>
       {/* 왼쪽 이미지 */}

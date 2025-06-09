@@ -58,18 +58,26 @@ function getPrintFee(mainPrintColor, spotPrintColor, totalQty, perSheetCount, pr
   const totalColor = colorNum + spotNum;
 
   // 인쇄비 도수별 단가(원색/별색 구분)
-  let printFee = 0;
+  let printFeeUnit = 0;
   if (colorNum > 0) {
     const mainPrintUnit = (paperFeel === '매끄러운') ? 20000 : 40000;
-    printFee += mainPrintUnit * colorNum;
+    printFeeUnit += mainPrintUnit * colorNum;
   }
   if (spotNum > 0) {
     const spotPrintUnit = (paperFeel === '매끄러운') ? 40000 : 80000;
-    printFee += spotPrintUnit * spotNum;
+    printFeeUnit += spotPrintUnit * spotNum;
   }
-  if (totalColor === 1) printFee *= 2;
+  if (totalColor === 1) printFeeUnit *= 2;
 
-  // ★ 도수 상관없이 판비 25,000원 × 전체 도수
+  // ★ 전지 수 계산 (perSheetCount: 전지 1장당 제품 수)
+  const sheetCount = Math.ceil(Number(totalQty) / perSheetCount);
+  // 250장 단위 반복 횟수 (최소 1)
+  const repeat = Math.ceil(sheetCount / 250);
+
+  // 최종 인쇄비: printFeeUnit × repeat
+  const printFee = printFeeUnit * repeat;
+
+  // ★ 도수 상관없이 판비 25,000원 × 전체 도수 (1회만!)
   const plateFee = totalColor * 25000;
 
   return { plate: plateFee, print: printFee };
