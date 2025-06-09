@@ -311,7 +311,7 @@ function NamecardOrder() {
               title="파일 업로드"
             />
             <button className="primary-button" onClick={handleOrderSubmit} style={{ marginTop: 18 }}>
-              확인 및 결제하기
+              바로 주문하기
             </button>
           </>
         )}
