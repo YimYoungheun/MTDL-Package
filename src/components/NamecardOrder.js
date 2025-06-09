@@ -170,7 +170,7 @@ function NamecardOrder() {
           </div>
         )}
 
-        {/* 색상 */}
+        {/* 색상 선택 (러프한 & 색상 옵션이 있는 경우만) */}
         {selectedSize && paperFeel === '러프한' && material && getColorOptions().length > 0 && (
           <div style={{ marginBottom: '1rem' }}>
             <label>색상</label>
