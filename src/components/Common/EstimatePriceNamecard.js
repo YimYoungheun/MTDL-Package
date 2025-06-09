@@ -1,5 +1,5 @@
 import React from 'react';
-import { paperPrices } from '../../data/NamecardPaperPrice';
+import { NamecardPaperPrice } from '../../data/NamecardPaperPrice';
 
 // [명함 도면 사이즈 계산]
 // - 사이즈(가로, 세로)는 선택 옵션에서 받음
@@ -25,20 +25,20 @@ function getUnitPrice(paperFeel, paperType, paperWeight, color) {
   // [명함 종이 단가 계산] - 무조건 1연(500장) 기준
   if (paperFeel === '매끄러운') {
     if (
-      paperPrices['매끄러운'][paperType] &&
-      paperPrices['매끄러운'][paperType][paperWeight]
+      NamecardPaperPrice['매끄러운'][paperType] &&
+      NamecardPaperPrice['매끄러운'][paperType][paperWeight]
     ) {
-      const totalPrice = paperPrices['매끄러운'][paperType][paperWeight];
+      const totalPrice = NamecardPaperPrice['매끄러운'][paperType][paperWeight];
       return Math.floor(totalPrice / 500); // 소수점은 버림, 1연 기준 단가
     }
   }
   if (paperFeel === '러프한') {
     if (
-      paperPrices['러프한'][paperType] &&
-      paperPrices['러프한'][paperType][color] &&
-      paperPrices['러프한'][paperType][color][paperWeight]
+      NamecardPaperPrice['러프한'][paperType] &&
+      NamecardPaperPrice['러프한'][paperType][color] &&
+      NamecardPaperPrice['러프한'][paperType][color][paperWeight]
     ) {
-      const totalPrice = paperPrices['러프한'][paperType][color][paperWeight];
+      const totalPrice = NamecardPaperPrice['러프한'][paperType][color][paperWeight];
       return Math.floor(totalPrice / 500);
     }
   }
