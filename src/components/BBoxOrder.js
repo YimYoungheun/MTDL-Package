@@ -98,7 +98,7 @@ function BBoxOrder() {
   };
 
    return (
-    <div style={{ display: 'flex', width: '100vw', height: '80vh', margin: 0, padding: 0, boxSizing: 'border-box' }}>
+    <div style={{ display: 'flex', width: '100vw', height: 'calc(100vh - 4rem)', margin: 0, padding: 0, boxSizing: 'border-box' }}>
       {/* 왼쪽 이미지 */}
       <div style={{ flex: 3.6, minWidth: 0, height: '80vh', margin: 0, padding: 0 }}>
         <img
