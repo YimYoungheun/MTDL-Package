@@ -1,4 +1,4 @@
-export const namecardMaterialMap = {
+export const NamecardMaterialMap = {
   "매끄러운": [
     "스노우",
     "아트지"
