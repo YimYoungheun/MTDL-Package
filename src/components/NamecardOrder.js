@@ -6,7 +6,7 @@ import { NamecardMaterialMap } from '../data/NamecardMaterialMap';
 import { NamecardColorMap } from '../data/NamecardColorMap';
 import { NamecardWeightMap } from '../data/NamecardWeightMap';
 
-// 명함 고정 사이즈 옵션
+// 명함 고정 사이즈 옵션, 기타 상수
 const SIZE_OPTIONS = [
   { label: '90×50', width: 90, height: 50 },
   { label: '90×55', width: 90, height: 55 },
@@ -18,17 +18,13 @@ const PRINT_OPTIONS = [
 ];
 const COATING_OPTIONS = ['없음', '무광', '유광', '벨벳'];
 const ROUND_OPTIONS = ['없음', '1면', '2면', '3면', '4면'];
-
-// 수량 옵션
 const QUANTITY_OPTIONS = [500, 1000, 2000, 3000, 5000, 10000, 20000, 30000, 50000, 100000];
 
 function NamecardOrder() {
-  // 입력 상태값
+  // ====== useState 선언부는 무조건 컴포넌트 함수 내부! ======
   const [company, setCompany] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
-
-  // 옵션 상태값
   const [selectedSize, setSelectedSize] = useState(null);
   const [paperFeel, setPaperFeel] = useState('');
   const [material, setMaterial] = useState('');
@@ -37,13 +33,13 @@ function NamecardOrder() {
   const [printType, setPrintType] = useState('');
   const [coating, setCoating] = useState('');
   const [round, setRound] = useState('없음');
+  const [quantity, setQuantity] = useState('');
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
-  // 옵션 분기함수(BBoxOrder.js 참고)
-  const getColorOptions = () => {
-    // 러프한 재질에서만 색상 분기
-    return paperFeel === '러프한' ? (NamecardColorMap[material] || []) : [];
-  };
-
+  // 옵션 분기함수
+  const getColorOptions = () => (
+    paperFeel === '러프한' ? (NamecardColorMap[material] || []) : []
+  );
   const getWeightOptions = () => {
     if (paperFeel === '매끄러운' || paperFeel === '친환경') {
       return NamecardWeightMap[paperFeel]?.[material] || [];
@@ -54,7 +50,7 @@ function NamecardOrder() {
     return [];
   };
 
-  // 리셋
+  // 리셋 함수
   const handleReset = () => {
     setCompany('');
     setPhone('');
@@ -67,6 +63,13 @@ function NamecardOrder() {
     setPrintType('');
     setCoating('');
     setRound('없음');
+    setQuantity('');
+  };
+
+  // 주문 버튼 클릭 처리
+  const handleOrderSubmit = () => {
+    setShowConfirmation(true);
+    handleReset();
   };
 
   return (
@@ -281,9 +284,25 @@ function NamecardOrder() {
           </div>
         )}
         
-        {/* 파일 업로드 + 확인(결제) 버튼 (BBoxOrder와 동일하게 추가!) */}
+        {/* (예비) 견적가 컴포넌트 자리 (추후 개발) */}
         {selectedSize && weight && printType && coating && quantity && (
           <>
+            {/* <EstimatePriceNamecard
+              size={selectedSize}
+              paperFeel={paperFeel}
+              material={material}
+              color={color}
+              weight={weight}
+              printType={printType}
+              coating={coating}
+              round={round}
+              quantity={quantity}
+            /> */}
+            <div style={{ margin: "1rem 0", color: "#b71c1c", fontWeight: 600 }}>
+              견적가 계산 준비 중
+            </div>
+        
+            {/* 파일 업로드 */}
             <iframe
               className="file-upload-frame"
               src="https://mtdl.co.kr/fileupload"
@@ -295,6 +314,20 @@ function NamecardOrder() {
               확인 및 결제하기
             </button>
           </>
+        )}
+        
+        {/* 주문 완료 오버레이 */}
+        {showConfirmation && (
+          <div className="confirmation-overlay">
+            <div className="confirmation-message">
+              <strong>주문이 접수되었습니다!</strong>
+              <br />나머지 결제를 진행해주세요
+              <br /><br />
+              <button className="primary-button" onClick={() => setShowConfirmation(false)}>
+                확인
+              </button>
+            </div>
+          </div>
         )}
       </div>
     </div>
