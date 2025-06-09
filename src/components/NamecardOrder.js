@@ -119,7 +119,7 @@ function NamecardOrder() {
           </div>
         </div>
 
-        {/* 종이 선택 */}
+        {/* 종이 느낌 선택 */}
         {selectedSize && (
           <div style={{ marginBottom: '1.3rem' }}>
             <label>종이 선택</label>
@@ -136,6 +136,28 @@ function NamecardOrder() {
                   }}
                 >
                   {feel === '매끄러운' ? '스탠다드' : '러프한'}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+        
+        /* 종이 종류 선택 */
+        {paperFeel && (
+          <div style={{ marginBottom: '1.3rem' }}>
+            <label>종이 종류</label>
+            <div className="button-group">
+              {NamecardMaterialMap[paperFeel].map(mat => (
+                <button
+                  key={mat}
+                  className={`option-button ${material === mat ? 'selected' : ''}`}
+                  onClick={() => {
+                    setMaterial(mat);
+                    setColor('');
+                    setWeight('');
+                  }}
+                >
+                  {mat}
                 </button>
               ))}
             </div>
