@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import '../App.css';
 
 // 필요한 데이터 import
+import EstimatePriceNamecard from './Common/EstimatePriceNamecard';
 import { NamecardMaterialMap } from '../data/NamecardMaterialMap';
 import { NamecardColorMap } from '../data/NamecardColorMap';
 import { NamecardWeightMap } from '../data/NamecardWeightMap';
