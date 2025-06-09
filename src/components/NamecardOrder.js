@@ -3,16 +3,16 @@ import '../App.css'; // 스타일시트 주의!
 import { paperPrices } from '../data/paperPrices';
 
 // 필요한 파일 import
-import { namecardmaterialMap } from '../data/namecardmaterialMap';
-import { namecardcolorMap } from '../data/namecardcolorMap';
-import { namecardweightMap } from '../data/namecardweightMap';
-import { namecardpaperPrice } from '../data/namecardpaperPrice';
+import { NamecardmaterialMap } from '../data/NamecardmaterialMap';
+import { NamecardcolorMap } from '../data/NamecardcolorMap';
+import { NamecardweightMap } from '../data/NamecardweightMap';
+import { NamecardpaperPrice } from '../data/NamecardpaperPrice';
 
 //옵션 명칭 선언
-const FEEL_OPTIONS = namecardFeelOptions;
-const MATERIAL_MAP = namecardMaterialMap;
-const COLOR_MAP = namecardColorMap;
-const WEIGHT_MAP = namecardWeightMap;
+const FEEL_OPTIONS = NamecardFeelOptions;
+const MATERIAL_MAP = NamecardMaterialMap;
+const COLOR_MAP = NamecardColorMap;
+const WEIGHT_MAP = NamecardWeightMap;
 
 // 명함 크기
 const SIZE_OPTIONS = [
@@ -126,7 +126,7 @@ function NamecardOrder() {
           <div style={{ marginBottom: '1.3rem' }}>
             <label>종이 느낌</label>
             <div className="button-group">
-              {Object.keys(namecardMaterialMap).map(feel => (
+              {Object.keys(NamecardMaterialMap).map(feel => (
                 <button
                   key={feel}
                   className={`option-button ${paperFeel === feel ? 'selected' : ''}`}
