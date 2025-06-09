@@ -8,7 +8,6 @@ import { NamecardWeightMap } from '../data/NamecardWeightMap';
 import { NamecardPaperPrice } from '../data/NamecardPaperPrice';
 
 //옵션 명칭 선언
-const FEEL_OPTIONS = NamecardFeelOptions;
 const MATERIAL_MAP = NamecardMaterialMap;
 const COLOR_MAP = NamecardColorMap;
 const WEIGHT_MAP = NamecardWeightMap;
@@ -121,27 +120,20 @@ function NamecardOrder() {
         </div>
 
         {/* 종이 느낌 */}
-        {selectedSize && (
-          <div style={{ marginBottom: '1.3rem' }}>
-            <label>종이 느낌</label>
-            <div className="button-group">
-              {Object.keys(NamecardMaterialMap).map(feel => (
-                <button
-                  key={feel}
-                  className={`option-button ${paperFeel === feel ? 'selected' : ''}`}
-                  onClick={() => {
-                    setPaperFeel(feel);
-                    setMaterial('');
-                    setColor('');
-                    setWeight('');
-                  }}
-                >
-                  {feel === '매끄러운' ? '기본명함' : '고급명함'}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
+        {Object.keys(NamecardMaterialMap).map(feel => (
+          <button
+            key={feel}
+            className={`option-button ${paperFeel === feel ? 'selected' : ''}`}
+            onClick={() => {
+              setPaperFeel(feel);
+              setMaterial('');
+              setColor('');
+              setWeight('');
+            }}
+          >
+            {feel === '매끄러운' ? '기본명함' : '고급명함'}
+          </button>
+        ))}
 
         {/* 색상(필요할 때만) */}
         {material && COLOR_MAP[material] && (
