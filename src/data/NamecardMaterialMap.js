@@ -1,6 +1,6 @@
 export const NamecardMaterialMap = {
   "매끄러운": [
-    "스노우",
+    "스노우지",
     "아트지"
   ],
   "러프한": [
