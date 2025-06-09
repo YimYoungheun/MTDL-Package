@@ -21,6 +21,14 @@ function getPerSheetCount(dogaWidth, dogaHeight) {
 
 // [명함 종이 단가] 1연(500장) 기준 단가 계산
 function getUnitPrice(paperFeel, paperType, paperWeight, color) {
+      console.log('[getUnitPrice]', { //디버깅용 콘솔 시작
+    paperFeel,
+    material,
+    weight,
+    color,
+    result: NamecardPaperPrice[paperFeel]?.[material]?.[weight],
+    resultColor: NamecardPaperPrice[paperFeel]?.[material]?.[color]?.[weight]
+  }); // 디버깅용 콘솔 끝
   if (paperFeel === '매끄러운') {
     if (
       NamecardPaperPrice['매끄러운'][paperType] &&
@@ -110,6 +118,10 @@ const EstimatePriceNamecard = ({
   foil = [],
   embossing = '없음',
 }) => {
+
+    console.log('[EstimatePriceNamecard props]', { paperFeel, material, weight, color, printType, coating, quantity }); // 디버깅용 콘솔
+
+
   // 기본 입력값 검사
   if (!width || !height || !paperFeel || !paperType || !paperWeight || !printType || !quantity) {
     return (
@@ -134,7 +146,7 @@ const EstimatePriceNamecard = ({
       </div>
     );
   }
-
+ 
   // 종이 단가
   const unitPrice = getUnitPrice(paperFeel, paperType, paperWeight, color);
   if (!unitPrice) {
