@@ -173,12 +173,11 @@ const EstimatePriceY = ({
   const paperTotal = unitPrice * totalOrderSheets; // 최종 종이비
 
   const { plate: printPlateFee, print: printRunFee } =
-  getPrintFee(mainPrintColor, spotPrintColor, actualQty, perSheetCount, printNone, paperFeel);
+  getPrintFee(printType, actualQty, paperFeel);
   const coatingFee = getCoatingFee(coatingType, actualQty, perSheetCount);
-  const cuttingFee = getCoatingFee(actualQty, perSheetCount);
+  const cuttingFee = getCuttingFee(actualQty);
   const { plate: foilPlate, fee: foilFee } = getFoilFee(foil, actualQty);
   const { plate: embossPlate, fee: embossFee } = getEmbossFee(embossing, actualQty);
-  const dieCutFee = 150000;
 
   const estimate =
     paperTotal +
