@@ -319,9 +319,9 @@ function NamecardOrder() {
             width={selectedSize?.width}
             height={selectedSize?.height}
             paperFeel={paperFeel}
-            material={material}
+            paperType={material}
             color={color}
-            weight={weight}
+            paperWeight={weight}
             printType={printType}
             coating={coating}
             round={round}
