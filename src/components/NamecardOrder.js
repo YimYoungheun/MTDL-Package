@@ -249,23 +249,26 @@ function NamecardOrder() {
           </div>
         )}
         
-        {/* 모서리 둥글게 선택 */}
-        {coating && (
-          <div style={{ marginBottom: '1.3rem' }}>
-            <label>모서리 둥글게</label>
-            <div className="button-group">
-              {ROUND_OPTIONS.map(opt => (
-                <button
-                  key={opt}
-                  className={`option-button ${round === opt ? 'selected' : ''}`}
-                  onClick={() => setRound(opt)}
-                >
-                  {opt}
-                </button>
-              ))}
+         {/* 모서리 둥글게 선택 */}
+              {coating && (
+                <div style={{ marginBottom: '1.3rem' }}>
+                  <label>모서리 둥글게</label>
+                  <div className="button-group">
+                    {ROUND_OPTIONS.map(opt => (
+                      <button
+                        key={opt}
+                        className={`option-button ${round === opt ? 'selected' : ''}`}
+                        onClick={() => setRound(opt)}
+                      >
+                        {opt}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
-        )}
-      );
-    }
+        );
+        }
+
 export default NamecardOrder;
