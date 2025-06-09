@@ -8,6 +8,11 @@ import { NamecardmeterialMap } from '../data/NamecardmeterialMap';
 import { NamecardpaperPrice } from '../data/NamecardpaperPrice';
 import { NamecardweightMap } from '../data/NamecardweightMap';
 
+//옵션 명칭 선언
+const FEEL_OPTIONS = namecardFeelOptions;
+const MATERIAL_MAP = namecardMaterialMap;
+const COLOR_MAP = namecardColorMap;
+const WEIGHT_MAP = namecardWeightMap;
 
 // 명함 크기
 const SIZE_OPTIONS = [
