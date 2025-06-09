@@ -1,4 +1,4 @@
-export const paperPrices = {
+export const NamecardPaperPrice = {
   "매끄러운": {
     "AB": {
       "300g": 359390,
