@@ -119,136 +119,152 @@ function NamecardOrder() {
           </div>
         </div>
 
-        {/* 종이 느낌 선택 */}
-        {selectedSize && (
-          <div style={{ marginBottom: '1.3rem' }}>
-            <label>종이 선택</label>
-            <div className="button-group">
-              {Object.keys(NamecardMaterialMap).map(feel => (
-                <button
-                  key={feel}
-                  className={`option-button ${paperFeel === feel ? 'selected' : ''}`}
-                  onClick={() => {
-                    setPaperFeel(feel);
-                    setMaterial('');
-                    setColor('');
-                    setWeight('');
-                  }}
-                >
-                  {feel === '매끄러운' ? '스탠다드' : '러프한'}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-        
-        /* 종이 종류 선택 */
-        {paperFeel && (
-          <div style={{ marginBottom: '1.3rem' }}>
-            <label>종이 종류</label>
-            <div className="button-group">
-              {NamecardMaterialMap[paperFeel].map(mat => (
-                <button
-                  key={mat}
-                  className={`option-button ${material === mat ? 'selected' : ''}`}
-                  onClick={() => {
-                    setMaterial(mat);
-                    setColor('');
-                    setWeight('');
-                  }}
-                >
-                  {mat}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* 색상(필요할 때만) */}
-        {material && COLOR_MAP[material] && (
-          <div style={{ marginBottom: '1.3rem' }}>
-            <label>색상</label>
-            <div className="button-group">
-              {COLOR_MAP[material].map(c => (
-                <button
-                  key={c}
-                  className={`option-button ${color === c ? 'selected' : ''}`}
-                  onClick={() => {
-                    setColor(c);
-                    setWeight('');
-                  }}
-                >{c}</button>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* 두께 */}
-        {material && (!COLOR_MAP[material] || color) && (
-          <div style={{ marginBottom: '1.3rem' }}>
-            <label>무게</label>
-            <div className="button-group">
-              {WEIGHT_MAP[material].map(w => (
-                <button
-                  key={w}
-                  className={`option-button ${weight === w ? 'selected' : ''}`}
-                  onClick={() => setWeight(w)}
-                >{w}</button>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* 인쇄 */}
-        {weight && (
-          <div style={{ marginBottom: '1.3rem' }}>
-            <label>인쇄</label>
-            <div className="button-group">
-              {PRINT_OPTIONS.map(opt => (
-                <button
-                  key={opt.value}
-                  className={`option-button ${printType === opt.value ? 'selected' : ''}`}
-                  onClick={() => setPrintType(opt.value)}
-                >{opt.label}</button>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* 코팅 */}
-        {printType && (
-          <div style={{ marginBottom: '1.3rem' }}>
-            <label>코팅</label>
-            <div className="button-group">
-              {COATING_OPTIONS.map(opt => (
-                <button
-                  key={opt}
-                  className={`option-button ${coating === opt ? 'selected' : ''}`}
-                  onClick={() => setCoating(opt)}
-                >{opt}</button>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* 모서리 둥글게 */}
-        {coating && (
-          <div style={{ marginBottom: '1.3rem' }}>
-            <label>모서리 둥글게</label>
-            <div className="button-group">
-              {ROUND_OPTIONS.map(opt => (
-                <button
-                  key={opt}
-                  className={`option-button ${round === opt ? 'selected' : ''}`}
-                  onClick={() => setRound(opt)}
-                >{opt}</button>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
+{/* 종이 선택 (느낌) */}
+{selectedSize && (
+  <div style={{ marginBottom: '1.3rem' }}>
+    <label>종이 선택</label>
+    <div className="button-group">
+      {Object.keys(NamecardMaterialMap).map(feel => (
+        <button
+          key={feel}
+          className={`option-button ${paperFeel === feel ? 'selected' : ''}`}
+          onClick={() => {
+            setPaperFeel(feel);
+            setMaterial('');
+            setColor('');
+            setWeight('');
+          }}
+        >
+          {feel === '매끄러운' ? '스탠다드' : '고급명함'}
+        </button>
+      ))}
     </div>
-  );
-}
+  </div>
+)}
+
+{/* 재질 선택 */}
+{paperFeel && (
+  <div style={{ marginBottom: '1.3rem' }}>
+    <label>재질</label>
+    <div className="button-group">
+      {NamecardMaterialMap[paperFeel].map(mat => (
+        <button
+          key={mat}
+          className={`option-button ${material === mat ? 'selected' : ''}`}
+          onClick={() => {
+            setMaterial(mat);
+            setColor('');
+            setWeight('');
+          }}
+        >
+          {mat}
+        </button>
+      ))}
+    </div>
+  </div>
+)}
+
+{/* 색상 선택 (러프한 느낌에서만) */}
+{paperFeel === '러프한' && material && NamecardColorMap[material] && (
+  <div style={{ marginBottom: '1.3rem' }}>
+    <label>색상</label>
+    <div className="button-group">
+      {NamecardColorMap[material].map(c => (
+        <button
+          key={c}
+          className={`option-button ${color === c ? 'selected' : ''}`}
+          onClick={() => {
+            setColor(c);
+            setWeight('');
+          }}
+        >
+          {c}
+        </button>
+      ))}
+    </div>
+  </div>
+)}
+
+{/* 무게 선택 */}
+{material && (
+  <div style={{ marginBottom: '1.3rem' }}>
+    <label>무게</label>
+    <div className="button-group">
+      {paperFeel === '러프한' && color
+        ? (NamecardWeightMap[material]?.[color] || []).map(w => (
+            <button
+              key={w}
+              className={`option-button ${weight === w ? 'selected' : ''}`}
+              onClick={() => setWeight(w)}
+            >
+              {w}
+            </button>
+          ))
+        : (NamecardWeightMap[material] || []).map(w => (
+            <button
+              key={w}
+              className={`option-button ${weight === w ? 'selected' : ''}`}
+              onClick={() => setWeight(w)}
+            >
+              {w}
+            </button>
+          ))}
+    </div>
+  </div>
+)}
+
+{/* 인쇄 선택 */}
+{weight && (
+  <div style={{ marginBottom: '1.3rem' }}>
+    <label>인쇄</label>
+    <div className="button-group">
+      {PRINT_OPTIONS.map(opt => (
+        <button
+          key={opt.value}
+          className={`option-button ${printType === opt.value ? 'selected' : ''}`}
+          onClick={() => setPrintType(opt.value)}
+        >
+          {opt.label}
+        </button>
+      ))}
+    </div>
+  </div>
+)}
+
+{/* 코팅 선택 */}
+{printType && (
+  <div style={{ marginBottom: '1.3rem' }}>
+    <label>코팅</label>
+    <div className="button-group">
+      {COATING_OPTIONS.map(opt => (
+        <button
+          key={opt}
+          className={`option-button ${coating === opt ? 'selected' : ''}`}
+          onClick={() => setCoating(opt)}
+        >
+          {opt}
+        </button>
+      ))}
+    </div>
+  </div>
+)}
+
+{/* 모서리 둥글게 선택 */}
+{coating && (
+  <div style={{ marginBottom: '1.3rem' }}>
+    <label>모서리 둥글게</label>
+    <div className="button-group">
+      {ROUND_OPTIONS.map(opt => (
+        <button
+          key={opt}
+          className={`option-button ${round === opt ? 'selected' : ''}`}
+          onClick={() => setRound(opt)}
+        >
+          {opt}
+        </button>
+      ))}
+    </div>
+  </div>
+)}
 
 export default NamecardOrder;
