@@ -33,9 +33,12 @@ function NamecardOrder() {
   const [printType, setPrintType] = useState('');
   const [coating, setCoating] = useState('');
   const [round, setRound] = useState('없음');
-  const [quantity, setQuantity] = useState('');
+  const [quantity, setQuantity] = useState('');   // ⬅️ 반드시 여기!
+  const [orderCount, setOrderCount] = useState('1'); // ⬅️ 반드시 여기!
   const [showConfirmation, setShowConfirmation] = useState(false);
-
+  const totalQuantity = quantity && orderCount
+    ? String(Number(quantity) * Number(orderCount))
+    : '';
   // 옵션 분기함수
   const getColorOptions = () => (
     paperFeel === '러프한' ? (NamecardColorMap[material] || []) : []
@@ -263,23 +266,38 @@ function NamecardOrder() {
           </div>
         )}
         
-        {/* 수량 선택 */}
+        {/* 수량 + 건수 선택 */}
         {selectedSize && weight && printType && coating && (
           <div style={{ marginBottom: '1.3rem' }}>
-            <label>수량 선택</label>
-            <div className="button-group">
+            <label>수량 및 건수 선택</label>
+            <div className="button-group" style={{ alignItems: 'center', gap: '1rem' }}>
               <select
                 className="custom-select"
                 value={quantity}
                 onChange={e => setQuantity(e.target.value)}
+                style={{ width: '150px' }}
               >
-                <option value="">수량을 선택하세요</option>
+                <option value="">수량 선택</option>
                 {QUANTITY_OPTIONS.map(qty => (
                   <option key={qty} value={qty}>
                     {Number(qty).toLocaleString()}
                   </option>
                 ))}
               </select>
+              <span style={{ fontWeight: 600 }}>×</span>
+              <select
+                className="custom-select"
+                value={orderCount}
+                onChange={e => setOrderCount(e.target.value)}
+                style={{ width: '90px' }}
+              >
+                {Array.from({ length: 10 }, (_, i) => (i + 1)).map(cnt => (
+                  <option key={cnt} value={cnt}>{cnt}건</option>
+                ))}
+              </select>
+              <span style={{ marginLeft: '0.7rem', color: '#B71C1C', fontWeight: 500 }}>
+                {quantity ? `총 ${(Number(quantity) * Number(orderCount)).toLocaleString()}장 주문` : ''}
+              </span>
             </div>
           </div>
         )}
