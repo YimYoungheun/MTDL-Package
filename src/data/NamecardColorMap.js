@@ -1,6 +1,6 @@
 // src/data/NamecardColorMap.js
 
-export const namecardColorMap = {
+export const NamecardColorMap = {
   // 색상 옵션이 있는 종이만!
   "에그쉘": ["엑스트라 화이트"],
   "띤또레또": ["순백색", "백색"]
