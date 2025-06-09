@@ -44,14 +44,24 @@ function NamecardOrder() {
     paperFeel === '러프한' ? (NamecardColorMap[material] || []) : []
   );
   const getWeightOptions = () => {
-    if (paperFeel === '매끄러운' || paperFeel === '친환경') {
-      return NamecardWeightMap[paperFeel]?.[material] || [];
+  if (paperFeel === '매끄러운' || paperFeel === '친환경') {
+    return NamecardWeightMap[paperFeel]?.[material] || [];
+  }
+  if (paperFeel === '러프한' && material) {
+    // 1. 색상 옵션이 있을 경우(선택된 color 사용)
+    if (NamecardWeightMap['러프한']?.[material]?.[color]) {
+      return NamecardWeightMap['러프한'][material][color];
     }
-    if (paperFeel === '러프한' && color) {
-      return NamecardWeightMap['러프한']?.[material]?.[color] || [];
+    // 2. 색상 옵션이 없을 경우(즉, 무게 배열이 그냥 있음)
+    // -> NamecardWeightMap['러프한'][material]이 배열이면 바로 리턴
+    if (Array.isArray(NamecardWeightMap['러프한'][material])) {
+      return NamecardWeightMap['러프한'][material];
     }
+    // 3. 아니면 빈 배열
     return [];
-  };
+  }
+  return [];
+};
 
   // 리셋 함수
   const handleReset = () => {
@@ -212,7 +222,6 @@ function NamecardOrder() {
             </div>
           </div>
         )}
-
         {/* 인쇄 */}
         {selectedSize && weight && (
           <div style={{ marginBottom: '1.3rem' }}>
