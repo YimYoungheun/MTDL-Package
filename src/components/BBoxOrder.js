@@ -10,17 +10,6 @@ import { colorMap } from '../data/colorMap';
 import { materialMap } from '../data/materialMap';
 import { paperPrices } from '../data/paperPrices';
 
-function getDogaSize(width, length, height) {
-  const w = Number(width);
-  const l = Number(length);
-  const h = Number(height);
-
-  const dogaWidth = (w * 2) + (l * 2) + 20;
-  const dogaHeight = (l * 1.75) + h + 21;
-
-  return { dogaWidth, dogaHeight };
-}
-
 function BBoxOrder() {
   // 기존 App.js 상태값들 그대로 복붙!
   const [company, setCompany] = useState('');
@@ -322,8 +311,7 @@ function BBoxOrder() {
               mainPrintColor={mainPrintColor}
               spotPrintColor={spotPrintColor}
               printNone={!mainPrintColor && !spotPrintColor}
-              dogaSize={getDogaSize(width, length, height)} // 🔺 추가
-            />
+              />
               <iframe
           className="file-upload-frame"
           src="https://mtdl.co.kr/fileupload"
