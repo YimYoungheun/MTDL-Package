@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import '../App.css'; // 스타일시트 주의!
-import { paperPrices } from '../data/paperPrices';
 
 // 필요한 파일 import
-import { NamecardmaterialMap } from '../data/NamecardmaterialMap';
-import { NamecardcolorMap } from '../data/NamecardcolorMap';
-import { NamecardweightMap } from '../data/NamecardweightMap';
-import { NamecardpaperPrice } from '../data/NamecardpaperPrice';
+import { NamecardMaterialMap } from '../data/NamecardMaterialMap';
+import { NamecardColorMap } from '../data/NamecardColorMap';
+import { NamecardWeightMap } from '../data/NamecardWeightMap';
+import { NamecardPaperPrice } from '../data/NamecardPaperPrice';
 
 //옵션 명칭 선언
 const FEEL_OPTIONS = NamecardFeelOptions;
