@@ -1,6 +1,6 @@
 // src/data/NamecardWeightMap.js
 
-export const namecardWeightMap = {
+export const NamecardWeightMap = {
   "매끄러운": {
     "스노우": ["250g", "300g"],
     "아트지": ["250g", "300g"]
