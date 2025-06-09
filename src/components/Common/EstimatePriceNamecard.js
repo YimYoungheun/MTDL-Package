@@ -21,14 +21,15 @@ function getPerSheetCount(dogaWidth, dogaHeight) {
 
 // [명함 종이 단가] 1연(500장) 기준 단가 계산
 function getUnitPrice(paperFeel, paperType, paperWeight, color) {
-      console.log('[getUnitPrice]', { //디버깅용 콘솔 시작
+  // 올바른 변수명으로 콘솔 찍기!
+  console.log('[getUnitPrice]', {
     paperFeel,
-    material,
-    weight,
+    paperType,
+    paperWeight,
     color,
-    result: NamecardPaperPrice[paperFeel]?.[material]?.[weight],
-    resultColor: NamecardPaperPrice[paperFeel]?.[material]?.[color]?.[weight]
-  }); // 디버깅용 콘솔 끝
+    result: NamecardPaperPrice[paperFeel]?.[paperType]?.[paperWeight],
+    resultColor: NamecardPaperPrice[paperFeel]?.[paperType]?.[color]?.[paperWeight]
+  });
   if (paperFeel === '매끄러운') {
     if (
       NamecardPaperPrice['매끄러운'][paperType] &&
@@ -47,7 +48,6 @@ function getUnitPrice(paperFeel, paperType, paperWeight, color) {
       const totalPrice = NamecardPaperPrice['러프한'][paperType][color][paperWeight];
       return Math.floor(totalPrice / 500);
     }
-    // 색상 없이 바로 무게 배열일 경우도 커버 가능하게 추가 가능
   }
   return 0;
 }
@@ -108,8 +108,8 @@ const EstimatePriceNamecard = ({
   width,
   height,
   paperFeel = '매끄러운',
-  material = '',
-  weight = '',
+  paperType = '',
+  paperWeight = '',
   color = '',
   printType = '단면',
   coating = '없음',
@@ -118,8 +118,8 @@ const EstimatePriceNamecard = ({
   foil = [],
   embossing = '없음',
 }) => {
-
-    console.log('[EstimatePriceNamecard props]', { paperFeel, material, weight, color, printType, coating, quantity }); // 디버깅용 콘솔
+  // 여기에 콘솔!
+  console.log('[EstimatePriceNamecard props]', { paperFeel, paperType, paperWeight, color, printType, coating, quantity });
 
 
   // 기본 입력값 검사
