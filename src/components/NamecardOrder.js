@@ -87,7 +87,6 @@ function NamecardOrder() {
 
   // 주문 버튼 클릭 처리
   const handleOrderSubmit = () => {
-    // 주문 정보 객체 생성
     const order = {
       company,
       phone,
@@ -101,8 +100,10 @@ function NamecardOrder() {
       coating,
       round,
       quantity: Number(quantity) * Number(orderCount),
-      foil,
-      embossing,
+      foilFace,
+      foilTypes,
+      embossFace,
+      embossShape,
       orderId: 'ORDER-' + new Date().getTime(),
       orderedAt: new Date().toISOString(),
     };
