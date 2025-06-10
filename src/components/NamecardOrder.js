@@ -298,15 +298,13 @@ function NamecardOrder() {
                   className={`option-button ${foilFace === type ? 'selected' : ''}`}
                   onClick={() => {
                     setFoilFace(type);
-                    if (type === '없음') setFoilTypes([]); // 모두 해제
-                  }}
-                >
-                  {type}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
+                      if (type === '없음') setFoilTypes([]); // 모두 해제
+                    }}
+                  >
+                    {type}
+                  </button>
+                ))}
+              </div>
 
         {/* 박 - 그룹2: 금박, 은박 등 복수 선택 */}
         {selectedSize && weight && printType && coating && foilFace &&(
@@ -322,11 +320,13 @@ function NamecardOrder() {
                     );
                   }}
                 >
-                  {type}
-                </button>
-              ))}
-            </div>
-          )}
+                    {type}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
         
         {/* 형압 - 그룹1: 단면/양면/없음 (하나만) */}
         {selectedSize && weight && printType && coating && foilFace && foilTypes &&(
@@ -339,15 +339,13 @@ function NamecardOrder() {
                   className={`option-button ${embossFace === type ? 'selected' : ''}`}
                   onClick={() => {
                     setEmbossFace(type);
-                    if (type === '없음') setEmbossShape([]); // 모두 해제
-                  }}
-                >
-                  {type}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
+                      if (type === '없음') setFoilTypes([]); // 모두 해제
+                    }}
+                  >
+                    {type}
+                  </button>
+                ))}
+              </div>
         
         {/* 형압 - 그룹2: 음각/양각 (복수 선택X, 둘 중 하나만) */}
         {selectedSize && weight && printType && coating && foilFace && foilTypes && embossFace &&(
@@ -360,8 +358,10 @@ function NamecardOrder() {
                 onClick={() => setEmbossShape([shape])}
               >
                 {shape}
-              </button>
-            ))}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         )}
 
