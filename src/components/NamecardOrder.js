@@ -288,63 +288,67 @@ function NamecardOrder() {
         )}
 
         {/* 박 - 그룹1: 단면/양면/없음 (하나만) */}
-        <div style={{ marginBottom: '0.5rem' }}>
-          <label>박</label>
-          <div className="button-group">
-            {['없음', '단면', '양면'].map(type => (
-              <button
-                key={type}
-                className={`option-button ${foilFace === type ? 'selected' : ''}`}
-                onClick={() => {
-                  setFoilFace(type);
-                  if (type === '없음') setFoilTypes([]); // 모두 해제
-                }}
-              >
-                {type}
-              </button>
-            ))}
+        {selectedSize && weight && printType && coating &&(
+          <div style={{ marginBottom: '0.5rem' }}>
+            <label>박</label>
+            <div className="button-group">
+              {['없음', '단면', '양면'].map(type => (
+                <button
+                  key={type}
+                  className={`option-button ${foilFace === type ? 'selected' : ''}`}
+                  onClick={() => {
+                    setFoilFace(type);
+                    if (type === '없음') setFoilTypes([]); // 모두 해제
+                  }}
+                >
+                  {type}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
 
         {/* 박 - 그룹2: 금박, 은박 등 복수 선택 */}
-        {foilFace !== '없음' && (
-          <div className="button-group" style={{ marginBottom: '1rem' }}>
-            {['금박', '은박', '먹박', '적박', '홀로그램박', '투명홀로그램박'].map(type => (
-              <button
-                key={type}
-                className={`option-button ${foilTypes.includes(type) ? 'selected' : ''}`}
-                onClick={() => {
-                  setFoilTypes(prev =>
-                    prev.includes(type) ? prev.filter(t => t !== type) : [...prev, type]
-                  );
-                }}
-              >
-                {type}
-              </button>
-            ))}
-          </div>
-        )}
+        {selectedSize && weight && printType && coating && foilFace &&(
+          {foilFace !== '없음' && (
+            <div className="button-group" style={{ marginBottom: '1rem' }}>
+              {['금박', '은박', '먹박', '적박', '홀로그램박', '투명홀로그램박'].map(type => (
+                <button
+                  key={type}
+                  className={`option-button ${foilTypes.includes(type) ? 'selected' : ''}`}
+                  onClick={() => {
+                    setFoilTypes(prev =>
+                      prev.includes(type) ? prev.filter(t => t !== type) : [...prev, type]
+                    );
+                  }}
+                >
+                  {type}
+                </button>
+              ))}
+            </div>
+          )}
         
         {/* 형압 - 그룹1: 단면/양면/없음 (하나만) */}
-        <div style={{ marginBottom: '0.5rem' }}>
-          <label>형압</label>
-          <div className="button-group">
-            {['없음', '단면', '양면'].map(type => (
-              <button
-                key={type}
-                className={`option-button ${embossFace === type ? 'selected' : ''}`}
-                onClick={() => {
-                  setEmbossFace(type);
-                  if (type === '없음') setEmbossShape([]); // 모두 해제
-                }}
-              >
-                {type}
-              </button>
-            ))}
+        {selectedSize && weight && printType && coating && foilFace && foilTypes &&(
+          <div style={{ marginBottom: '0.5rem' }}>
+            <label>형압</label>
+            <div className="button-group">
+              {['없음', '단면', '양면'].map(type => (
+                <button
+                  key={type}
+                  className={`option-button ${embossFace === type ? 'selected' : ''}`}
+                  onClick={() => {
+                    setEmbossFace(type);
+                    if (type === '없음') setEmbossShape([]); // 모두 해제
+                  }}
+                >
+                  {type}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
         
         {/* 형압 - 그룹2: 음각/양각 (복수 선택X, 둘 중 하나만) */}
+        {selectedSize && weight && printType && coating && foilFace && foilTypes && embossFace &&(
         {embossFace !== '없음' && (
           <div className="button-group" style={{ marginBottom: '1rem' }}>
             {['음각', '양각'].map(shape => (
@@ -360,7 +364,7 @@ function NamecardOrder() {
         )}
 
         {/* 모서리 둥글게 */}
-        {selectedSize && weight && printType && coating && (
+        {selectedSize && weight && printType && coating && foilFace && foilTypes && embossFace && embossShape &&(
           <div style={{ marginBottom: '1.3rem' }}>
             <label>모서리 둥글게</label>
             <div className="button-group">
@@ -378,7 +382,7 @@ function NamecardOrder() {
         )}
         
         {/* 수량 + 건수 선택 */}
-        {selectedSize && weight && printType && coating && (
+        {selectedSize && weight && printType && coating && foilFace && foilTypes && embossFace && embossShape && round &&(
           <div style={{ marginBottom: '1.3rem' }}>
             <label>수량 및 건수 선택</label>
             <div className="button-group" style={{ alignItems: 'center', gap: '1rem' }}>
@@ -411,7 +415,7 @@ function NamecardOrder() {
         )}
         
         {/* (예비) 견적가 컴포넌트 자리 (추후 개발) */}
-        {selectedSize && weight && printType && coating && quantity && (
+        {selectedSize && weight && printType && coating && foilFace && foilTypes && embossFace && embossShape && round && quantity &&(
           <>
             <EstimatePriceNamecard
               width={selectedSize?.width}
