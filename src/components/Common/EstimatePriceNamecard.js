@@ -261,7 +261,14 @@ const EstimatePriceNamecard = ({
     perUnitFoilPlate +
     perUnitEmboss +
     perUnitEmbossPlate;
-    const estimate = (unitTotal * totalQuantity) + coatingFee + roundCuttingFee;
+      let quantityMultiplier = 1;
+        if (totalQuantity === 2) {
+          quantityMultiplier = 0.7;
+           } else if (totalQuantity >= 3) {
+          quantityMultiplier = 0.5;
+          }
+
+const estimate = (unitTotal * totalQuantity * quantityMultiplier) + coatingFee + roundCuttingFee;
 
   // 마진 20% (필요시)
   const estimateWithMargin = Math.ceil(estimate * 1.2);
