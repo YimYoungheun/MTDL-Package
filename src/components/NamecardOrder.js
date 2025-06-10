@@ -413,20 +413,22 @@ function NamecardOrder() {
         {/* (예비) 견적가 컴포넌트 자리 (추후 개발) */}
         {selectedSize && weight && printType && coating && quantity && (
           <>
-          <EstimatePriceNamecard
-            width={selectedSize?.width}
-            height={selectedSize?.height}
-            paperFeel={paperFeel}
-            paperType={material}
-            color={color}
-            paperWeight={weight}
-            printType={printType}
-            coating={coating}
-            round={round}
-            quantity={Number(quantity) * Number(orderCount)}
-            foil={foil}           // 박 옵션 (예: 배열이나 문자열)
-            embossing={embossing} // 형압 옵션 (예: 문자열, 예시: '음각', '양각', '없음' 등)
-          />
+            <EstimatePriceNamecard
+              width={selectedSize?.width}
+              height={selectedSize?.height}
+              paperFeel={paperFeel}
+              paperType={material}
+              color={color}
+              paperWeight={weight}
+              printType={printType}
+              coating={coating}
+              round={round}
+              quantity={Number(quantity) * Number(orderCount)}
+              foilFace={foilFace}
+              foilTypes={foilTypes}
+              embossFace={embossFace}
+              embossShape={embossShape}
+            />
 
         
             {/* 파일 업로드 */}
