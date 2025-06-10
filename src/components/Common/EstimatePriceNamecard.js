@@ -19,41 +19,29 @@ function getPerSheetCount(dogaWidth, dogaHeight) {
   return countW > 0 && countH > 0 ? countW * countH : 0;
 }
 
-// [명함 종이 단가] 실제 소비자 주문 수량(500장)에 맞는 종이비 계산
-function getUnitPrice({ 
-  paperFeel, paperType, paperWeight, color, 
-  perSheetCount, quantity, NamecardPaperPrice 
-}) {
-  // 1. 전지 500장 금액(입력 데이터 기준)
-  let totalPrice = 0;
+// [명함 종이 단가] 1연(500장) 기준 단가 계산
+function getUnitPrice(paperFeel, paperType, paperWeight, color) {
   if (paperFeel === '매끄러운') {
     if (
       NamecardPaperPrice['매끄러운'][paperType] &&
       NamecardPaperPrice['매끄러운'][paperType][paperWeight]
     ) {
-      totalPrice = NamecardPaperPrice['매끄러운'][paperType][paperWeight];
+      const totalPrice = NamecardPaperPrice['매끄러운'][paperType][paperWeight];
+      return Math.floor(totalPrice / 500);
     }
-  } else if (paperFeel === '러프한') {
+  }
+  if (paperFeel === '러프한') {
     if (
       NamecardPaperPrice['러프한'][paperType] &&
       NamecardPaperPrice['러프한'][paperType][color] &&
       NamecardPaperPrice['러프한'][paperType][color][paperWeight]
     ) {
-      totalPrice = NamecardPaperPrice['러프한'][paperType][color][paperWeight];
+      const totalPrice = NamecardPaperPrice['러프한'][paperType][color][paperWeight];
+      return Math.floor(totalPrice / 500);
     }
   }
-  if (!totalPrice || !perSheetCount) return 0;
-
-  // 2. 전지 1장 금액
-  const perSheetPrice = totalPrice / 500;
-
-  // 3. 명함 1매당 종이비 (한 전지에서 생산되는 수량으로 나눔)
-  const perCardPrice = perSheetPrice / perSheetCount;
-
-  // 4. 주문 수량(500장)에 곱해서 실제 종이비 산출
-  return Math.ceil(perCardPrice * quantity); // 소수점 올림(혹은 floor로 버림 처리 가능)
+  return 0;
 }
-
 // [명함 인쇄비 계산]
 function getPrintFee(printType = '단면', totalQty = 500, paperFeel = '매끄러운') {
   let printFeeBase = 0, plateFeeBase = 0;
@@ -135,7 +123,7 @@ const EstimatePriceNamecard = ({
   // 도면/전지당 생산 수
   const doga = getNamecardDogaSize(width, height);
   const perSheetCount = getPerSheetCount(doga.dogaWidth, doga.dogaHeight);
-  console.log("perSheetCount:", perSheetCount); //콘솔
+
   if (perSheetCount < 1) {
     return (
       <div className="estimate-box">
