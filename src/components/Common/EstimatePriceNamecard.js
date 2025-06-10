@@ -20,14 +20,14 @@ function getPerSheetCount(dogaWidth, dogaHeight) {
 }
 
 // [명함 종이 단가] 1연(500장) 기준 단가 계산
-function getUnitPrice(paperFeel, paperType, paperWeight, color) {
+function getUnitPrice(paperFeel, paperType, paperWeight, color, perSheetCount) {
   if (paperFeel === '매끄러운') {
     if (
       NamecardPaperPrice['매끄러운'][paperType] &&
       NamecardPaperPrice['매끄러운'][paperType][paperWeight]
     ) {
       const totalPrice = NamecardPaperPrice['매끄러운'][paperType][paperWeight];
-      return Math.floor(totalPrice / 500);
+      return Math.floor(totalPrice / 500 / perSheetCount);
     }
   }
   if (paperFeel === '러프한') {
@@ -37,11 +37,12 @@ function getUnitPrice(paperFeel, paperType, paperWeight, color) {
       NamecardPaperPrice['러프한'][paperType][color][paperWeight]
     ) {
       const totalPrice = NamecardPaperPrice['러프한'][paperType][color][paperWeight];
-      return Math.floor(totalPrice / 500);
+      return Math.floor(totalPrice / 500 / perSheetCount);
     }
   }
   return 0;
 }
+
 // [명함 인쇄비 계산]
 function getPrintFee(printType = '단면', totalQty = 500, paperFeel = '매끄러운') {
   let printFeeBase = 0, plateFeeBase = 0;
