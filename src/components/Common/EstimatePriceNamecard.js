@@ -253,16 +253,15 @@ const EstimatePriceNamecard = ({
   const roundCuttingFee = (round && round !== '없음') ? totalQuantity * 3 : 0;
 
   // 총 견적
-    const unitTotal =
+  const unitTotal =
     unitPrice +
     perUnitPrint +
     cuttingFee +
-    roundCuttingFee +
     perUnitFoil +
     perUnitFoilPlate +
     perUnitEmboss +
     perUnitEmbossPlate;
-    const estimate = (unitTotal * totalQuantity) + coatingFee;
+    const estimate = (unitTotal * totalQuantity) + coatingFee + roundCuttingFee;
 
   // 마진 20% (필요시)
   const estimateWithMargin = Math.ceil(estimate * 1.2);
