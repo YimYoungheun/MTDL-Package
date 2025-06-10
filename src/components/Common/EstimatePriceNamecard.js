@@ -261,12 +261,13 @@ const EstimatePriceNamecard = ({
     perUnitFoilPlate +
     perUnitEmboss +
     perUnitEmbossPlate;
-      let quantityMultiplier = 1;
-        if (totalQuantity === 2) {
-          quantityMultiplier = 0.7;
-           } else if (totalQuantity >= 3) {
-          quantityMultiplier = 0.5;
-          }
+  let orderCount = totalQuantity / 500; // 500개 = 1건, 1000개 = 2건 ...
+  let quantityMultiplier = 1;
+  if (orderCount === 2) {
+    quantityMultiplier = 0.7;
+  } else if (orderCount >= 3) {
+    quantityMultiplier = 0.5;
+  }
 
 const estimate = (unitTotal * totalQuantity * quantityMultiplier) + coatingFee + roundCuttingFee;
 console.log("unitTotal:", unitTotal);
