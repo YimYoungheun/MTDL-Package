@@ -228,7 +228,7 @@ const EstimatePriceNamecard = ({
 
   // 코팅비(함수 사용)
   const coatingFee = getCoatingFee(coating, totalQuantity);
-
+console.log('[코팅값 확인]', coating, totalQuantity, '→', coatingFee); //콘솔
   // 재단비
   const cuttingFee = 1;
 
