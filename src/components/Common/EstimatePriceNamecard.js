@@ -228,7 +228,7 @@ const EstimatePriceNamecard = ({
 
   // 코팅비(함수 사용)
   const coatingFee = getCoatingFee(coating, totalQuantity);
-console.log('[코팅값 확인]', coating, totalQuantity, '→', coatingFee); //콘솔
+
   // 재단비
   const cuttingFee = 1;
 
@@ -249,14 +249,15 @@ console.log('[코팅값 확인]', coating, totalQuantity, '→', coatingFee); //
     perUnitEmboss = Math.ceil((50 * faceMultiplier) / 1);
   }
 
-  // 목형(명함은 0)
-  const dieCutFee = 0;
+  // 귀도리 비용
+  const roundCuttingFee = (round && round !== '없음') ? totalQuantity * 3 : 0;
 
   // 총 견적
     const unitTotal =
     unitPrice +
     perUnitPrint +
     cuttingFee +
+    roundCuttingFee +
     perUnitFoil +
     perUnitFoilPlate +
     perUnitEmboss +

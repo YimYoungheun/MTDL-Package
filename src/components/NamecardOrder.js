@@ -18,7 +18,7 @@ const PRINT_OPTIONS = [
   { label: '양면 인쇄', value: '양면' }
 ];
 const COATING_OPTIONS = ['없음', '무광', '유광', '벨벳'];
-const ROUND_OPTIONS = ['없음', '1면', '2면', '3면', '4면'];
+const ROUND_OPTIONS = ['없음', '둥글게'];
 const QUANTITY_OPTIONS = [500, 1000, 2000, 3000, 5000, 10000, 20000, 30000, 50000, 100000];
 
 function NamecardOrder() {
