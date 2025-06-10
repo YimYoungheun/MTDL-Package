@@ -141,6 +141,10 @@ const EstimatePriceNamecard = ({
   plate,
   print,
   coating = '없음',
+  foilFace = '없음',
+  foilTypes = [],
+  embossFace = '없음',
+  embossShape = [],
   round = '없음',
   quantity = 0,
   foil = [],
@@ -234,19 +238,21 @@ const EstimatePriceNamecard = ({
   // 재단비
   const cuttingFee = 1;
 
-  // 박/형압
+  // --- 박(foil) 계산 ---
   let perUnitFoil = 0, perUnitFoilPlate = 0;
-  if (foil && foil.length > 0) {
-    // 동판비: 1개 150,000원, 2개 225,000원, ...
-    const n = Array.isArray(foil) ? foil.length : 1;
-    perUnitFoilPlate = Math.ceil((150000 * (1 + (n - 1) * 0.5)) / 500 / perSheetCount);
-    perUnitFoil = Math.ceil((50 * n) / 1); // 1매 기준 작업비
+  if (foilFace !== '없음' && foilTypes && foilTypes.length > 0) {
+    const n = foilTypes.length;
+    const faceMultiplier = foilFace === '양면' ? 2 : 1;
+    perUnitFoilPlate = Math.ceil((150000 * (1 + (n - 1) * 0.5) * faceMultiplier) / 500 / perSheetCount);
+    perUnitFoil = Math.ceil((50 * n * faceMultiplier) / 1);
   }
-
+  
+  // --- 형압(emboss) 계산 ---
   let perUnitEmboss = 0, perUnitEmbossPlate = 0;
-  if (embossing && embossing !== '없음') {
-    perUnitEmbossPlate = Math.ceil(150000 / 500 / perSheetCount);
-    perUnitEmboss = Math.ceil(50 / 1); // 1매 기준 작업비
+  if (embossFace !== '없음' && embossShape && embossShape.length > 0) {
+    const faceMultiplier = embossFace === '양면' ? 2 : 1;
+    perUnitEmbossPlate = Math.ceil((150000 * faceMultiplier) / 500 / perSheetCount);
+    perUnitEmboss = Math.ceil((50 * faceMultiplier) / 1);
   }
 
   // 목형(명함은 0)
