@@ -269,7 +269,10 @@ const EstimatePriceNamecard = ({
           }
 
 const estimate = (unitTotal * totalQuantity * quantityMultiplier) + coatingFee + roundCuttingFee;
-
+console.log("unitTotal:", unitTotal);
+console.log("totalQuantity:", totalQuantity);
+console.log("quantityMultiplier:", quantityMultiplier);
+console.log("estimate:", estimate);
   // 마진 20% (필요시)
   const estimateWithMargin = Math.ceil(estimate * 1.2);
   const unitPriceWithMargin = Math.ceil(estimateWithMargin / totalQuantity);
