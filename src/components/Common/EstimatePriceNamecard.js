@@ -20,28 +20,40 @@ function getPerSheetCount(dogaWidth, dogaHeight) {
 }
 
 // [명함 종이 단가] 1연(500장) 기준 단가 계산
-function getUnitPrice(paperFeel, paperType, paperWeight, color) {
+function getNamecardPaperCost({ 
+  paperFeel, paperType, paperWeight, color, 
+  perSheetCount, quantity, NamecardPaperPrice 
+}) {
+  // 1. 전지 500장 금액(입력 데이터 기준)
+  let totalPrice = 0;
   if (paperFeel === '매끄러운') {
     if (
       NamecardPaperPrice['매끄러운'][paperType] &&
       NamecardPaperPrice['매끄러운'][paperType][paperWeight]
     ) {
-      const totalPrice = NamecardPaperPrice['매끄러운'][paperType][paperWeight];
-      return Math.floor(totalPrice / 500);
+      totalPrice = NamecardPaperPrice['매끄러운'][paperType][paperWeight];
     }
-  }
-  if (paperFeel === '러프한') {
+  } else if (paperFeel === '러프한') {
     if (
       NamecardPaperPrice['러프한'][paperType] &&
       NamecardPaperPrice['러프한'][paperType][color] &&
       NamecardPaperPrice['러프한'][paperType][color][paperWeight]
     ) {
-      const totalPrice = NamecardPaperPrice['러프한'][paperType][color][paperWeight];
-      return Math.floor(totalPrice / 500);
+      totalPrice = NamecardPaperPrice['러프한'][paperType][color][paperWeight];
     }
   }
-  return 0;
+  if (!totalPrice || !perSheetCount) return 0;
+
+  // 2. 전지 1장 금액
+  const perSheetPrice = totalPrice / 500;
+
+  // 3. 명함 1매당 종이비 (한 전지에서 생산되는 수량으로 나눔)
+  const perCardPrice = perSheetPrice / perSheetCount;
+
+  // 4. 주문 수량(500장)에 곱해서 실제 종이비 산출
+  return Math.ceil(perCardPrice * quantity); // 소수점 올림(혹은 floor로 버림 처리 가능)
 }
+
 // [명함 인쇄비 계산]
 function getPrintFee(printType = '단면', totalQty = 500, paperFeel = '매끄러운') {
   let printFeeBase = 0, plateFeeBase = 0;
