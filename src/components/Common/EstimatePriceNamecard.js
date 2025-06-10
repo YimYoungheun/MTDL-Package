@@ -278,7 +278,7 @@ const EstimatePriceNamecard = ({
   // 출력
   return (
     <div className="estimate-box">
-      <p className="main-estimate" style={{ color: 'crimson' }}>
+      <p className="main-estimate">
         {estimateWithMargin.toLocaleString()}원부터~
       </p>
       <p className="estimate-unit">
