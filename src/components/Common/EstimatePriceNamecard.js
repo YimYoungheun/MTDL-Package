@@ -48,10 +48,10 @@ function getUnitPrice(paperFeel, paperType, paperWeight, color, perSheetCount) {
 function getPrintFee(printType = '단면', totalQty = 500, paperFeel = '매끄러운') {
   let printFeeBase = 0, plateFeeBase = 0;
   if (paperFeel === '매끄러운') {
-    printFeeBase = printType === '양면' ? 80000 : 60000;
+    printFeeBase = printType === '양면' ? 160000 : 80000;
     plateFeeBase = printType === '양면' ? 25000 * 8 : 25000 * 4;
   } else {
-    printFeeBase = printType === '양면' ? 160000 : 140000;
+    printFeeBase = printType === '양면' ? 320000 : 160000;
     plateFeeBase = printType === '양면' ? 25000 * 8 : 25000 * 4;
   }
   const multiplier = Math.ceil(totalQty / 250);
