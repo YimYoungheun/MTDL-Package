@@ -284,6 +284,43 @@ function NamecardOrder() {
           </div>
         )}
 
+        {/* 🟡 박(복수 선택) */}
+        <div style={{ marginBottom: '1rem' }}>
+          <label>박 (복수 선택 가능)</label>
+          <div className="button-group">
+            {['없음', '금박', '은박', '먹박', '적박', '홀로그램박', '투명홀로그램박'].map(type => (
+              <button
+                key={type}
+                className={`option-button ${(type === '없음' && foil.length === 0) || foil.includes(type) ? 'selected' : ''}`}
+                onClick={() => {
+                  if (type === '없음') setFoil([]);
+                  else setFoil(prev =>
+                    prev.includes(type) ? prev.filter(t => t !== type) : [...prev, type]
+                  );
+                }}
+              >
+                {type}
+              </button>
+            ))}
+          </div>
+        </div>
+        
+        {/* 🟠 형압(단일 선택) */}
+        <div style={{ marginBottom: '1rem' }}>
+          <label>형압</label>
+          <div className="button-group">
+            {['없음', '음각', '양각'].map(type => (
+              <button
+                key={type}
+                className={`option-button ${(type === '없음' ? embossing === '' : embossing === type) ? 'selected' : ''}`}
+                onClick={() => setEmbossing(type === '없음' ? '' : type)}
+              >
+                {type}
+              </button>
+            ))}
+          </div>
+        </div>
+
         {/* 모서리 둥글게 */}
         {selectedSize && weight && printType && coating && (
           <div style={{ marginBottom: '1.3rem' }}>
