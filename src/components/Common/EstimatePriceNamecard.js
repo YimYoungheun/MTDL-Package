@@ -226,9 +226,8 @@ const EstimatePriceNamecard = ({
   if (printType === '양면') printBase *= 2;   // 양면은 2배
   const perUnitPrint = Math.ceil(printBase / 500 / perSheetCount);
 
-  // 코팅
-  let totalCoating = (coating === '벨벳') ? 200000 : 100000; // 벨벳이면 2배
-  const perUnitCoating = Math.ceil(totalCoating / 500 / perSheetCount);
+  // 코팅비(함수 사용)
+  const coatingFee = getCoatingFee(coating, totalQuantity);
 
   // 재단비
   const cuttingFee = 1;
@@ -257,14 +256,12 @@ const EstimatePriceNamecard = ({
     const unitTotal =
     unitPrice +
     perUnitPrint +
-    perUnitCoating +
     cuttingFee +
     perUnitFoil +
     perUnitFoilPlate +
     perUnitEmboss +
     perUnitEmbossPlate;
-
-  const estimate = unitTotal * totalQuantity;
+    const estimate = (unitTotal * totalQuantity) + coatingFee;
 
   // 마진 20% (필요시)
   const estimateWithMargin = Math.ceil(estimate * 1.2);
