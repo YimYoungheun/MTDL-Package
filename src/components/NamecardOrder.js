@@ -306,6 +306,7 @@ function NamecardOrder() {
               ))}
             </div>
           </div>
+        )}
 
         {/* 박 - 그룹2: 금박, 은박 등 복수 선택 */}
         {selectedSize && weight && printType && coating && foilFace &&(
@@ -346,6 +347,7 @@ function NamecardOrder() {
               ))}
             </div>
           </div>
+        )}
         
         {/* 형압 - 그룹2: 음각/양각 (복수 선택X, 둘 중 하나만) */}
         {selectedSize && weight && printType && coating && foilFace && foilTypes && embossFace &&(
