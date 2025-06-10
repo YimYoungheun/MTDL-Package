@@ -135,7 +135,7 @@ const EstimatePriceNamecard = ({
   // 도면/전지당 생산 수
   const doga = getNamecardDogaSize(width, height);
   const perSheetCount = getPerSheetCount(doga.dogaWidth, doga.dogaHeight);
-
+  console.log("perSheetCount:", perSheetCount); //콘솔
   if (perSheetCount < 1) {
     return (
       <div className="estimate-box">
