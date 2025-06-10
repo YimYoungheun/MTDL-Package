@@ -271,7 +271,7 @@ const estimate = (unitTotal * totalQuantity) + coatingFee + roundCuttingFee;
   return (
     <div className="estimate-box">
       <p className="main-estimate">
-        {estimateWithMargin.toLocaleString()}원부터~
+        {estimateWithMargin.toLocaleString()}원
       </p>
       <p className="estimate-unit">
         개당 금액: {unitPriceWithMargin.toLocaleString()}원
