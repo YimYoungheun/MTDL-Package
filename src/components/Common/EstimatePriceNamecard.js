@@ -19,8 +19,8 @@ function getPerSheetCount(dogaWidth, dogaHeight) {
   return countW > 0 && countH > 0 ? countW * countH : 0;
 }
 
-// [명함 종이 단가] 1연(500장) 기준 단가 계산
-function getNamecardPaperCost({ 
+// [명함 종이 단가] 실제 소비자 주문 수량(500장)에 맞는 종이비 계산
+function getUnitPrice({ 
   paperFeel, paperType, paperWeight, color, 
   perSheetCount, quantity, NamecardPaperPrice 
 }) {
