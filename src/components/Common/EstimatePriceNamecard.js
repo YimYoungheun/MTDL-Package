@@ -137,7 +137,7 @@ const EstimatePriceNamecard = ({
   }
  
   // 종이 단가
-  const unitPrice = getUnitPrice(paperFeel, paperType, paperWeight, color);
+  const unitPrice = getUnitPrice(paperFeel, paperType, paperWeight, color, perSheetCount);
   if (!unitPrice) {
     return (
       <div className="estimate-box">
