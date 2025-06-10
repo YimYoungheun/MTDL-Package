@@ -21,6 +21,7 @@ function getPerSheetCount(dogaWidth, dogaHeight) {
 
 // [명함 종이 단가] 1연(500장) 기준 단가 계산
 function getUnitPrice(paperFeel, paperType, paperWeight, color, perSheetCount) {
+  if (!perSheetCount || perSheetCount < 1) return 0;   // ← 방어 코드 추가!
   if (paperFeel === '매끄러운') {
     if (
       NamecardPaperPrice['매끄러운'][paperType] &&
