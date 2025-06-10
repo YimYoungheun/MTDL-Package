@@ -173,7 +173,26 @@ const EstimatePriceNamecard = ({
   }
  
   // 종이 단가
-  const unitPrice = getUnitPrice(paperFeel, paperType, paperWeight, color, perSheetCount);
+  let unitPrice = 0;
+  if (paperFeel === '매끄러운') {
+    if (
+      NamecardPaperPrice['매끄러운'][paperType] &&
+      NamecardPaperPrice['매끄러운'][paperType][paperWeight]
+    ) {
+      const totalPrice = NamecardPaperPrice['매끄러운'][paperType][paperWeight];
+      unitPrice = Math.ceil(totalPrice / 500 / perSheetCount);
+    }
+  }
+  if (paperFeel === '러프한') {
+    if (
+      NamecardPaperPrice['러프한'][paperType] &&
+      NamecardPaperPrice['러프한'][paperType][color] &&
+      NamecardPaperPrice['러프한'][paperType][color][paperWeight]
+    ) {
+      const totalPrice = NamecardPaperPrice['러프한'][paperType][color][paperWeight];
+      unitPrice = Math.ceil(totalPrice / 500 / perSheetCount);
+    }
+  }
   if (!unitPrice) {
     return (
       <div className="estimate-box">
@@ -203,33 +222,48 @@ const EstimatePriceNamecard = ({
   const paperTotal = unitPrice * totalOrderSheets;
 
   // 인쇄비
-  const { plate: printPlateFee, print: printRunFee } = getPrintFee(printType, totalQuantity, paperFeel, perSheetCount);
+  let printBase = 100000 + 80000; // 일반(매끄러운) 단면 기본값
+  if (paperFeel === '러프한') printBase *= 2; // 고급명함(러프한) 인쇄비 2배
+  if (printType === '양면') printBase *= 2;   // 양면은 2배
+  const perUnitPrint = Math.ceil(printBase / 500 / perSheetCount);
 
   // 코팅
-  const coatingFee = getCoatingFee(coating, totalQuantity, perSheetCount);
+  let totalCoating = (coating === '벨벳') ? 200000 : 100000; // 벨벳이면 2배
+  const perUnitCoating = Math.ceil(totalCoating / 500 / perSheetCount);
 
   // 재단비
-  const cuttingFee = getCuttingFee(totalQuantity);
+  const cuttingFee = 1;
 
   // 박/형압
-  const { plate: foilPlate, fee: foilFee } = getFoilFee(foil, totalQuantity, perSheetCount);
-  const { plate: embossPlate, fee: embossFee } = getEmbossFee(embossing, totalQuantity, perSheetCount);
+  let perUnitFoil = 0, perUnitFoilPlate = 0;
+  if (foil && foil.length > 0) {
+    // 동판비: 1개 150,000원, 2개 225,000원, ...
+    const n = Array.isArray(foil) ? foil.length : 1;
+    perUnitFoilPlate = Math.ceil((150000 * (1 + (n - 1) * 0.5)) / 500 / perSheetCount);
+    perUnitFoil = Math.ceil((50 * n) / 1); // 1매 기준 작업비
+  }
+
+  let perUnitEmboss = 0, perUnitEmbossPlate = 0;
+  if (embossing && embossing !== '없음') {
+    perUnitEmbossPlate = Math.ceil(150000 / 500 / perSheetCount);
+    perUnitEmboss = Math.ceil(50 / 1); // 1매 기준 작업비
+  }
 
   // 목형(명함은 0)
   const dieCutFee = 0;
 
   // 총 견적
-  const estimate =
-    paperTotal +
-    printPlateFee +
-    printRunFee +
-    coatingFee +
+    const unitTotal =
+    unitPrice +
+    perUnitPrint +
+    perUnitCoating +
     cuttingFee +
-    foilFee +
-    embossFee +
-    foilPlate +
-    embossPlate +
-    dieCutFee;
+    perUnitFoil +
+    perUnitFoilPlate +
+    perUnitEmboss +
+    perUnitEmbossPlate;
+
+  const estimate = unitTotal * totalQuantity;
 
   // 마진 20% (필요시)
   const estimateWithMargin = Math.ceil(estimate * 1.2);
