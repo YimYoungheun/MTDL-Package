@@ -253,27 +253,16 @@ const EstimatePriceNamecard = ({
   const roundCuttingFee = (round && round !== '없음') ? totalQuantity * 3 : 0;
 
   // 총 견적
-  const unitTotal =
-    unitPrice +
-    perUnitPrint +
-    cuttingFee +
-    perUnitFoil +
-    perUnitFoilPlate +
-    perUnitEmboss +
-    perUnitEmbossPlate;
-  let orderCount = totalQuantity / 500; // 500개 = 1건, 1000개 = 2건 ...
-  let quantityMultiplier = 1;
-  if (orderCount === 2) {
-    quantityMultiplier = 0.7;
-  } else if (orderCount >= 3) {
-    quantityMultiplier = 0.5;
-  }
+const unitTotal =
+  unitPrice +
+  perUnitPrint +
+  cuttingFee +
+  perUnitFoil +
+  perUnitFoilPlate +
+  perUnitEmboss +
+  perUnitEmbossPlate;
 
-const estimate = (unitTotal * totalQuantity * quantityMultiplier) + coatingFee + roundCuttingFee;
-console.log("unitTotal:", unitTotal);
-console.log("totalQuantity:", totalQuantity);
-console.log("quantityMultiplier:", quantityMultiplier);
-console.log("estimate:", estimate);
+const estimate = (unitTotal * totalQuantity) + coatingFee + roundCuttingFee;
   // 마진 20% (필요시)
   const estimateWithMargin = Math.ceil(estimate * 1.2);
   const unitPriceWithMargin = Math.ceil(estimateWithMargin / totalQuantity);
