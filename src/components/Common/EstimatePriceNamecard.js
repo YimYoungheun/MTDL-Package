@@ -230,7 +230,7 @@ const EstimatePriceNamecard = ({
   const coatingFee = getCoatingFee(coating, totalQuantity);
 
   // 재단비
-  const cuttingFee = 1;
+  const cuttingFee = 3;
 
   // --- 박(foil) 계산 ---
   let perUnitFoil = 0, perUnitFoilPlate = 0;
