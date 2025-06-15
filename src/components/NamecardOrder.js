@@ -116,377 +116,368 @@ function NamecardOrder() {
   handleReset();
   setShowConfirmation(true);
 };
-  return (
-    <div style={{ display: 'flex', width: '100vw', height: '100vh', boxSizing: 'border-box', overflow: 'hidden' }}>
-      {/* 왼쪽 이미지 */}
-      <div style={{ flex: 3.6, minWidth: 0, height: '100%', overflow: 'hidden' }}>
-        <img
-          src={imageSrc}
-          alt="명함"
-          className="img-anim fade-in" // 혹시 애니메이션 클래스 쓰면 여기에!
-          style={{ width: '73vw', height: '100%', objectFit: 'cover', display: 'block', borderRadius: 0 }}
-        />
-      </div>
-      {/* 오른쪽 입력폼 */}
-       <div style={{ flex: 1, minWidth: 0, padding: '2rem', background: '#fff', boxSizing: 'border-box', overflowY: 'auto' }}>
-        <button className="secondary-button" onClick={handleReset} style={{ marginBottom: 16 }}>
-          처음부터 입력 다시하기
-        </button>
-        {/* 기본 입력 */}
-        {[{ label: '회사명 또는 성함', value: company, setter: setCompany },
-          { label: '연락처', value: phone, setter: setPhone },
-          { label: '이메일 주소', value: email, setter: setEmail }].map((f, i) => (
-          <div key={i} style={{ marginBottom: '1rem' }}>
-            <label>{f.label}</label>
-            <input
-              className="custom-input long"
-              value={f.value}
-              onChange={e => f.setter(e.target.value)}
-              autoComplete="off"
-            />
-          </div>
-        ))}
+return (
+  <div style={{ width: '100vw', height: '100vh', boxSizing: 'border-box', overflow: 'hidden', display: 'flex' }}>
+    {/* 왼쪽 이미지 */}
+    <div style={{ flex: 3.6, minWidth: 0, height: '100%', overflow: 'hidden' }}>
+      <img
+        src={imageSrc}
+        alt="명함"
+        className="img-anim fade-in"
+        style={{ width: '73vw', height: '100%', objectFit: 'cover', display: 'block', borderRadius: 0 }}
+      />
+    </div>
+    {/* 오른쪽 입력폼 */}
+    <div style={{ flex: 1, minWidth: 0, padding: '2rem', background: '#fff', boxSizing: 'border-box', overflowY: 'auto' }}>
+      <button className="secondary-button" onClick={handleReset} style={{ marginBottom: 16 }}>
+        처음부터 입력 다시하기
+      </button>
+      {/* 기본 입력 */}
+      {[{ label: '회사명 또는 성함', value: company, setter: setCompany },
+        { label: '연락처', value: phone, setter: setPhone },
+        { label: '이메일 주소', value: email, setter: setEmail }].map((f, i) => (
+        <div key={i} style={{ marginBottom: '1rem' }}>
+          <label>{f.label}</label>
+          <input
+            className="custom-input long"
+            value={f.value}
+            onChange={e => f.setter(e.target.value)}
+            autoComplete="off"
+          />
+        </div>
+      ))}
 
-        {/* 명함 사이즈 */}
-        <div style={{ marginBottom: '1.3rem' }}>
-          <label>사이즈 (mm)</label>
+      {/* 명함 사이즈 */}
+      <div style={{ marginBottom: '1.3rem' }}>
+        <label>사이즈 (mm)</label>
+        <div className="button-group">
+          {SIZE_OPTIONS.map(opt => (
+            <button
+              key={opt.label}
+              className={`option-button ${selectedSize?.label === opt.label ? 'selected' : ''}`}
+              onClick={() => {
+                setSelectedSize(opt);
+                setPaperFeel('');
+                setMaterial('');
+                setColor('');
+                setWeight('');
+                setPrintType('');
+                setCoating('');
+                setRound('없음');
+                setImageSrc(`/img/size_${opt.label}.jpg`);
+              }}
+            >{opt.label}</button>
+          ))}
+        </div>
+      </div>
+
+      {/* 종이 느낌 */}
+      {selectedSize && (
+        <div style={{ marginBottom: '1rem' }}>
+          <label>종이 느낌</label>
           <div className="button-group">
-            {SIZE_OPTIONS.map(opt => (
+            {Object.keys(NamecardMaterialMap).map(feel => (
               <button
-                key={opt.label}
-                className={`option-button ${selectedSize?.label === opt.label ? 'selected' : ''}`}
+                key={feel}
+                className={`option-button ${paperFeel === feel ? 'selected' : ''}`}
                 onClick={() => {
-                  setSelectedSize(opt);
-                  setPaperFeel('');
+                  setPaperFeel(feel);
                   setMaterial('');
                   setColor('');
                   setWeight('');
-                  setPrintType('');
-                  setCoating('');
-                  setRound('없음');
-                  setImageSrc(`/img/size_${opt.label}.jpg`); // 사이즈 이미지 변경
+                  // setImageSrc(`/img/feel_${feel}.jpg`);
                 }}
-              >{opt.label}</button>
+              >
+                {feel === '매끄러운' ? '스탠다드' : '고급명함'}
+              </button>
             ))}
           </div>
         </div>
+      )}
 
-        {/* 종이 느낌 */}
-        {selectedSize && (
-          <div style={{ marginBottom: '1rem' }}>
-            <label>종이 느낌</label>
-            <div className="button-group">
-              {Object.keys(NamecardMaterialMap).map(feel => (
-                <button
-                  key={feel}
-                  className={`option-button ${paperFeel === feel ? 'selected' : ''}`}
-                  onClick={() => {
-                    setPaperFeel(feel);
-                    setMaterial('');
-                    setColor('');
-                    setWeight('');
-                    // setImageSrc(`/img/feel_${feel}.jpg`); // 종이 느낌 이미지 변경 (현재 사용 안함)
-                  }}
-                >
-                  {feel === '매끄러운' ? '스탠다드' : '고급명함'}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* 재질 */}
-        {selectedSize && paperFeel && (
-          <div style={{ marginBottom: '1rem' }}>
-            <label>재질</label>
-            <div className="button-group">
-              {NamecardMaterialMap[paperFeel].map(mat => (
-                <button
-                  key={mat}
-                  className={`option-button ${material === mat ? 'selected' : ''}`}
-                  onClick={() => {
-                    setMaterial(mat);
-                    setColor('');
-                    setWeight('');
-                    setImageSrc(`/img/material_${mat}.jpg`); // 종이 재질 이미지 변경
-                  }}
-                >
-                  {mat}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* 색상 선택 (러프한 & 색상 옵션이 있는 경우만) */}
-        {selectedSize && paperFeel === '러프한' && material && getColorOptions().length > 0 && (
-          <div style={{ marginBottom: '1rem' }}>
-            <label>색상</label>
-            <div className="button-group">
-              {getColorOptions().map(c => (
-                <button
-                  key={c}
-                  className={`option-button ${color === c ? 'selected' : ''}`}
-                  onClick={() => {
-                    setColor(c);
-                    setWeight('');
-                    // setImageSrc(`/img/color_${c}.jpg`); // 러프한 적용시 이미지 변경 (현재 적용 안함)
-                  }}
-                >
-                  {c}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* 무게 */}
-        {selectedSize && material && getWeightOptions().length > 0 && (
-          <div style={{ marginBottom: '1rem' }}>
-            <label>무게</label>
-            <div className="button-group">
-              {getWeightOptions().map(w => (
-                <button
-                  key={w}
-                  className={`option-button ${weight === w ? 'selected' : ''}`}
-                  onClick={() => {
-                  setWeight(w)}
-                  // setImageSrc(`/img/weight_${w}.jpg`); // 종이 무게 이미지 변경 (현재 적용 안함)
-                 }}
-              >
-                  {w}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-        {/* 인쇄 */}
-        {selectedSize && weight && (
-          <div style={{ marginBottom: '1.3rem' }}>
-            <label>인쇄</label>
-            <div className="button-group">
-              {PRINT_OPTIONS.map(opt => (
-                <button
-                  key={opt.value}
-                  className={`option-button ${printType === opt.value ? 'selected' : ''}`}
-                  onClick={() => {
-                  setPrintType(opt.value)}
-                  setImageSrc(`/img/print_${opt.value}.jpg`); // 양면, 단면 이미지 변경
+      {/* 재질 */}
+      {selectedSize && paperFeel && (
+        <div style={{ marginBottom: '1rem' }}>
+          <label>재질</label>
+          <div className="button-group">
+            {NamecardMaterialMap[paperFeel].map(mat => (
+              <button
+                key={mat}
+                className={`option-button ${material === mat ? 'selected' : ''}`}
+                onClick={() => {
+                  setMaterial(mat);
+                  setColor('');
+                  setWeight('');
+                  setImageSrc(`/img/material_${mat}.jpg`);
                 }}
               >
-                  {opt.label}
-                </button>
-              ))}
-            </div>
+                {mat}
+              </button>
+            ))}
           </div>
-        )}
+        </div>
+      )}
 
-        {/* 코팅 */}
-        {selectedSize && weight && printType && (
-          <div style={{ marginBottom: '1.3rem' }}>
-            <label>코팅</label>
-            <div className="button-group">
-              {COATING_OPTIONS.map(opt => (
-                <button
-                  key={opt}
-                  className={`option-button ${coating === opt ? 'selected' : ''}`}
-                  onClick={() => {
-                  setCoating(opt)}
-                  setImageSrc(`/img/coating_${opt}.jpg`); // 코팅 이미지 변경
+      {/* 색상 선택 (러프한 & 색상 옵션이 있는 경우만) */}
+      {selectedSize && paperFeel === '러프한' && material && getColorOptions().length > 0 && (
+        <div style={{ marginBottom: '1rem' }}>
+          <label>색상</label>
+          <div className="button-group">
+            {getColorOptions().map(c => (
+              <button
+                key={c}
+                className={`option-button ${color === c ? 'selected' : ''}`}
+                onClick={() => {
+                  setColor(c);
+                  setWeight('');
+                  // setImageSrc(`/img/color_${c}.jpg`);
                 }}
               >
-                  {opt}
-                </button>
-              ))}
-            </div>
+                {c}
+              </button>
+            ))}
           </div>
-        )}
+        </div>
+      )}
 
-        {/* 박 - 그룹1: 단면/양면/없음 (하나만) */}
-        {selectedSize && weight && printType && coating && (
-          <div style={{ marginBottom: '0.5rem' }}>
-            <label>박</label>
-            <div className="button-group">
-              {['없음', '단면', '양면'].map(type => (
+      {/* 무게 */}
+      {selectedSize && material && getWeightOptions().length > 0 && (
+        <div style={{ marginBottom: '1rem' }}>
+          <label>무게</label>
+          <div className="button-group">
+            {getWeightOptions().map(w => (
+              <button
+                key={w}
+                className={`option-button ${weight === w ? 'selected' : ''}`}
+                onClick={() => setWeight(w)}
+              >
+                {w}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* 인쇄 */}
+      {selectedSize && weight && (
+        <div style={{ marginBottom: '1.3rem' }}>
+          <label>인쇄</label>
+          <div className="button-group">
+            {PRINT_OPTIONS.map(opt => (
+              <button
+                key={opt.value}
+                className={`option-button ${printType === opt.value ? 'selected' : ''}`}
+                onClick={() => setPrintType(opt.value)}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* 코팅 */}
+      {selectedSize && weight && printType && (
+        <div style={{ marginBottom: '1.3rem' }}>
+          <label>코팅</label>
+          <div className="button-group">
+            {COATING_OPTIONS.map(opt => (
+              <button
+                key={opt}
+                className={`option-button ${coating === opt ? 'selected' : ''}`}
+                onClick={() => setCoating(opt)}
+              >
+                {opt}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* 박 - 그룹1: 단면/양면/없음 (하나만) */}
+      {selectedSize && weight && printType && coating && (
+        <div style={{ marginBottom: '0.5rem' }}>
+          <label>박</label>
+          <div className="button-group">
+            {['없음', '단면', '양면'].map(type => (
+              <button
+                key={type}
+                className={`option-button ${foilFace === type ? 'selected' : ''}`}
+                onClick={() => {
+                  setFoilFace(type);
+                  if (type === '없음') setFoilTypes([]);
+                  setImageSrc(`/img/foil_${type}.jpg`);
+                }}
+              >
+                {type}
+              </button>
+            ))}
+          </div>
+          {/* 박 - 그룹2: 금박, 은박 등 복수 선택 */}
+          {foilFace !== '없음' && (
+            <div className="button-group" style={{ marginBottom: '1rem' }}>
+              {['금박', '은박', '먹박', '적박', '홀로그램박', '투명홀로그램박'].map(type => (
                 <button
                   key={type}
-                  className={`option-button ${foilFace === type ? 'selected' : ''}`}
+                  className={`option-button ${foilTypes.includes(type) ? 'selected' : ''}`}
                   onClick={() => {
-                    setFoilFace(type);
-                    if (type === '없음') setFoilTypes([]);
-                    setImageSrc(`/img/foil_${type}.jpg`); // 박 이미지 변경
+                    setFoilTypes(prev =>
+                      prev.includes(type) ? prev.filter(t => t !== type) : [...prev, type]
+                    );
+                    setImageSrc(`/img/foiltype_${type}.jpg`);
                   }}
                 >
                   {type}
                 </button>
               ))}
             </div>
-            {/* 박 - 그룹2: 금박, 은박 등 복수 선택 */}
-            {foilFace !== '없음' && (
-              <div className="button-group" style={{ marginBottom: '1rem' }}>
-                {['금박', '은박', '먹박', '적박', '홀로그램박', '투명홀로그램박'].map(type => (
+          )}
+        </div>
+      )}
+
+      {/* 형압 - 그룹1: 단면/양면/없음 (하나만) */}
+      {selectedSize && weight && printType && coating && foilFace && foilTypes && (
+        <div style={{ marginBottom: '0.5rem' }}>
+          <label>형압</label>
+          <div className="button-group">
+            {['없음', '단면', '양면'].map(type => (
+              <button
+                key={type}
+                className={`option-button ${embossFace === type ? 'selected' : ''}`}
+                onClick={() => {
+                  setEmbossFace(type);
+                  if (type === '없음') setEmbossShape([]);
+                  setImageSrc(`/img/emboss_${type}.jpg`);
+                }}
+              >
+                {type}
+              </button>
+            ))}
+          </div>
+          {/* 형압 - 그룹2: 음각/양각 (하나만 선택) */}
+          {embossFace !== '없음' && (
+            <div className="button-group" style={{ marginBottom: '1rem' }}>
+              {['음각', '양각'].map(shape => (
+                <button
+                  key={shape}
+                  className={`option-button ${embossShape[0] === shape ? 'selected' : ''}`}
+                  onClick={() => {
+                    setEmbossShape([shape]);
+                    setImageSrc(`/img/embossshape_${shape}.jpg`);
+                  }}
+                >
+                  {shape}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* 모서리 둥글게 */}
+          {selectedSize && weight && printType && coating && foilFace && foilTypes && embossFace && embossShape && (
+            <div style={{ marginBottom: '1.3rem' }}>
+              <label>모서리 둥글게</label>
+              <div className="button-group">
+                {ROUND_OPTIONS.map(opt => (
                   <button
-                    key={type}
-                    className={`option-button ${foilTypes.includes(type) ? 'selected' : ''}`}
+                    key={opt}
+                    className={`option-button ${round === opt ? 'selected' : ''}`}
                     onClick={() => {
-                      setFoilTypes(prev =>
-                        prev.includes(type) ? prev.filter(t => t !== type) : [...prev, type]
-                      );
-                      setImageSrc(`/img/foiltype_${type}.jpg`); // 은,금박 등 박 세부사항 이미지 변경
+                      setRound(opt);
+                      setImageSrc(`/img/round_${opt}.jpg`);
                     }}
                   >
-                    {type}
+                    {opt}
                   </button>
                 ))}
               </div>
-            )}
-          </div>
-        )}
-        
-        {/* 형압 - 그룹1: 단면/양면/없음 (하나만) */}
-        {selectedSize && weight && printType && coating && foilFace && foilTypes && (
-          <div style={{ marginBottom: '0.5rem' }}>
-            <label>형압</label>
-            <div className="button-group">
-              {['없음', '단면', '양면'].map(type => (
-                <button
-                  key={type}
-                  className={`option-button ${embossFace === type ? 'selected' : ''}`}
-                  onClick={() => {
-                    setEmbossFace(type);
-                    if (type === '없음') setEmbossShape([]);
-                    setImageSrc(`/img/emboss_${type}.jpg`); // 형압 이미지 변경
-                  }}
+            </div>
+          )}
+
+          {/* 수량 + 건수 선택 */}
+          {selectedSize && weight && printType && coating && foilFace && foilTypes && embossFace && embossShape && round && (
+            <div style={{ marginBottom: '1.3rem' }}>
+              <label>수량 및 건수 선택</label>
+              <div className="button-group" style={{ alignItems: 'center', gap: '1rem' }}>
+                <select
+                  className="custom-select"
+                  value={quantity}
+                  onChange={e => setQuantity(e.target.value)}
+                  style={{ width: '150px' }}
                 >
-                  {type}
-                </button>
-              ))}
-            </div>
-            {/* 형압 - 그룹2: 음각/양각 (하나만 선택) */}
-              {embossFace !== '없음' && (
-                <div className="button-group" style={{ marginBottom: '1rem' }}>
-                  {['음각', '양각'].map(shape => (
-                    <button
-                      key={shape}
-                      className={`option-button ${embossShape[0] === shape ? 'selected' : ''}`}
-                      onClick={() => {
-                        setEmbossShape([shape]);
-                        setImageSrc(`/img/embossshape_${shape}.jpg`); // ⭐ 형압 종류 선택시 이미지 변경
-                      }}
-                    >
-                      {shape}
-                    </button>
+                  <option value="">수량 선택</option>
+                  {QUANTITY_OPTIONS.map(qty => (
+                    <option key={qty} value={qty}>
+                      {Number(qty).toLocaleString()}
+                    </option>
                   ))}
-                </div>
-              )}
-
-        
-              {/* 모서리 둥글게 */}
-                {selectedSize && weight && printType && coating && foilFace && foilTypes && embossFace && embossShape && (
-                  <div style={{ marginBottom: '1.3rem' }}>
-                    <label>모서리 둥글게</label>
-                    <div className="button-group">
-                      {ROUND_OPTIONS.map(opt => (
-                        <button
-                          key={opt}
-                          className={`option-button ${round === opt ? 'selected' : ''}`}
-                          onClick={() => {
-                            setRound(opt);
-                            setImageSrc(`/img/round_${opt}.jpg`); // ⭐ 둥글게 선택시 이미지 변경
-                          }}
-                        >
-                          {opt}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-        
-              {/* 수량 + 건수 선택 */}
-              {selectedSize && weight && printType && coating && foilFace && foilTypes && embossFace && embossShape && round && (
-                <div style={{ marginBottom: '1.3rem' }}>
-                  <label>수량 및 건수 선택</label>
-                  <div className="button-group" style={{ alignItems: 'center', gap: '1rem' }}>
-                    <select
-                      className="custom-select"
-                      value={quantity}
-                      onChange={e => setQuantity(e.target.value)}
-                      style={{ width: '150px' }}
-                    >
-                      <option value="">수량 선택</option>
-                      {QUANTITY_OPTIONS.map(qty => (
-                        <option key={qty} value={qty}>
-                          {Number(qty).toLocaleString()}
-                        </option>
-                      ))}
-                    </select>
-                    <span style={{ fontWeight: 600 }}>×</span>
-                    <select
-                      className="custom-select"
-                      value={orderCount}
-                      onChange={e => setOrderCount(e.target.value)}
-                      style={{ width: '90px' }}
-                    >
-                      {Array.from({ length: 10 }, (_, i) => (i + 1)).map(cnt => (
-                        <option key={cnt} value={cnt}>{cnt}건</option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-              )}
-        
-              {/* (예비) 견적가 컴포넌트 */}
-              {selectedSize && weight && printType && coating && foilFace && foilTypes && embossFace && embossShape && round && quantity &&(
-                <>
-                  <EstimatePriceNamecard
-                    width={selectedSize?.width}
-                    height={selectedSize?.height}
-                    paperFeel={paperFeel}
-                    paperType={material}
-                    color={color}
-                    paperWeight={weight}
-                    printType={printType}
-                    coating={coating}
-                    round={round}
-                    quantity={Number(quantity) * Number(orderCount)}
-                    foilFace={foilFace}
-                    foilTypes={foilTypes}
-                    embossFace={embossFace}
-                    embossShape={embossShape}
-                  />
-      
-              
-                  {/* 파일 업로드 */}
-                  <iframe
-                    className="file-upload-frame"
-                    src="https://mtdl.co.kr/fileupload"
-                    width="100%"
-                    height="170"
-                    title="파일 업로드"
-                  />
-                  <button className="primary-button" onClick={handleOrderSubmit} style={{ marginTop: 18 }}>
-                    바로 주문하기
-                  </button>
-                </>
-              )}
-              
-              {/* 주문 완료 오버레이 */}
-              {showConfirmation && (
-                <div className="confirmation-overlay">
-                  <div className="confirmation-message">
-                    <strong>주문이 접수되었습니다!</strong>
-                    <br />나머지 결제를 진행해주세요
-                    <br /><br />
-                    <button className="primary-button" onClick={() => setShowConfirmation(false)}>
-                      확인
-                    </button>
-                  </div>
-                </div>
-              )}
+                </select>
+                <span style={{ fontWeight: 600 }}>×</span>
+                <select
+                  className="custom-select"
+                  value={orderCount}
+                  onChange={e => setOrderCount(e.target.value)}
+                  style={{ width: '90px' }}
+                >
+                  {Array.from({ length: 10 }, (_, i) => (i + 1)).map(cnt => (
+                    <option key={cnt} value={cnt}>{cnt}건</option>
+                  ))}
+                </select>
+              </div>
             </div>
-          </div>
-        );
-      }
+          )}
+
+          {/* (예비) 견적가 컴포넌트 */}
+          {selectedSize && weight && printType && coating && foilFace && foilTypes && embossFace && embossShape && round && quantity && (
+            <>
+              <EstimatePriceNamecard
+                width={selectedSize?.width}
+                height={selectedSize?.height}
+                paperFeel={paperFeel}
+                paperType={material}
+                color={color}
+                paperWeight={weight}
+                printType={printType}
+                coating={coating}
+                round={round}
+                quantity={Number(quantity) * Number(orderCount)}
+                foilFace={foilFace}
+                foilTypes={foilTypes}
+                embossFace={embossFace}
+                embossShape={embossShape}
+              />
+
+              {/* 파일 업로드 */}
+              <iframe
+                className="file-upload-frame"
+                src="https://mtdl.co.kr/fileupload"
+                width="100%"
+                height="170"
+                title="파일 업로드"
+              />
+              <button className="primary-button" onClick={handleOrderSubmit} style={{ marginTop: 18 }}>
+                바로 주문하기
+              </button>
+            </>
+          )}
+
+          {/* 주문 완료 오버레이 */}
+          {showConfirmation && (
+            <div className="confirmation-overlay">
+              <div className="confirmation-message">
+                <strong>주문이 접수되었습니다!</strong>
+                <br />나머지 결제를 진행해주세요
+                <br /><br />
+                <button className="primary-button" onClick={() => setShowConfirmation(false)}>
+                  확인
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  </div>
+);
+
       
 export default NamecardOrder;
