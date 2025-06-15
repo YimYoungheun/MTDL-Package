@@ -479,5 +479,6 @@ return (
   </div>
 );
 
+}
       
 export default NamecardOrder;
