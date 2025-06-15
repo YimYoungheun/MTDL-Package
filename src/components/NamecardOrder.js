@@ -123,6 +123,7 @@ function NamecardOrder() {
         <img
           src={imageSrc}
           alt="명함"
+          className="img-anim fade-in" // 혹시 애니메이션 클래스 쓰면 여기에!
           style={{ width: '73vw', height: '100%', objectFit: 'cover', display: 'block', borderRadius: 0 }}
         />
       </div>
@@ -487,5 +488,5 @@ function NamecardOrder() {
           </div>
         );
       }
-
+      
 export default NamecardOrder;
