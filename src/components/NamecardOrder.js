@@ -248,7 +248,8 @@ function NamecardOrder() {
                 <button
                   key={w}
                   className={`option-button ${weight === w ? 'selected' : ''}`}
-                  onClick={() => setWeight(w)}
+                  onClick={() => {
+                  setWeight(w)}
                   setImageSrc(`/img/weight_${w}.jpg`);
                  }}// 종이 무게 이미지 변경
               >
@@ -267,7 +268,8 @@ function NamecardOrder() {
                 <button
                   key={opt.value}
                   className={`option-button ${printType === opt.value ? 'selected' : ''}`}
-                  onClick={() => setPrintType(opt.value)}
+                  onClick={() => {
+                  setPrintType(opt.value)}
                   setImageSrc(`/img/print_${opt.value}.jpg`); // 양면, 단면 이미지 변경
                 }}
               >
@@ -287,7 +289,8 @@ function NamecardOrder() {
                 <button
                   key={opt}
                   className={`option-button ${coating === opt ? 'selected' : ''}`}
-                  onClick={() => setCoating(opt)}
+                  onClick={() => {
+                  setCoating(opt)}
                   setImageSrc(`/img/coating_${opt}.jpg`); // 코팅 이미지 변경
                 }}
               >
