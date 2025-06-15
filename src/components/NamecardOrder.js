@@ -357,39 +357,45 @@ function NamecardOrder() {
               ))}
             </div>
             {/* 형압 - 그룹2: 음각/양각 (하나만 선택) */}
-            {embossFace !== '없음' && (
-              <div className="button-group" style={{ marginBottom: '1rem' }}>
-                {['음각', '양각'].map(shape => (
+              {embossFace !== '없음' && (
+                <div className="button-group" style={{ marginBottom: '1rem' }}>
+                  {['음각', '양각'].map(shape => (
+                    <button
+                      key={shape}
+                      className={`option-button ${embossShape[0] === shape ? 'selected' : ''}`}
+                      onClick={() => {
+                        setEmbossShape([shape]);
+                        setImageSrc(`/img/embossshape_${shape}.jpg`); // ⭐ 형압 종류 선택시 이미지 변경
+                      }}
+                    >
+                      {shape}
+                    </button>
+                  ))}
+                </div>
+              )}
+
+        
+        {/* 모서리 둥글게 */}
+          {selectedSize && weight && printType && coating && foilFace && foilTypes && embossFace && embossShape && (
+            <div style={{ marginBottom: '1.3rem' }}>
+              <label>모서리 둥글게</label>
+              <div className="button-group">
+                {ROUND_OPTIONS.map(opt => (
                   <button
-                    key={shape}
-                    className={`option-button ${embossShape[0] === shape ? 'selected' : ''}`}
-                    onClick={() => setEmbossShape([shape])}
+                    key={opt}
+                    className={`option-button ${round === opt ? 'selected' : ''}`}
+                    onClick={() => {
+                      setRound(opt);
+                      setImageSrc(`/img/round_${opt}.jpg`); // ⭐ 둥글게 선택시 이미지 변경
+                    }}
                   >
-                    {shape}
+                    {opt}
                   </button>
                 ))}
               </div>
-            )}
-          </div>
-        )}
-        
-        {/* 모서리 둥글게 */}
-        {selectedSize && weight && printType && coating && foilFace && foilTypes && embossFace && embossShape && (
-          <div style={{ marginBottom: '1.3rem' }}>
-            <label>모서리 둥글게</label>
-            <div className="button-group">
-              {ROUND_OPTIONS.map(opt => (
-                <button
-                  key={opt}
-                  className={`option-button ${round === opt ? 'selected' : ''}`}
-                  onClick={() => setRound(opt)}
-                >
-                  {opt}
-                </button>
-              ))}
             </div>
-          </div>
-        )}
+          )}
+
         
         {/* 수량 + 건수 선택 */}
         {selectedSize && weight && printType && coating && foilFace && foilTypes && embossFace && embossShape && round && (
