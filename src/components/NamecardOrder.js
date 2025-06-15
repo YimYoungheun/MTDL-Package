@@ -185,7 +185,7 @@ function NamecardOrder() {
                     setMaterial('');
                     setColor('');
                     setWeight('');
-                    setImageSrc(`/img/feel_${feel}.jpg`); // 종이 느낌 이미지 변경
+                    // setImageSrc(`/img/feel_${feel}.jpg`); // 종이 느낌 이미지 변경 (현재 사용 안함)
                   }}
                 >
                   {feel === '매끄러운' ? '스탠다드' : '고급명함'}
@@ -251,8 +251,8 @@ function NamecardOrder() {
                   className={`option-button ${weight === w ? 'selected' : ''}`}
                   onClick={() => {
                   setWeight(w)}
-                  setImageSrc(`/img/weight_${w}.jpg`);
-                 }}// 종이 무게 이미지 변경
+                  // setImageSrc(`/img/weight_${w}.jpg`); // 종이 무게 이미지 변경 (현재 적용 안함)
+                 }}
               >
                   {w}
                 </button>
