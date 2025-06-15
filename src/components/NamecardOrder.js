@@ -7,8 +7,6 @@ import { NamecardMaterialMap } from '../data/NamecardMaterialMap';
 import { NamecardColorMap } from '../data/NamecardColorMap';
 import { NamecardWeightMap } from '../data/NamecardWeightMap';
 
-// 버튼별 변경될 이미지 소스
-const [imageSrc, setImageSrc] = useState('/img/Namecard.jpg');
 // 명함 고정 사이즈 옵션, 기타 상수
 const SIZE_OPTIONS = [
   { label: '90×50', width: 90, height: 50 },
@@ -25,6 +23,7 @@ const QUANTITY_OPTIONS = [500, 1000, 2000, 3000, 5000, 10000, 20000, 30000, 5000
 
 function NamecardOrder() {
   // ====== useState 선언부는 무조건 컴포넌트 함수 내부! ======
+  const [imageSrc, setImageSrc] = useState('/img/Namecard.jpg');  // 버튼별 변경될 이미지 소스
   const [company, setCompany] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
@@ -161,14 +160,8 @@ function NamecardOrder() {
                   setMaterial('');
                   setColor('');
                   setWeight('');
-                  setImageSrc(`/img/feel_${feel}.jpg`); // 종이 느낌 이미지 변경
-                  setImageSrc(`/img/material_${mat}.jpg`); // 종이 재질 이미지 변경
-                  setImageSrc(`/img/color_${c}.jpg`); // 러프한 적용시 이미지 변경
-                  setImageSrc(`/img/weight_${w}.jpg`); // 종이 무게 이미지 변경
                   setPrintType('');
-                  setImageSrc(`/img/print_${opt.value}.jpg`); // 양면, 단면 이미지 변경
                   setCoating('');
-                  setImageSrc(`/img/coating_${opt}.jpg`); // 코팅 이미지 변경
                   setRound('없음');
                   setImageSrc(`/img/size_${opt.label}.jpg`); // 사이즈 이미지 변경
                 }}
@@ -191,6 +184,7 @@ function NamecardOrder() {
                     setMaterial('');
                     setColor('');
                     setWeight('');
+                    setImageSrc(`/img/feel_${feel}.jpg`); // 종이 느낌 이미지 변경
                   }}
                 >
                   {feel === '매끄러운' ? '스탠다드' : '고급명함'}
@@ -213,6 +207,7 @@ function NamecardOrder() {
                     setMaterial(mat);
                     setColor('');
                     setWeight('');
+                    setImageSrc(`/img/material_${mat}.jpg`); // 종이 재질 이미지 변경
                   }}
                 >
                   {mat}
@@ -234,6 +229,7 @@ function NamecardOrder() {
                   onClick={() => {
                     setColor(c);
                     setWeight('');
+                    // setImageSrc(`/img/color_${c}.jpg`); // 러프한 적용시 이미지 변경 (현재 적용 안함)
                   }}
                 >
                   {c}
@@ -253,7 +249,9 @@ function NamecardOrder() {
                   key={w}
                   className={`option-button ${weight === w ? 'selected' : ''}`}
                   onClick={() => setWeight(w)}
-                >
+                  setImageSrc(`/img/weight_${w}.jpg`);
+                 }}// 종이 무게 이미지 변경
+              >
                   {w}
                 </button>
               ))}
@@ -270,7 +268,9 @@ function NamecardOrder() {
                   key={opt.value}
                   className={`option-button ${printType === opt.value ? 'selected' : ''}`}
                   onClick={() => setPrintType(opt.value)}
-                >
+                  setImageSrc(`/img/print_${opt.value}.jpg`); // 양면, 단면 이미지 변경
+                }}
+              >
                   {opt.label}
                 </button>
               ))}
@@ -288,7 +288,9 @@ function NamecardOrder() {
                   key={opt}
                   className={`option-button ${coating === opt ? 'selected' : ''}`}
                   onClick={() => setCoating(opt)}
-                >
+                  setImageSrc(`/img/coating_${opt}.jpg`); // 코팅 이미지 변경
+                }}
+              >
                   {opt}
                 </button>
               ))}
@@ -375,112 +377,112 @@ function NamecardOrder() {
               )}
 
         
-        {/* 모서리 둥글게 */}
-          {selectedSize && weight && printType && coating && foilFace && foilTypes && embossFace && embossShape && (
-            <div style={{ marginBottom: '1.3rem' }}>
-              <label>모서리 둥글게</label>
-              <div className="button-group">
-                {ROUND_OPTIONS.map(opt => (
-                  <button
-                    key={opt}
-                    className={`option-button ${round === opt ? 'selected' : ''}`}
-                    onClick={() => {
-                      setRound(opt);
-                      setImageSrc(`/img/round_${opt}.jpg`); // ⭐ 둥글게 선택시 이미지 변경
-                    }}
-                  >
-                    {opt}
+              {/* 모서리 둥글게 */}
+                {selectedSize && weight && printType && coating && foilFace && foilTypes && embossFace && embossShape && (
+                  <div style={{ marginBottom: '1.3rem' }}>
+                    <label>모서리 둥글게</label>
+                    <div className="button-group">
+                      {ROUND_OPTIONS.map(opt => (
+                        <button
+                          key={opt}
+                          className={`option-button ${round === opt ? 'selected' : ''}`}
+                          onClick={() => {
+                            setRound(opt);
+                            setImageSrc(`/img/round_${opt}.jpg`); // ⭐ 둥글게 선택시 이미지 변경
+                          }}
+                        >
+                          {opt}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+        
+              {/* 수량 + 건수 선택 */}
+              {selectedSize && weight && printType && coating && foilFace && foilTypes && embossFace && embossShape && round && (
+                <div style={{ marginBottom: '1.3rem' }}>
+                  <label>수량 및 건수 선택</label>
+                  <div className="button-group" style={{ alignItems: 'center', gap: '1rem' }}>
+                    <select
+                      className="custom-select"
+                      value={quantity}
+                      onChange={e => setQuantity(e.target.value)}
+                      style={{ width: '150px' }}
+                    >
+                      <option value="">수량 선택</option>
+                      {QUANTITY_OPTIONS.map(qty => (
+                        <option key={qty} value={qty}>
+                          {Number(qty).toLocaleString()}
+                        </option>
+                      ))}
+                    </select>
+                    <span style={{ fontWeight: 600 }}>×</span>
+                    <select
+                      className="custom-select"
+                      value={orderCount}
+                      onChange={e => setOrderCount(e.target.value)}
+                      style={{ width: '90px' }}
+                    >
+                      {Array.from({ length: 10 }, (_, i) => (i + 1)).map(cnt => (
+                        <option key={cnt} value={cnt}>{cnt}건</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              )}
+        
+              {/* (예비) 견적가 컴포넌트 */}
+              {selectedSize && weight && printType && coating && foilFace && foilTypes && embossFace && embossShape && round && quantity &&(
+                <>
+                  <EstimatePriceNamecard
+                    width={selectedSize?.width}
+                    height={selectedSize?.height}
+                    paperFeel={paperFeel}
+                    paperType={material}
+                    color={color}
+                    paperWeight={weight}
+                    printType={printType}
+                    coating={coating}
+                    round={round}
+                    quantity={Number(quantity) * Number(orderCount)}
+                    foilFace={foilFace}
+                    foilTypes={foilTypes}
+                    embossFace={embossFace}
+                    embossShape={embossShape}
+                  />
+      
+              
+                  {/* 파일 업로드 */}
+                  <iframe
+                    className="file-upload-frame"
+                    src="https://mtdl.co.kr/fileupload"
+                    width="100%"
+                    height="170"
+                    title="파일 업로드"
+                  />
+                  <button className="primary-button" onClick={handleOrderSubmit} style={{ marginTop: 18 }}>
+                    바로 주문하기
                   </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-        
-        {/* 수량 + 건수 선택 */}
-        {selectedSize && weight && printType && coating && foilFace && foilTypes && embossFace && embossShape && round && (
-          <div style={{ marginBottom: '1.3rem' }}>
-            <label>수량 및 건수 선택</label>
-            <div className="button-group" style={{ alignItems: 'center', gap: '1rem' }}>
-              <select
-                className="custom-select"
-                value={quantity}
-                onChange={e => setQuantity(e.target.value)}
-                style={{ width: '150px' }}
-              >
-                <option value="">수량 선택</option>
-                {QUANTITY_OPTIONS.map(qty => (
-                  <option key={qty} value={qty}>
-                    {Number(qty).toLocaleString()}
-                  </option>
-                ))}
-              </select>
-              <span style={{ fontWeight: 600 }}>×</span>
-              <select
-                className="custom-select"
-                value={orderCount}
-                onChange={e => setOrderCount(e.target.value)}
-                style={{ width: '90px' }}
-              >
-                {Array.from({ length: 10 }, (_, i) => (i + 1)).map(cnt => (
-                  <option key={cnt} value={cnt}>{cnt}건</option>
-                ))}
-              </select>
+                </>
+              )}
+              
+              {/* 주문 완료 오버레이 */}
+              {showConfirmation && (
+                <div className="confirmation-overlay">
+                  <div className="confirmation-message">
+                    <strong>주문이 접수되었습니다!</strong>
+                    <br />나머지 결제를 진행해주세요
+                    <br /><br />
+                    <button className="primary-button" onClick={() => setShowConfirmation(false)}>
+                      확인
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
-        )}
-        
-        {/* (예비) 견적가 컴포넌트 */}
-        {selectedSize && weight && printType && coating && foilFace && foilTypes && embossFace && embossShape && round && quantity &&(
-          <>
-            <EstimatePriceNamecard
-              width={selectedSize?.width}
-              height={selectedSize?.height}
-              paperFeel={paperFeel}
-              paperType={material}
-              color={color}
-              paperWeight={weight}
-              printType={printType}
-              coating={coating}
-              round={round}
-              quantity={Number(quantity) * Number(orderCount)}
-              foilFace={foilFace}
-              foilTypes={foilTypes}
-              embossFace={embossFace}
-              embossShape={embossShape}
-            />
-
-        
-            {/* 파일 업로드 */}
-            <iframe
-              className="file-upload-frame"
-              src="https://mtdl.co.kr/fileupload"
-              width="100%"
-              height="170"
-              title="파일 업로드"
-            />
-            <button className="primary-button" onClick={handleOrderSubmit} style={{ marginTop: 18 }}>
-              바로 주문하기
-            </button>
-          </>
-        )}
-        
-        {/* 주문 완료 오버레이 */}
-        {showConfirmation && (
-          <div className="confirmation-overlay">
-            <div className="confirmation-message">
-              <strong>주문이 접수되었습니다!</strong>
-              <br />나머지 결제를 진행해주세요
-              <br /><br />
-              <button className="primary-button" onClick={() => setShowConfirmation(false)}>
-                확인
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
+        );
+      }
 
 export default NamecardOrder;
