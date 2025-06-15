@@ -7,6 +7,8 @@ import { NamecardMaterialMap } from '../data/NamecardMaterialMap';
 import { NamecardColorMap } from '../data/NamecardColorMap';
 import { NamecardWeightMap } from '../data/NamecardWeightMap';
 
+// 버튼별 변경될 이미지 소스
+const [imageSrc, setImageSrc] = useState('/img/Namecard.jpg');
 // 명함 고정 사이즈 옵션, 기타 상수
 const SIZE_OPTIONS = [
   { label: '90×50', width: 90, height: 50 },
@@ -120,7 +122,7 @@ function NamecardOrder() {
       {/* 왼쪽 이미지 */}
       <div style={{ flex: 3.6, minWidth: 0, height: '100%', overflow: 'hidden' }}>
         <img
-          src="/img/Namecard.jpg"
+          src={imageSrc}
           alt="명함"
           style={{ width: '73vw', height: '100%', objectFit: 'cover', display: 'block', borderRadius: 0 }}
         />
@@ -159,9 +161,16 @@ function NamecardOrder() {
                   setMaterial('');
                   setColor('');
                   setWeight('');
+                  setImageSrc(`/img/feel_${feel}.jpg`); // 종이 느낌 이미지 변경
+                  setImageSrc(`/img/material_${mat}.jpg`); // 종이 재질 이미지 변경
+                  setImageSrc(`/img/color_${c}.jpg`); // 러프한 적용시 이미지 변경
+                  setImageSrc(`/img/weight_${w}.jpg`); // 종이 무게 이미지 변경
                   setPrintType('');
+                  setImageSrc(`/img/print_${opt.value}.jpg`); // 양면, 단면 이미지 변경
                   setCoating('');
+                  setImageSrc(`/img/coating_${opt}.jpg`); // 코팅 이미지 변경
                   setRound('없음');
+                  setImageSrc(`/img/size_${opt.label}.jpg`); // 사이즈 이미지 변경
                 }}
               >{opt.label}</button>
             ))}
@@ -299,6 +308,7 @@ function NamecardOrder() {
                   onClick={() => {
                     setFoilFace(type);
                     if (type === '없음') setFoilTypes([]);
+                    setImageSrc(`/img/foil_${type}.jpg`); // 박 이미지 변경
                   }}
                 >
                   {type}
@@ -316,6 +326,7 @@ function NamecardOrder() {
                       setFoilTypes(prev =>
                         prev.includes(type) ? prev.filter(t => t !== type) : [...prev, type]
                       );
+                      setImageSrc(`/img/foiltype_${type}.jpg`); // 은,금박 등 박 세부사항 이미지 변경
                     }}
                   >
                     {type}
@@ -338,6 +349,7 @@ function NamecardOrder() {
                   onClick={() => {
                     setEmbossFace(type);
                     if (type === '없음') setEmbossShape([]);
+                    setImageSrc(`/img/emboss_${type}.jpg`); // 형압 이미지 변경
                   }}
                 >
                   {type}
