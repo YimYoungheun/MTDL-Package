@@ -224,6 +224,28 @@ label {
   transition: opacity 0.3s;
 }
 
+.img-anim {
+  position: absolute;
+  left: 0; top: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.5s, transform 0.5s;
+  opacity: 1;
+  transform: translateX(0);
+  z-index: 1;
+}
+.img-anim.fade-out {
+  opacity: 0;
+  transform: translateX(100px); /* 오른쪽으로 슬라이드+사라짐 */
+  z-index: 0;
+}
+.img-anim.fade-in {
+  opacity: 1;
+  transform: translateX(0);     /* 원래 자리+나타남 */
+  z-index: 2;
+}
+
 /* ==============================
    파일 업로드 iframe
    ============================== */
