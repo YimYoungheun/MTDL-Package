@@ -1,0 +1,526 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body, html, #root {
+  font-family: 'Pretendard', 'Noto Sans KR', Arial, sans-serif;
+}
+
+/* 버튼 가로 정렬 추가 */
+.button-group {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* 옵션들 세로 간격 */
+.option-block {
+  margin-bottom: 1.5rem;   /* 항목들 사이 일정하게 띄움 */
+}
+
+.switch-toggle {
+  gap: 0.7em;              /* 스위치와 라벨 사이의 간격 */
+}
+
+/* 모든 <label> 태그 색상 */
+label {
+  display: block;
+  margin-top: 0.25rem;
+  margin-bottom: 0.5rem;	         	  /* 라벨 ~ 입력란/버튼그룹 간격 */
+  color: #5D5D5D;                     /* 옅은 회색 */
+  font-weight: 400;                   /* 살짝 두껍게 (선택) */
+  font-size: 1rem;                  /* 글씨 크기 */
+  letter-spacing: 0.01em;             /* (선택) */
+}
+
+/* placeholder 색 */
+input::placeholder,
+textarea::placeholder {
+  color: #adb5bd;
+  opacity: 1;
+}
+
+/* 선택된 탭(버튼) */
+.button-group .option-button.selected {
+  display: flex;
+  gap: 0.5rem;
+  background: #ffffff;
+  color: #1e6dff;
+  font-weight: 600;      /* 폰트 굵기 */
+}
+
+/* 미선택 탭 hover */
+.button-group .option-button:not(.selected):hover {
+  background: #ffffff;               /* 배경 색상 */
+  font-weight: 500;                  /* 폰트 굵기 */ 
+  color: #0059ff;          /* 폰트 색상 */
+}
+
+/* ==============================
+   개별 옵션 버튼(그룹 외 단일)
+   ============================== */
+.option-button {
+  min-width: 30px;
+  height: 46px;
+  width: fit-content;
+  padding: 1 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  border: 1.5px solid #b3cdfd;
+  border-radius: 12px;
+  background: #ffffff;               /* 배경 색상 */
+  color: #747474;                    /* 폰트 색상 */
+  cursor: pointer;
+  margin-bottom: 2px;
+  margin-right: 2px;
+  transition: background 0.16s, color 0.15s, border 0.18s;
+  outline: none;
+}
+.option-button.selected {
+  background: #ffffff;               /* 배경 색상 */
+  color: #1e6dff;
+  font-weight: 600;                  /* 폰트 굵기 */ 
+  border-color: #0059ff;
+  border-width: 1.5px;
+}
+.option-button:hover:not(.selected) {
+  background: #ffffff;               /* 배경 색상 */
+  font-weight: 500;                  /* 폰트 굵기 */
+  color: #1e6dff;
+  border-color: #3e82ff;
+}
+
+
+/* ==============================
+   입력란 스타일 (길이별)
+   ============================== */
+input,
+select,
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 8px;
+  border: 1.5px solid #b3cdfd;   /* 연파랑 테두리 */
+  background: #fff;
+  padding: 0.85em 1.1em;
+  font-size: 1rem;
+  color: #222;
+  font-family: inherit;
+  outline: none;
+  transition: border 0.18s, box-shadow 0.18s;
+  margin-bottom: 0.15rem;
+}
+
+/* 포커스시 진한 파랑 테두리+그림자 */
+input:focus,
+select:focus,
+textarea:focus {
+  border: 2px solid #2563eb;         /* 진한 파랑 */
+}
+
+/* 긴 입력란 (회사명/연락처/이메일 등) */
+.custom-input.long {
+  width: 360px;
+  max-width: 100%;
+}
+/* 짧은 입력란 (내경) */
+.input-wrap {
+  position: relative;
+  margin-bottom: 0.3rem;
+  width: 100px; /* 원하는 폭에 맞게 조절 */
+}
+
+.floating-label {
+  position: absolute;
+  top: -0.72em;
+  left: 0.8em;
+  background: #fff;
+  padding: 0 0.2em;
+  font-size: 0.93rem;
+  color: #7a7a7a;    /* 가로, 세로, 높이 폰트 색상 */
+  font-weight: 500;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.modern-input {
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 8px;
+  border: 1.5px solid #b3cdfd;
+  background: #fff;
+  padding: 1.08em 1em 0.62em 1em;
+  font-size: 1rem;
+  color: #222;
+  font-family: inherit;
+  outline: none;
+  transition: border 0.18s, box-shadow 0.18s;
+}
+
+.modern-input:focus {
+  border: 1.7px solid #2563eb;
+  box-shadow: 0 0 0 2px #cddafd60;
+}
+/* 중간 입력란 (기타 별도 입력) */
+.custom-input.medium {
+  width: 200px;
+}
+/* 수량 입력란 (기타 수량, "그 외 수량" 입력 등) */
+.custom-input.qty {
+  width: 160px;
+}
+/* 입력란 포커스 시 */
+.custom-input:focus {
+  border: 1.5px solid #2563eb;     /* 포커스시 진하게 */
+  outline: none;
+}
+
+/* ==============================
+   셀렉트 박스 (수량 등)
+   ============================== */
+/* select(드롭다운) 스타일 보정 (크롬/엣지) */
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg fill='gray' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9em center;
+  background-size: 1.1em;
+  padding-right: 2.3em;
+
+  /* --- 추가 --- */
+  border-radius: 12px;
+  border: 1px solid #bfcbe6;
+  font-size: 1rem;
+  color: #222;
+  box-shadow: 0 2px 10px #0001;
+  min-height: 2.7em;
+  padding-top: 0.7em;
+  padding-bottom: 0.7em;
+  transition: border 0.18s;
+}
+select:focus {
+  border: 1px solid #2972ff;
+  outline: none;
+}
+
+/* option 간 간격 */
+select option, select optgroup {
+  border-radius: 12px;
+  border: 1px solid #bfcbe6;
+  min-height: 2.3em;
+  padding: 0.6em 1em;
+  font-size: 1rem;
+}
+/* ==============================
+   견적/안내 박스
+   ============================== */
+.estimate-box {
+  background: #ffffff;              /* 견적 박스 배경 색상 (흰색) */
+  border-radius: 3px;               /* 모서리 둥글게 */
+  border: 1.5px solid #ffffff;      /* 외곽선 (흰색, 사실상 없음) */
+  padding: 0.5rem 0.5rem;           /* 내부 여백 */
+  margin-top: 1.5rem;               /* 위쪽 간격 */
+  text-align: left;                 /* 텍스트 왼쪽 정렬 */
+}
+
+.estimate-box p {
+  margin: 0;                        /* 기본 마진 제거 */
+  line-height: 1.4;                 /* 줄 간격 적당히 */
+}
+
+/* 전체 단가 표시 영역 */
+.estimate-box .main-estimate {
+  font-size: 1.6rem;                /* 큰 글씨 */
+  color: #3736FF;                   /* 진한 푸른색 강조 */
+  font-weight: bold;                /* 굵은 글씨 */
+  margin-bottom: 0.3rem;            /* 아래쪽 여백 약간 */
+}
+
+/* 개당 단가 표시 영역 */
+.estimate-box .estimate-unit {
+  font-size: 0.9rem;                /* 작고 간결한 글씨 */
+  font-weight: bold;                /* 굵은 글씨 */
+  color: #000000;                   /* 검은색 폰트 */
+}
+
+/* ==============================
+   버튼(확인/리셋 등)
+   ============================== */
+/* 주요 버튼(확인/제출 등) */
+.primary-button {
+  background: #5AAEFF;
+  color: #ffffff;
+  padding: 0.5rem 1.3rem;
+  border-radius: 3px;
+  border: 1px solid #5AAEFF;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  transition: background 0.18s, color 0.15s, opacity 0.18s;
+}
+.primary-button:hover {
+  font-weight: 500;
+  background: #0054FF;
+}
+/* 리셋, 취소 등 서브 버튼 */
+.secondary-button {
+  padding: 0.5rem 0.7rem;
+  font-size: 0.9rem;
+  border: 1.5px solid #747474;
+  border-radius: 3px;
+  background: #ffffff;               /* 배경 색상 */
+  color: #747474;                    /* 폰트 색상 */
+  cursor: pointer;
+  margin-bottom: 3px;
+  margin-right: 1px;
+  transition: background 0.16s, color 0.15s, border 0.18s;
+  outline: none;
+}
+.secondary-button:hover {
+  background: #ffffff;
+  font-weight: 500;          /* 폰트 굵기 */
+  color: #000000;            /* 텍스트 색상 */
+}
+
+/* ==============================
+   애니메이션 (페이드 인/아웃)
+   ============================== */
+.fade-in {
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.3s;
+}
+.fade-out {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.img-anim {
+  /* 항상 기본값, 트랜지션 없음 */
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.img-anim.fade-in {
+  animation: fadeInAnim 0.3s forwards;
+}
+@keyframes fadeInAnim {
+  from {
+    opacity: 0;
+    transform: translateX(50px); /* 오른쪽에서 등장 */
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.img-anim.fade-out {
+  animation: fadeOutAnim 0.3s forwards;
+}
+@keyframes fadeOutAnim {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.98) /* 크기가 작아지며 사라짐 */
+  }
+}
+
+
+/* ==============================
+   파일 업로드 iframe
+   ============================== */
+.file-upload-frame {
+  border-radius: 3px;
+  border: 1.5px solid #000000;
+  margin-bottom: 1rem;
+}
+
+/* ==============================
+   기타 레이아웃
+   ============================== */
+.flex-row {
+  display: flex;
+  gap: 0.5rem;
+}
+.flex-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* ==============================
+   주문 완료 오버레이 (팝업)
+   ============================== */
+.confirmation-overlay {
+  position: fixed;              /* 화면에 고정 위치로 표시 */
+  top: 0; left: 0;              /* 화면 최상단, 최좌측에 붙임 */
+  width: 100vw; height: 100vh;  /* 화면 전체 너비와 높이 차지 */
+  background: rgba(0,0,0,0.42); /* 반투명 검정색 배경 (투명도 42%) */
+  z-index: 9999;                /* 다른 요소 위에 표시되도록 최상위 설정 */
+  display: flex;                /* 내부 콘텐츠를 flex 컨테이너로 설정 */
+  align-items: center;          /* 세로 중앙 정렬 */
+  justify-content: center;      /* 가로 중앙 정렬 */
+}
+
+.confirmation-message {
+  background: #fff;             /* 팝업 배경을 흰색으로 */
+  border-radius: 3px;           /* 모서리를 둥글게 */
+  box-shadow: 0 8px 32px #0002; /* 그림자 효과, 약간 흐린 검정색 */
+  padding: 20px;                /* 내부 여백 */
+  text-align: center;           /* 텍스트 가운데 정렬 */
+  min-width: 120px;             /* 최소 너비 보장 */
+  max-width: 90vw;              /* 최대 너비는 화면 너비의 90%까지 */
+  font-size: 1.25rem;           /* 글자 크기 1.25rem */
+  animation: fadeInPop 0.28s;   /* fadeInPop 애니메이션 0.28초 동안 실행 */
+}
+
+/* 팝업 부드럽게 나타나는 효과 (선택) */
+@keyframes fadeInPop {
+  from { 
+    opacity: 0;                 /* 시작 시 완전 투명 */
+    transform: scale(0.98);     /* 시작 시 약간 축소된 상태 */
+  }
+  to   { 
+    opacity: 1;                 /* 끝에는 완전 불투명 */
+    transform: scale(1);        /* 원래 크기로 확대 */
+  }
+}
+
+/* 통일된 토글 그룹 스타일 */
+.toggle-group {
+  display: flex;
+  position: relative;
+  border: 1.5px solid #bfcbe6;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #f7fafd;
+  height: 45px;
+  width: fit-content;           /* ⭐️ 항목 수만큼만 */
+  min-width: 0;
+  margin-left: 0;               /* ⭐️ 왼쪽 정렬 */
+}
+
+.toggle-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: #2563eb;
+  border-radius: 14px;
+  transition: left 0.15s cubic-bezier(.65,.05,.36,1), width 0.15s cubic-bezier(.65,.05,.36,1);
+  z-index: 1;
+}
+
+/* 토글 버튼(미선택) */
+.toggle-btn {
+  white-space: nowrap; /* 줄바꿈 금지 */
+  min-width: 105px;   /* 필요시 조절 */
+  padding: 1 1em;
+  flex: 1 1 0;
+  z-index: 2;
+  border: none;
+  background: transparent;
+  font-weight: 400;
+  font-size: 1rem;
+  color: #575757;
+  transition: color 0.14s;
+  cursor: pointer;
+  padding: 1 1em;
+  height: 45px;
+  border-radius: 0;
+}
+
+/* 선택된 버튼 (파란 배경, 흰 글씨) */
+.toggle-btn.selected {
+  background: transparent;
+  color: #fff;
+}
+
+/* 마지막 버튼 오른쪽 radius */
+.toggle-btn:last-child {
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+/* 첫 버튼 왼쪽 radius */
+.toggle-btn:first-child {
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+
+/* 머티리얼 토글 스위치 */
+.switch-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.68em;
+  cursor: pointer;
+  user-select: none;
+  font-size: 1.03em;
+}
+
+.switch-input {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 44px;
+  height: 26px;
+  border-radius: 16px;
+  background: #ededed;
+  border: 2px solid #2972ff;
+  outline: none;
+  box-shadow: 0 0 8px 1px transparent;
+  transition: background 0.19s, border 0.19s, box-shadow 0.19s;
+  position: relative;
+  margin: 0;
+  cursor: pointer;
+  /* box-sizing: border-box;  // 기본값이 box-sizing: border-box임 */
+}
+
+/* ON 상태 - box-shadow만 다르게, 크기는 동일하게! */
+.switch-input:checked {
+  background: #2972ff;
+  border: 2px solid #2972ff;
+  box-shadow: 0 0 8px 1px #2972ff55;
+}
+
+.switch-slider {
+  position: absolute;
+  left: 4px;
+  top: 5px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  transition: left 0.18s;
+  pointer-events: none;
+  box-shadow: 0 1px 4px #0001;
+}
+
+.switch-input:checked + .switch-slider {
+  left: 20px;
+}
+
+.switch-label {
+  color: #2972ff;
+  font-weight: 700;
+  font-size: 1.05em;
+  margin-left: 0.1em;
+  transition: color 0.17s, font-weight 0.17s;
+}
+
+.switch-input:not(:checked) ~ .switch-label {
+  color: #222;
+  font-weight: 500;
+}
