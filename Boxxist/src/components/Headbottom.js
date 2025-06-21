@@ -14,14 +14,15 @@ export default function Headbottom({ children }) {
           />
         </Link>
         <nav className="site-nav">
-          <div className="menu-item">제품라인업</div>
-          <div className="menu-item">샘플제작</div>
+          <div className="menu-item">전체제품</div>
+          <div className="menu-item">제작사례</div>
           <div className="menu-item">고객지원</div>
           <div className="menu-item">회사소개</div>
         </nav>
-        <div className="site-icons">
+        <div className="head-icons-wrapper">
+        <div className="site-head-icons">
           {/* 회원가입 */}
-          <span className="icon-tooltip">
+          <span className="head-icon-tooltip">
             <svg xmlns="http://www.w3.org/2000/svg"
               width="26" height="26" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
@@ -32,10 +33,10 @@ export default function Headbottom({ children }) {
               <path d="M19 16v6"/>
               <path d="M22 19h-6"/>
             </svg>
-            <span className="tooltip-text">회원가입</span>
+            <span className="head-tooltip-text">회원가입</span>
           </span>
           {/* 마이페이지 */}
-          <span className="icon-tooltip">
+          <span className="head-icon-tooltip">
             <svg xmlns="http://www.w3.org/2000/svg"
               width="26" height="26" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
@@ -44,10 +45,10 @@ export default function Headbottom({ children }) {
               <circle cx="12" cy="8" r="5"/>
               <path d="M20 21a8 8 0 0 0-16 0"/>
             </svg>
-            <span className="tooltip-text">마이페이지</span>
+            <span className="head-tooltip-text">마이페이지</span>
           </span>
           {/* 검색 */}
-          <span className="icon-tooltip">
+          <span className="head-icon-tooltip">
             <svg xmlns="http://www.w3.org/2000/svg"
               width="26" height="26" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
@@ -56,10 +57,10 @@ export default function Headbottom({ children }) {
               <circle cx="11" cy="11" r="8"/>
               <path d="m21 21-4.34-4.34"/>
             </svg>
-            <span className="tooltip-text">검색</span>
+            <span className="head-tooltip-text">검색</span>
           </span>
           {/* 메뉴 */}
-          <span className="icon-tooltip">
+          <span className="head-icon-tooltip">
             <svg xmlns="http://www.w3.org/2000/svg"
               width="26" height="26" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
@@ -69,9 +70,10 @@ export default function Headbottom({ children }) {
               <path d="M4 18h16"/>
               <path d="M4 6h16"/>
             </svg>
-            <span className="tooltip-text">메뉴</span>
+            <span className="head-tooltip-text">메뉴</span>
           </span>
         </div>
+      </div>
       </header>
 
       {/* ------- 본문 Main ------- */}
@@ -85,14 +87,9 @@ export default function Headbottom({ children }) {
         color: "#eee",
         marginTop: 10,
         marginBottom: 0,
-        padding: "40px 0 45px 0"
+        padding: "30px 0 45px 0"
       }}>
         <div className="footer-inner">
-          {/* 왼쪽: 로고 */}
-          <div className="footer-logo">
-            <img src="/img/company_logo.png" alt="회사 로고" />
-          </div>
-          {/* 가운데: 회사 정보 및 안내 */}
           <div className="footer-info">
             <div className="footer-links">
               <span>저작권안내</span>
@@ -106,6 +103,9 @@ export default function Headbottom({ children }) {
             </div>
             <div className="footer-copy">
               COPYRIGHT ⓒ 주식회사 메타디자인연구소 COMPANY. ALL RIGHTS RESERVED.
+            </div>
+            <div className="footer-logo">
+              <img src="/img/logo_metadesign.png" alt="회사 로고" />
             </div>
           </div>
         </div>
