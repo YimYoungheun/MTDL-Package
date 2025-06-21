@@ -101,7 +101,7 @@ main, .main-content, .main-slider-outer {
   font-size: 0.97rem;
   font-weight: 500;
   position: absolute;
-  bottom: -44px;
+  bottom: 44px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 15;
