@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef, useLayoutEffect } from "react";
 import EstimatePrice from './Common/EstimatePriceB';
 import { weightMap } from '../data/weightMap';
 import { colorMap } from '../data/colorMap';
@@ -43,8 +43,6 @@ function BBoxOrder() {
       width,
       length,
       height,
-      thickness,
-      cover,
       paperFeel,
       material,
       color,
@@ -58,7 +56,32 @@ function BBoxOrder() {
       orderId: 'ORDER-' + new Date().getTime(),
       orderedAt: new Date().toISOString(),
     };
-
+  const handleReset = () => {
+    setCompany('');
+    setPhone('');
+    setEmail('');
+    setWidth('');
+    setLength('');
+    setHeight('');
+    setBottomStyle(0);
+    setPaperFeel('매끄러운');
+    setPaperFeelIdx(0);
+    setMaterial('');
+    setHasPrinting(false);
+    setMainPrintColor('');
+    setSpotPrintColor('');
+    setColor('');
+    setWeight('');
+    setHasCoating(false);
+    setCoating('');
+    setHasEmbossing(false);
+    setEmbossing('');
+    setHasFoil(false);
+    setFoil([]);
+    setHasSilk(false);
+    setQuantity('');
+    setCustomQuantity('');
+  };
     // 콘솔에 주문 정보 출력
     console.log("📦 주문서 요약:", order);
 

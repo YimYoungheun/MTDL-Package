@@ -1,6 +1,4 @@
-// src/components/YBoxOrder.js
-
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import EstimatePriceY from './Common/EstimatePriceY';
 
 // 필요한 데이터 import
@@ -62,7 +60,33 @@ function YBoxOrder() {
       orderId: 'ORDER-' + new Date().getTime(),
       orderedAt: new Date().toISOString(),
     };
-
+  const handleReset = () => {
+    setCompany('');
+    setPhone('');
+    setEmail('');
+    setWidth('');
+    setLength('');
+    setHeight('');
+    setThickness('');
+    setCover('');
+    setPaperFeel('매끄러운');
+    setPaperFeelIdx(0);
+    setMaterial('');
+    setHasPrinting(false);
+    setMainPrintColor('');
+    setSpotPrintColor('');
+    setColor('');
+    setWeight('');
+    setCoating(null);
+    setHasCoating(false);
+    setHasEmbossing(false);
+    setEmbossing('');
+    setHasFoil(false);
+    setFoil([]);
+    setHasSilk(false);
+    setQuantity('');
+    setCustomQuantity('');
+  };
     // 콘솔에 주문 정보 출력
     console.log("📦 주문서 요약:", order);
 

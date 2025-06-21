@@ -1,12 +1,22 @@
+/* 헤더와 드롭다운 wrapper: 항상 화면 꽉 채움 */
 .site-header {
   width: 100%;
-  height: 100px;
-  display: flex;           /* 가로 배치 */
+  background: transparent;
+  min-width: 0;
+  left: 0;
+  right: 0;
+  box-sizing: border-box;
+}
+
+/* 안쪽 내용: max-width + 패딩 */
+.header-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
   align-items: center;
-  padding-left: 48px;
-  padding-right: 48px;
-  padding-top: 0px;
-  background: #f7faff;
+  justify-content: space-between; /* 필요에 따라 center */
+  padding: 0 48px;
+  width: 100%;
   box-sizing: border-box;
 }
 
@@ -18,15 +28,111 @@
 }
 
 .site-nav {
-  display: flex;            /* 가로 배치 */
-  flex: 1;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 36px;
+  display: flex;
+  gap: 100px;
   font-size: 1.15rem;
   font-weight: 600;
-  color: #1e293b;
+  flex: 1;
+  justify-content: center;
+}
+
+.menu-item {
+  cursor: pointer;
+  padding: 8px 18px;
+  position: relative;
+  font-weight: 500;
+  transition: color .14s;
+}
+.menu-item:hover, .menu-item:focus {
+  color: #2972ff;
+}
+
+.nav-dropdown-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;    /* 드롭다운이 nav 아래로 오게 */
+  align-items: center;       /* 가운데 정렬(원하면 left로 조정 가능) */
+  z-index: 20;               /* 드롭다운 위로 잘 나오게 */
+}
+
+.dropdown-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;    /* 왼쪽 정렬 (필요하면 center 가능) */
+  min-width: 100px;           /* 카테고리별 최소 너비 */
+  gap: 7px;
+}
+.dropdown-title {
+  font-weight: 700;
+  margin-bottom: 7px;
+  color: #2972ff;
+  font-size: 1.01rem;
+}
+.dropdown-link {
+  cursor: pointer;
+  color: #222;
+  padding: 2px 0;
+  font-size: 0.97rem;
+  border-radius: 6px;
+  transition: background .13s, color .13s;
+  text-decoration: none !important;
+}
+.dropdown-link:hover {
+  background: transparent;
+  color: #2972ff;
+}
+
+.nav-dropdown-outer {
+  width: 100%;
+  background: transparent;
+  min-width: 0;
+  left: 0;
+  right: 0;
+  box-sizing: border-box;
+}
+
+/* 모바일 대응 */
+@media (max-width: 900px) {
+  .header-inner {
+    padding: 0 12px;
+  }
+  .site-nav {
+    gap: 20px;
+    font-size: 1rem;
+  }
+}
+.nav-dropdown-outer:hover, .nav-dropdown-outer:focus-within {
+  pointer-events: auto; /* 드롭다운 위에 올리면 다시 활성 */
+}
+
+.dropdown-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;           /* 가운데 정렬, 필요시 space-between */
+  gap: 64px;                         /* 컬럼 간 간격 */
+  width: 100%;
+  box-sizing: border-box;
+  background: rgba(255,255,255,0.55);    /* 0.7 정도로 하면 blur가 더 강하게 보임 */
+  border-radius: 0 0 18px 18px;
+  box-shadow: 0 8px 40px #0002;
+  padding: 40px 0;                   /* 상하 패딩, 좌우는 gap과 함께 */
+  animation: dropdownFadeIn 1s cubic-bezier(.39,.58,.57,1.04);
+  opacity: 1;
+  transition: opacity 0.5;
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .site-icons {

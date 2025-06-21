@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,} from 'react';
 import EstimatePricePoster from './Common/EstimatePricePoster';
 
 
@@ -42,6 +42,22 @@ function PosterOrder() {
     setIsFading(true);
   }
 
+  const handleReset = () => {
+    setCompany('');
+    setPhone('');
+    setEmail('');
+    setSelectedSize(null);
+    setSelectedPaper('');
+    setSelectedWeight('');
+    setPrintType('단면');
+    setCoating('');
+    setQuantity('');
+    setImageSrc('/img/Poster.jpg');
+    setNextImageSrc(null);
+    setPrevImageSrc(null);
+    setIsFading(false);
+  };
+  
   useEffect(() => {
     if (!isFading) return;
     setImageSrc(nextImageSrc);

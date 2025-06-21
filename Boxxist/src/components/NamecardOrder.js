@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 
 // 필요한 데이터 import
 import EstimatePriceNamecard from './Common/EstimatePriceNamecard';
@@ -43,8 +43,8 @@ function NamecardOrder() {
   const [foilSideIdx, setFoilSideIdx] = useState(0);
   const [silkSide, setSilkSide] = useState('없음');
   const [silkSideIdx, setSilkSideIdx] = useState(0);
-  const [embossing, setEmbossing] = useState('없음'); // '없음', '있음'
-  const [embossType, setEmbossType] = useState('');   // '음각', '양각'
+  const [embossing, setEmbossing] = useState('없음');
+  const [embossType, setEmbossType] = useState('');
   const [round, setRound] = useState('없음');
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [quantity, setQuantity] = useState('');
@@ -93,6 +93,35 @@ useEffect(() => {
     }
     return [];
   };
+  const handleReset = () => {
+    setCompany('');
+    setPhone('');
+    setEmail('');
+    setSelectedSize(null);
+    setPaperFeel('매끄러운');
+    setPaperFeelIdx(0);
+    setMaterial('');
+    setColor('');
+    setWeight('');
+    setPrintType('단면');
+    setCoating('없음');
+    setCoatingType('');
+    setFoilTypes([]);
+    setFoilSide('없음');
+    setFoilSideIdx(0);
+    setSilkSide('없음');
+    setSilkSideIdx(0);
+    setEmbossing('없음');
+    setEmbossType('');
+    setRound('없음');
+    setShowConfirmation(false);
+    setQuantity('');
+    setOrderCount('1');
+    setImageSrc('/img/Namecard.jpg');
+    setNextImageSrc(null);
+    setPrevImageSrc(null);
+    setIsFading(false);
+  };
 
   // 주문 버튼 클릭 처리
   const handleOrderSubmit = () => {
@@ -109,10 +138,10 @@ useEffect(() => {
       coating,
       round,
       quantity: Number(quantity) * Number(orderCount),
-      foilFace,
+      foilFace: foilSide,
       foilTypes,
-      embossFace,
-      embossShape,
+      embossing,
+      embossType,
       silkSide,
       orderId: 'ORDER-' + new Date().getTime(),
       orderedAt: new Date().toISOString(),
@@ -303,9 +332,9 @@ useEffect(() => {
                   key={type}
                   className={`toggle-btn${printType === type ? ' selected' : ''}`}
                   onClick={() => {
-                  setPrintType(type);
-                  handleChangeImage(`/Namecardimg/printType_${printType}.png`);
-                }}
+                    setPrintType(type);
+                    handleChangeImage(`/Namecardimg/printType_${type}.png`);
+                  }}
                   type="button"
                   style={{ borderRadius: '12px', zIndex: 2 }}
                 >
@@ -544,25 +573,24 @@ useEffect(() => {
                 </div>
               </div>        
 
-            {/* 견적가 컴포넌트 */}
-                 <>
-                  <EstimatePriceNamecard
-                    width={selectedSize?.width}
-                    height={selectedSize?.height}
-                    paperFeel={paperFeel}
-                    paperType={material}
-                    color={color}
-                    paperWeight={weight}
-                    printType={printType}
-                    coating={coating}
-                    round={round}
-                    quantity={Number(quantity) * Number(orderCount)}
-                    foilSide={foilSide}
-                    foilTypes={foilTypes}
-                    embossing={embossing}
-                    silkSide={silkSide}
-                  />
-                  {/* 파일 업로드 */}
+                  {/* 견적가 컴포넌트 */}
+                    <EstimatePriceNamecard
+                      width={selectedSize?.width}
+                      height={selectedSize?.height}
+                      paperFeel={paperFeel}
+                      paperType={material}
+                      color={color}
+                      paperWeight={weight}
+                      printType={printType}
+                      coating={coating}
+                      round={round}
+                      quantity={Number(quantity) * Number(orderCount)}
+                      foilFace={foilSide}   // foilFace만 전달
+                      foilTypes={foilTypes}
+                      embossing={embossing}
+                      silkSide={silkSide}
+                    />
+                  {/* 파일 업로드 및 주문버튼 */}
                   <iframe
                     className="file-upload-frame"
                     src="https://mtdl.co.kr/fileupload"
@@ -573,23 +601,23 @@ useEffect(() => {
                   <button className="primary-button" onClick={handleOrderSubmit}>
                     바로 주문하기
                   </button>
-                </>     
 
+                  {/* 주문 접수 완료 오버레이 */}
+                  {showConfirmation && (
+                    <div className="confirmation-overlay">
+                      <div className="confirmation-message">
+                        <strong>주문이 접수되었습니다!</strong>
+                        <br />나머지 결제를 진행해주세요
+                        <br /><br />
+                        <button className="primary-button" onClick={() => setShowConfirmation(false)}>
+                          확인
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div> 
               </div>
-              {showConfirmation && (
-                <div className="confirmation-overlay">
-                  <div className="confirmation-message">
-                    <strong>주문이 접수되었습니다!</strong>
-                    <br />나머지 결제를 진행해주세요
-                    <br /><br />
-                    <button className="primary-button" onClick={() => setShowConfirmation(false)}>
-                      확인
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-          );
-        }
+              );
+            }           // NamecardOrder 함수 끝
 
-export default NamecardOrder;
+            export default NamecardOrder;
