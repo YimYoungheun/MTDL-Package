@@ -1,11 +1,12 @@
-import React, { useState, useRef, useLayoutEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import EstimatePrice from './Common/EstimatePriceB';
 import { weightMap } from '../data/weightMap';
 import { colorMap } from '../data/colorMap';
 import { materialMap } from '../data/materialMap';
-
+import ChevronsDownIcon from '../app/ChevronsDownIcon';
 
 function BBoxOrder() {
+  // 상태 선언부
   const [company, setCompany] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
@@ -18,7 +19,7 @@ function BBoxOrder() {
   const [paperFeel, setPaperFeel] = useState('매끄러운');
   const [paperFeelIdx, setPaperFeelIdx] = useState(0);
   const [material, setMaterial] = useState('');
-  const [hasPrinting, setHasPrinting] = useState(false); // 인쇄 스위치
+  const [hasPrinting, setHasPrinting] = useState(false);
   const [mainPrintColor, setMainPrintColor] = useState('');
   const [spotPrintColor, setSpotPrintColor] = useState('');
   const [color, setColor] = useState('');
@@ -27,35 +28,18 @@ function BBoxOrder() {
   const [coating, setCoating] = useState('');
   const [hasEmbossing, setHasEmbossing] = useState(false);
   const [embossing, setEmbossing] = useState('');
-  const [hasFoil, setHasFoil] = useState(false); // 박 "있음/없음"
-  const [foil, setFoil] = useState([]);          // 복수 선택 옵션
-  const [hasSilk, setHasSilk] = useState(false);   // 부분 실크 스위치 (있음/없음)
+  const [hasFoil, setHasFoil] = useState(false);
+  const [foil, setFoil] = useState([]);
+  const [hasSilk, setHasSilk] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [quantity, setQuantity] = useState("");
-  const [customQuantity, setCustomQuantity] = useState(""); // 직접 입력용
+  const [customQuantity, setCustomQuantity] = useState("");
+  
+  // ▼ floating arrow 표시 여부
+  const [showArrow, setShowArrow] = useState(true);
+  const formPanelRef = useRef();
 
-  const handleOrderSubmit = () => {
-    // 주문 정보 객체 생성
-    const order = {
-      company,
-      phone,
-      email,
-      width,
-      length,
-      height,
-      paperFeel,
-      material,
-      color,
-      weight,
-      coating,
-      embossing,
-      foil,
-      quantity: quantity === '그 외 수량' ? customQuantity : quantity,
-      mainPrintColor,
-      spotPrintColor,
-      orderId: 'ORDER-' + new Date().getTime(),
-      orderedAt: new Date().toISOString(),
-    };
+  // 리셋 함수
   const handleReset = () => {
     setCompany('');
     setPhone('');
@@ -82,17 +66,48 @@ function BBoxOrder() {
     setQuantity('');
     setCustomQuantity('');
   };
-    // 콘솔에 주문 정보 출력
-    console.log("📦 주문서 요약:", order);
 
-    // 주문 완료 메시지 띄우기
-    handleReset(); // 🟢 폼 초기화
+  // 주문서 제출
+  const handleOrderSubmit = () => {
+    const order = {
+      company, phone, email, width, length, height,
+      paperFeel, material, color, weight, coating, embossing, foil,
+      quantity: quantity === '그 외 수량' ? customQuantity : quantity,
+      mainPrintColor, spotPrintColor,
+      orderId: 'ORDER-' + new Date().getTime(),
+      orderedAt: new Date().toISOString(),
+    };
+    console.log("📦 주문서 요약:", order);
+    handleReset();
     setShowConfirmation(true);
   };
 
+  // 스크롤 시 floating arrow 노출 제어
+useEffect(() => {
+  const formPanel = formPanelRef.current;
+  if (!formPanel) return;
+
+  function handlePanelScroll() {
+    // 오른쪽 패널 "내부" 스크롤만 감지!
+    const { scrollTop, scrollHeight, clientHeight } = formPanel;
+    if (scrollTop + clientHeight >= scrollHeight - 10) {
+      setShowArrow(false);  // 다 내리면 화살표 숨김
+    } else {
+      setShowArrow(true);   // 아직 더 내릴 수 있으면 화살표 노출
+    }
+  }
+
+  // formPanel에만 scroll 이벤트 붙이기
+  formPanel.addEventListener('scroll', handlePanelScroll, { passive: true });
+  // mount 시 바로 한 번 체크
+  handlePanelScroll();
+
+  return () => formPanel.removeEventListener('scroll', handlePanelScroll);
+}, []);
+
   return (
     <div style={{ display: 'flex', width: '100vw', height: '100vh', boxSizing: 'border-box', overflow: 'hidden' }}>
-    {/* 왼쪽 이미지 */}
+      {/* 왼쪽 이미지 */}
       <div style={{ flex: 3, minWidth: 0, height: '100%', overflow: 'hidden', marginTop: '35px' }}>
         <img
           src="/img/Designers.png"
@@ -100,9 +115,20 @@ function BBoxOrder() {
           style={{ width: '73vw', height: '100%', objectFit: 'cover', display: 'block', borderRadius: '0' }}
         />
       </div>
-    {/* 오른쪽 입력란 */}
-<div style={{ flex: 1, minWidth: 0, padding: '2rem', background: '#fff', boxSizing: 'border-box', overflowY: 'auto' }}>      
-        {/* 회사, 연락처, 이메일 */}
+      {/* 오른쪽 패널 */}
+      <div style={{ flex: 1, minWidth: 0, background: '#fff', height: '100vh', position: 'relative' }}>
+        <div
+          ref={formPanelRef}
+          className="form-panel"
+          style={{
+            position: 'relative',
+            height: '100vh',
+            overflowY: 'auto',
+            padding: '2rem',
+            boxSizing: 'border-box',
+          }}
+        >
+        {/* 여기부터 모든 입력폼(회사명~버튼) 전부 포함 */}
         {[{ label: '회사명 또는 성함', value: company, setter: setCompany },
           { label: '연락처', value: phone, setter: setPhone },
           { label: '이메일 주소', value: email, setter: setEmail }].map((f, i) => (
@@ -455,8 +481,6 @@ function BBoxOrder() {
                 </div>
             </div>
 
-
-
             {/* 수량 */}
             <div style={{ marginBottom: '1rem' }}>
             <label>수량 선택</label>
@@ -488,34 +512,41 @@ function BBoxOrder() {
             )}
 
         {/* 견적 컴포넌트, 파일업로드, 주문버튼 등은 동일 */}
-        <EstimatePrice
-          width={width}
-          length={length}
-          height={height}
-          bottomStyle={bottomStyle}
-          paperFeel={paperFeel}
-          paperType={material}
-          paperWeight={weight}
-          color={color}
-          quantity={quantity === '그 외 수량' ? customQuantity : quantity}
-          coatingType={hasCoating ? coating : '없음'}
-          foil={hasFoil ? foil : []}
-          embossing={hasEmbossing ? embossing : ''}
-          mainPrintColor={hasPrinting ? mainPrintColor : ''}
-          spotPrintColor={hasPrinting ? spotPrintColor : ''}
-          printNone={!hasPrinting || (!mainPrintColor && !spotPrintColor)}
-          hasSilk={hasSilk}
-        />
-        <iframe
-          className="file-upload-frame"
-          src="https://mtdl.co.kr/fileupload"
-          width="100%"
-          height="170"
-          title="파일 업로드"
-        />
-        <button className="primary-button" onClick={handleOrderSubmit}>
-          바로 주문하기
-        </button>
+          <EstimatePrice
+            width={width}
+            length={length}
+            height={height}
+            bottomStyle={bottomStyle}
+            paperFeel={paperFeel}
+            paperType={material}
+            paperWeight={weight}
+            color={color}
+            quantity={quantity === '그 외 수량' ? customQuantity : quantity}
+            coatingType={hasCoating ? coating : '없음'}
+            foil={hasFoil ? foil : []}
+            embossing={hasEmbossing ? embossing : ''}
+            mainPrintColor={hasPrinting ? mainPrintColor : ''}
+            spotPrintColor={hasPrinting ? spotPrintColor : ''}
+            printNone={!hasPrinting || (!mainPrintColor && !spotPrintColor)}
+            hasSilk={hasSilk}
+          />
+          <iframe
+            className="file-upload-frame"
+            src="https://mtdl.co.kr/fileupload"
+            width="100%"
+            height="170"
+            title="파일 업로드"
+          />
+          <button className="primary-button" onClick={handleOrderSubmit}>
+            바로 주문하기
+          </button>
+        </div>
+        {/* ▼▼▼ floating arrow는 오른쪽 패널에 붙이기! ▼▼▼ */}
+        {showArrow && (
+            <div className={`floating-down-arrow${showArrow ? '' : ' hide'}`}>
+            <ChevronsDownIcon />
+            </div>
+        )}
       </div>
       {showConfirmation && (
         <div className="confirmation-overlay">

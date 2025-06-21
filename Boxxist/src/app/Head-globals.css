@@ -112,7 +112,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: center;           /* 가운데 정렬, 필요시 space-between */
-  gap: 64px;                         /* 컬럼 간 간격 */
+  gap: 6%;                         /* 컬럼 간 간격 */
   width: 100%;
   box-sizing: border-box;
   background: rgba(255,255,255,0.55);    /* 0.7 정도로 하면 blur가 더 강하게 보임 */

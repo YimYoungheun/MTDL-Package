@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import EstimatePriceY from './Common/EstimatePriceY';
 
 // 필요한 데이터 import
@@ -105,6 +105,22 @@ function YBoxOrder() {
       return weightMap['러프한']?.[material]?.[color] || [];
     return [];
   };
+
+  const formPanelRef = useRef();
+  const [showArrow, setShowArrow] = useState(true);
+
+  useEffect(() => {
+    const formPanel = formPanelRef.current;
+    if (!formPanel) return;
+    function handlePanelScroll() {
+      const { scrollTop, scrollHeight, clientHeight } = formPanel;
+      if (scrollTop + clientHeight >= scrollHeight - 10) setShowArrow(false);
+      else setShowArrow(true);
+    }
+    formPanel.addEventListener('scroll', handlePanelScroll, { passive: true });
+    handlePanelScroll();
+    return () => formPanel.removeEventListener('scroll', handlePanelScroll);
+  }, []); 
 
   return (
     <div style={{ display: 'flex', width: '100vw', height: '100vh', boxSizing: 'border-box', overflow: 'hidden' }}>

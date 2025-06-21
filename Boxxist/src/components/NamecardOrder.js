@@ -1,10 +1,11 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 // 필요한 데이터 import
 import EstimatePriceNamecard from './Common/EstimatePriceNamecard';
 import { NamecardMaterialMap as materialMap } from '../data/NamecardMaterialMap';
 import { NamecardColorMap as colorMap } from '../data/NamecardColorMap';
 import { NamecardWeightMap as weightMap } from '../data/NamecardWeightMap';
+import ChevronsDownIcon from '../app/ChevronsDownIcon';
 
   const SIZE_OPTIONS = [
   { label: '90×50', width: 90, height: 50 },
@@ -18,7 +19,26 @@ import { NamecardWeightMap as weightMap } from '../data/NamecardWeightMap';
   const foilSideOptions = ['없음', '단면', '양면'];
   const silkSideOptions = ['없음', '단면', '양면'];
   const QUANTITY_OPTIONS = [500, 1000, 2000, 3000, 5000, 10000, 20000, 30000, 50000, 100000];
+
+
 function NamecardOrder() {
+  
+  const formPanelRef = useRef();
+  const [showArrow, setShowArrow] = useState(true);
+
+  useEffect(() => {
+    const formPanel = formPanelRef.current;
+    if (!formPanel) return;
+    function handlePanelScroll() {
+      const { scrollTop, scrollHeight, clientHeight } = formPanel;
+      if (scrollTop + clientHeight >= scrollHeight - 10) setShowArrow(false);
+      else setShowArrow(true);
+    }
+    formPanel.addEventListener('scroll', handlePanelScroll, { passive: true });
+    handlePanelScroll();
+    return () => formPanel.removeEventListener('scroll', handlePanelScroll);
+  }, []);
+
   /* 이미지에 관여되는 const */
   const [imageSrc, setImageSrc] = useState('/img/Namecard.jpg');
   const [nextImageSrc, setNextImageSrc] = useState(null); // 전환 예약
@@ -36,8 +56,8 @@ function NamecardOrder() {
   const [color, setColor] = useState('');
   const [weight, setWeight] = useState('');
   const [printType, setPrintType] = useState('단면'); // 또는 기본값 '단면'
-  const [coating, setCoating] = useState('없음');      // '없음', '단면', '양면'
-  const [coatingType, setCoatingType] = useState('');  // '무광', '유광', '벨벳'
+  const [hasCoating, setHasCoating] = useState(false);   // 스위치
+  const [coatingType, setCoatingType] = useState('');    // '단면' or '양면'
   const [foilTypes, setFoilTypes] = useState([]);
   const [foilSide, setFoilSide] = useState('없음');
   const [foilSideIdx, setFoilSideIdx] = useState(0);
@@ -49,7 +69,7 @@ function NamecardOrder() {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [quantity, setQuantity] = useState('');
   const [orderCount, setOrderCount] = useState('1');
-
+  
   // 이미지 변경 함수
 function handleChangeImage(newSrc) {
   if (imageSrc === newSrc) return;
@@ -194,7 +214,14 @@ useEffect(() => {
       </div>
 
       {/* 오른쪽 입력폼 */}
-      <div style={{ flex: 1, minWidth: 0, padding: '2rem', background: '#fff', boxSizing: 'border-box', overflowY: 'auto' }}>
+      <div
+        ref={formPanelRef}
+        className="form-panel"
+        style={{
+          flex: 1, minWidth: 0, padding: '2rem', background: '#fff',
+          boxSizing: 'border-box', overflowY: 'auto', height: '100vh',
+        }}
+      >
         {/* 기본 입력 */}
         {[{ label: '회사명 또는 성함', value: company, setter: setCompany },
         { label: '연락처', value: phone, setter: setPhone },
@@ -345,49 +372,37 @@ useEffect(() => {
           </div>
 
           {/* 코팅 */}
-          <div style={{ marginBottom: '1.2rem' }}>
-            <label style={{ display: 'block', marginBottom: 5 }}>코팅</label>
-            <div className="toggle-group" style={{ position: 'relative' }}>
-              {/* 🔵 슬라이드 배경 */}
-              <div
-                className="toggle-bg"
-                style={{
-                  left: `${(['없음', '단면', '양면'].indexOf(coating)) * (100 / 3)}%`,
-                  width: `${100 / 3}%`,
-                }}
-              />
-              {['없음', '단면', '양면'].map((type) => (
-                <button
-                  key={type}
-                  className={`toggle-btn${coating === type ? ' selected' : ''}`}
-                  onClick={() => {
-                    setCoating(type);
-                    if (type === '없음') setCoatingType('');
+            <div className="option-block">
+              <label className="option-label">코팅</label>
+              {/* 스위치 */}
+              <label className="switch-toggle" style={{ position: 'relative', marginBottom: '0.7em' }}>
+                <input
+                  type="checkbox"
+                  className="switch-input"
+                  checked={hasCoating}
+                  onChange={e => {
+                    setHasCoating(e.target.checked);
+                    if (!e.target.checked) setCoatingType('');
                   }}
-                  type="button"
-                  style={{ borderRadius: '12px', zIndex: 2 }}
-                >
-                  {type}
-                </button>
-              ))}
+                />
+                <span className="switch-slider" />
+                <span className="switch-label">{hasCoating ? "있음" : "없음"}</span>
+              </label>
+
+              {/* 있음일 때만 하위 옵션 */}
+              {hasCoating && (
+                <div className="button-group" style={{ marginTop: 8 }}>
+                  {['단면', '양면'].map(opt => (
+                    <button
+                      key={opt}
+                      className={`option-button${coatingType === opt ? ' selected' : ''}`}
+                      onClick={() => setCoatingType(opt)}
+                      type="button"
+                    >{opt}</button>
+                  ))}
+                </div>
+              )}
             </div>
-          
-            {/* 코팅이 단면/양면일 때만 코팅 종류 선택 */}
-            {(coating === '단면' || coating === '양면') && (
-              <div className="button-group" style={{ marginTop: 8 }}>
-                {['무광', '유광', '벨벳'].map((type) => (
-                  <button
-                    key={type}
-                    className={`option-button${coatingType === type ? ' selected' : ''}`}
-                    onClick={() => setCoatingType(type)}
-                    type="button"
-                  >
-                    {type}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
 
             
           {/* 형압 */}
@@ -582,7 +597,7 @@ useEffect(() => {
                       color={color}
                       paperWeight={weight}
                       printType={printType}
-                      coating={coating}
+                      coating={coatingType}
                       round={round}
                       quantity={Number(quantity) * Number(orderCount)}
                       foilFace={foilSide}   // foilFace만 전달
@@ -598,26 +613,33 @@ useEffect(() => {
                     height="170"
                     title="파일 업로드"
                   />
-                  <button className="primary-button" onClick={handleOrderSubmit}>
-                    바로 주문하기
-                  </button>
+            <button className="primary-button" onClick={handleOrderSubmit}>
+              바로 주문하기
+            </button>
+          </div>
 
-                  {/* 주문 접수 완료 오버레이 */}
-                  {showConfirmation && (
-                    <div className="confirmation-overlay">
-                      <div className="confirmation-message">
-                        <strong>주문이 접수되었습니다!</strong>
-                        <br />나머지 결제를 진행해주세요
-                        <br /><br />
-                        <button className="primary-button" onClick={() => setShowConfirmation(false)}>
-                          확인
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                </div> 
-              </div>
-              );
-            }           // NamecardOrder 함수 끝
+      {/* ▼▼▼ floating arrow (항상 패널 div 바깥에!) ▼▼▼ */}
+      {showArrow && (
+        <div className="floating-down-arrow">
+          <ChevronsDownIcon />
+        </div>
+      )}
 
-            export default NamecardOrder;
+      {/* 주문 완료 알림 */}
+      {showConfirmation && (
+        <div className="confirmation-overlay">
+          <div className="confirmation-message">
+            <strong>주문이 접수되었습니다!</strong>
+            <br />나머지 결제를 진행해주세요
+            <br /><br />
+            <button className="primary-button" onClick={() => setShowConfirmation(false)}>
+              확인
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default NamecardOrder;

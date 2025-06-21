@@ -528,3 +528,29 @@ select option, select optgroup {
   color: #222;
   font-weight: 500;
 }
+
+.floating-down-arrow {
+  position: fixed;
+  color: #2563eb;
+  left: 87vw;   /* 오른쪽 패널 중앙쯤, 필요시 조정 */
+  bottom: 10vh;
+  z-index: 200;
+  animation: arrowBounce 1.1s infinite cubic-bezier(.44,.2,.44,.97);
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.5s; /* ← 여기서 부드러운 변화 */
+}
+.floating-down-arrow.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+@media (max-width: 900px) {
+  .floating-down-arrow {
+    left: 50vw;
+  }
+}
+@keyframes arrowBounce {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(18px);}
+  100% { transform: translateY(0);}
+}

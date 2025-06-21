@@ -1,6 +1,6 @@
-import React, { useState, useEffect,} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import EstimatePricePoster from './Common/EstimatePricePoster';
-
+import ChevronsDownIcon from '../app/ChevronsDownIcon';
 
 const SIZE_OPTIONS = [
   { code: 'A2', label: 'A2', description: '420×594mm', width: 420, height: 594 },
@@ -80,9 +80,27 @@ function PosterOrder() {
     setShowConfirmation(true);
   };
 
-  return (
+  const formPanelRef = useRef();
+  const [showArrow, setShowArrow] = useState(true);
+
+  useEffect(() => {
+    const formPanel = formPanelRef.current;
+    if (!formPanel) return;
+    function handlePanelScroll() {
+      const { scrollTop, scrollHeight, clientHeight } = formPanel;
+      if (scrollTop + clientHeight >= scrollHeight - 10) setShowArrow(false);
+      else setShowArrow(true);
+    }
+    formPanel.addEventListener('scroll', handlePanelScroll, { passive: true });
+    handlePanelScroll();
+    return () => formPanel.removeEventListener('scroll', handlePanelScroll);
+  }, []);
+
+ return (
     <div style={{ width: '100vw', height: '100vh', boxSizing: 'border-box', overflow: 'hidden', display: 'flex' }}>
+      {/* -------- 왼쪽 이미지 -------- */}
       <div style={{ flex: 3, minWidth: 0, height: '100%', overflow: 'hidden', position: 'relative', marginTop: '35px' }}>
+        {/* ... 이미지 페이드 애니메이션 ... */}
         {isFading && prevImageSrc && (
           <img src={prevImageSrc} className="img-anim fade-out"
             style={{ width: '73vw', height: '100%', objectFit: 'cover', position: 'absolute', left: 0, top: 0, pointerEvents: 'none', zIndex: 2 }}
@@ -100,8 +118,16 @@ function PosterOrder() {
         )}
       </div>
 
-      <div style={{ flex: 1, minWidth: 0, padding: '2rem', background: '#fff', boxSizing: 'border-box', overflowY: 'auto' }}>
-
+      {/* -------- 오른쪽 입력폼 -------- */}
+      <div
+        ref={formPanelRef}
+        className="form-panel"
+        style={{
+          flex: 1, minWidth: 0, padding: '2rem', background: '#fff',
+          boxSizing: 'border-box', overflowY: 'auto', height: '100vh',
+        }}
+      >
+        {/* ---- 입력 폼 내용 ---- */}
         {[{ label: '회사명 또는 성함', value: company, setter: setCompany },
           { label: '연락처', value: phone, setter: setPhone },
           { label: '이메일 주소', value: email, setter: setEmail }].map((f, i) => (
@@ -197,32 +223,41 @@ function PosterOrder() {
           </div>
 
         {/* 견적 + 파일업로드 + 주문 */}
-          <>
-            <EstimatePricePoster
-              width={selectedSize?.width}
-              height={selectedSize?.height}
-              paperType={selectedPaper}
-              paperWeight={selectedWeight}
-              printType={printType}
-              coating={coating}
-              quantity={Number(quantity)}
-            />
-            <iframe className="file-upload-frame" src="https://mtdl.co.kr/fileupload" width="100%" height="170" title="파일 업로드" />
-            <button className="primary-button" onClick={handleOrderSubmit} style={{ marginTop: 18 }}>
-              바로 주문하기
-            </button>
-          </>
-
-        {showConfirmation && (
-          <div className="confirmation-overlay">
-            <div className="confirmation-message">
-              <strong>주문이 접수되었습니다!</strong><br />
-              나머지 결제를 진행해주세요<br /><br />
-              <button className="primary-button" onClick={() => setShowConfirmation(false)}>확인</button>
-            </div>
-          </div>
-        )}
+        <EstimatePricePoster
+          width={selectedSize?.width}
+          height={selectedSize?.height}
+          paperType={selectedPaper}
+          paperWeight={selectedWeight}
+          printType={printType}
+          coating={coating}
+          quantity={Number(quantity)}
+        />
+        <iframe className="file-upload-frame" src="https://mtdl.co.kr/fileupload" width="100%" height="170" title="파일 업로드" />
+        <button className="primary-button" onClick={handleOrderSubmit}>
+          바로 주문하기
+        </button>
       </div>
+
+      {/* -------- floating arrow (항상 form-panel 바깥에!) -------- */}
+      {showArrow && (
+        <div className="floating-down-arrow">
+          <ChevronsDownIcon />
+        </div>
+      )}
+
+      {/* -------- 주문 완료 알림 -------- */}
+      {showConfirmation && (
+        <div className="confirmation-overlay">
+          <div className="confirmation-message">
+            <strong>주문이 접수되었습니다!</strong>
+            <br />나머지 결제를 진행해주세요
+            <br /><br />
+            <button className="primary-button" onClick={() => setShowConfirmation(false)}>
+              확인
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
