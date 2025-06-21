@@ -66,11 +66,27 @@ main, .main-content, .main-slider-outer {
   position: relative;
 }
 
+.order-icon-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 36px;
+  margin-top: 48px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
 .icon-tooltip {
   position: relative;
   display: flex;
   align-items: center;
   cursor: pointer;
+}
+
+.icon-svg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .main-tooltip-text {
@@ -85,7 +101,7 @@ main, .main-content, .main-slider-outer {
   font-size: 0.97rem;
   font-weight: 500;
   position: absolute;
-  bottom: 44px; /* 아이콘 아래쪽에 노출 */
+  bottom: -44px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 15;
@@ -94,7 +110,6 @@ main, .main-content, .main-slider-outer {
   white-space: nowrap;
   box-shadow: 0 2px 10px rgba(219, 219, 219, 0.158);
 }
-
 .icon-tooltip:hover .main-tooltip-text,
 .icon-tooltip:focus .main-tooltip-text {
   visibility: visible;
