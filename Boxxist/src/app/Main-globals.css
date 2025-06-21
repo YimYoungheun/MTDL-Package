@@ -106,7 +106,7 @@ main, .main-content, .main-slider-outer {
   left: 50%;
   transform: translateX(-50%);
   z-index: 15;
-  transition: opacity 0.19s, visibility 0.19s;
+  transition: opacity 0.7s, visibility 0.7s;
   pointer-events: none;
   white-space: nowrap;
   box-shadow: 0 2px 10px rgba(219, 219, 219, 0.158);

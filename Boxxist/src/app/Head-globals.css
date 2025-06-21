@@ -90,7 +90,14 @@
   left: 0;
   right: 0;
   box-sizing: border-box;
+  transition: opacity 0.5s;
 }
+
+.nav-dropdown-outer.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
 
 /* 모바일 대응 */
 @media (max-width: 900px) {
@@ -191,7 +198,7 @@
   opacity: 0.85;
 }
 .footer-links span:hover {
-  text-decoration: underline;
+  text-decoration: none;
   opacity: 1;
 }
 
@@ -269,7 +276,7 @@
   left: 50%;
   transform: translateX(-50%);
   z-index: 15;
-  transition: opacity 0.19s, visibility 0.19s;
+  transition: opacity 0.7s, visibility 0.7s;
   pointer-events: none;
   white-space: nowrap;
   box-shadow: 0 2px 10px rgba(219, 219, 219, 0.158);

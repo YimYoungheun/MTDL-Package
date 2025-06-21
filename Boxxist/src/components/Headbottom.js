@@ -4,6 +4,16 @@ import Link from "next/link";
 
 export default function Headbottom({ children }) {
   const [showDropdown, setShowDropdown] = useState(false);
+  const [isFadeOut, setIsFadeOut] = useState(false);
+
+  // 드롭다운 마우스 떠날 때
+  function handleDropdownClose() {
+    setIsFadeOut(true);        // fade-out 클래스 적용
+    setTimeout(() => {
+      setShowDropdown(false);  // 0.5초 뒤에 실제로 DOM 삭제
+      setIsFadeOut(false);     // 초기화
+    }, 500);                   // css 트랜지션과 같은 시간!
+  }
 
   return (
     <>
@@ -97,7 +107,7 @@ export default function Headbottom({ children }) {
         {/* ▼▼▼ 드롭다운: header 바깥에 position: absolute + width: 100vw ▼▼▼ */}
         {showDropdown && (
           <div
-            className="nav-dropdown-outer"
+            className={`nav-dropdown-outer${isFadeOut ? " fade-out" : ""}`}
             style={{
               position: "absolute",
               zIndex: 200,
@@ -105,9 +115,13 @@ export default function Headbottom({ children }) {
               background: "transparent",
               backdropFilter: "blur(4px)",
               WebkitBackdropFilter: "blur(4px)",
+              width: "100vw",
+              left: 0,
+              right: 0,
+              top: "100px"
             }}
             onMouseEnter={() => setShowDropdown(true)}
-            onMouseLeave={() => setShowDropdown(false)}
+            onMouseLeave={handleDropdownClose}
           >
             <div className="dropdown-inner">
               <div className="dropdown-col">
