@@ -18,8 +18,8 @@ main, .main-content, .main-slider-outer {
 }
 
 .main-slide-image {
-  width: 700px;
-  height: 580px;
+  width: 100vw;
+  height: 70vh;
   object-fit: cover;
   border-radius: 0;
   background: #f8fafc;
@@ -37,7 +37,7 @@ main, .main-content, .main-slider-outer {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #222;
+  color: #ffffff;
   font-size: 2.2rem;
   cursor: pointer;
   box-shadow: none;
@@ -53,12 +53,12 @@ main, .main-content, .main-slider-outer {
 .slide-arrow-btn:hover,
 .slide-arrow-btn:focus {
   background: none;
-  color: #222;
+  color: #ffffff;
 }
 
 .slide-img-box {
-  width: 700px;
-  height: 580px;
+  width: 100vw;
+  height: 70vh;
   display: flex;
   align-items: center;
   justify-content: center;
