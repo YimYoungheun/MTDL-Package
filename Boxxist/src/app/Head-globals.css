@@ -1,0 +1,169 @@
+.site-header {
+  width: 100%;
+  height: 100px;
+  display: flex;           /* 가로 배치 */
+  align-items: center;
+  padding-left: 48px;
+  padding-right: 48px;
+  padding-top: 0px;
+  background: #f7faff;
+  box-sizing: border-box;
+}
+
+.site-logo {
+  margin-right: 40px;
+  min-width: 120px;
+  display: flex;
+  align-items: center;
+}
+
+.site-nav {
+  display: flex;            /* 가로 배치 */
+  flex: 1;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 36px;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.site-icons {
+  display: flex;
+  gap: 28px;              /* ← 아이콘 간격 조절 (원하는 대로 숫자 조정) */
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.site-footer {
+  background: #222;
+  color: #eee;
+  padding: 40px 0 45px 0;
+  font-family: 'Geist', 'Pretendard', Arial, sans-serif;
+  font-size: 12px;
+  margin-top: 0;   /* 바깥쪽 띠 없애기 */
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  align-items: flex-start;
+  gap: 40px;
+}
+
+.footer-logo {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.footer-logo img {
+  height: 20px;           /* 로고 높이 */
+  padding-left: 0;
+  width: flex;
+}
+
+.footer-info {
+  text-align: center;      /* 중앙정렬 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-links {
+  margin-bottom: 18px;    /* 회사정보 메뉴와 연락처 사이 */
+  font-size: 15px;        /* 회사정보 링크 글씨 크기 */
+  font-weight: 400;
+}
+.footer-links span {
+  margin: 0 10px;
+  cursor: pointer;
+  opacity: 0.85;
+}
+.footer-links span:hover {
+  text-decoration: underline;
+  opacity: 1;
+}
+
+.footer-contact {
+  font-weight: 600;
+  font-size: 17px;
+  margin-bottom: 8px;
+}
+
+.footer-copy {
+  font-size: 14px;
+  color: #bbb;
+  margin-top: 6px;
+}
+
+/* --- (미사용) SNS/패밀리 영역 --- */
+.footer-sns,
+.footer-family {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer-sns img {
+  height: 30px;
+  width: 30px;
+  margin-left: 8px;
+  opacity: 0.78;
+  transition: opacity 0.13s;
+}
+.footer-sns img:hover {
+  opacity: 1;
+}
+
+.footer-family-site {
+  margin-left: 16px;
+  padding: 5px 14px;
+  border-radius: 6px;
+  background: #292929;
+  color: #eee;
+  border: 1px solid #444;
+  font-size: 15px;
+}
+
+.icon-tooltip {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  opacity: 0;
+  min-width: 70px;
+  background: #24272b;
+  color: #fff;
+  text-align: center;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 0.97rem;
+  font-weight: 500;
+  position: absolute;
+  bottom: -44px; /* 아이콘 아래쪽에 노출 */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 15;
+  transition: opacity 0.19s, visibility 0.19s;
+  pointer-events: none;
+  white-space: nowrap;
+  box-shadow: 0 2px 10px #0002;
+}
+
+.icon-tooltip:hover .tooltip-text,
+.icon-tooltip:focus .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
