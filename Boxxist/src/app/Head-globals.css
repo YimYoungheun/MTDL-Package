@@ -256,7 +256,8 @@
   visibility: hidden;
   opacity: 0;
   min-width: 70px;
-  background: #9290ff41;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter:blur(6px);
   color: #000000;
   text-align: center;
   border-radius: 8px;
